@@ -38,12 +38,6 @@
         <td>{{ $history->amount }}</td>
 
         <td>
-            <a href="/histories/{{ $history->id }}">
-                Detail
-            </a>
-
-            |
-
             <a href="/histories/delete/{{ $history->id }}">
                 Hapus
             </a>
