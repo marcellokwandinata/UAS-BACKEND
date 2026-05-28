@@ -49,4 +49,15 @@ class TopupController extends Controller
 
         return redirect('/topups');
     }
+
+    public function destroy($id)
+    {
+        $history = History::find($id);
+
+        if ($history) {
+            $history->delete();
+        }
+
+        return redirect('/histories');
+    }
 }
