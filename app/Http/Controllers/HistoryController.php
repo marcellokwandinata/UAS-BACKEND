@@ -49,14 +49,9 @@ class HistoryController extends Controller
     {
         $history = History::find($id);
 
-        if (!$history) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Maaf, History tidak ditemukan..'
-            ], 404);
-        }
-
+        if ($history) {
         $history->delete();
+        }
 
         return redirect('/histories');
     }
