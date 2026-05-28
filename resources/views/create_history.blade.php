@@ -30,6 +30,7 @@
 <h1>History Data</h1>
 
 <a href="/">Kembali ke Home</a>
+<br><br>
 
 <table>
     <tr>
