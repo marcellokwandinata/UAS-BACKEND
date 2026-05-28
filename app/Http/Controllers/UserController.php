@@ -7,86 +7,75 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    // nampilin semua data user
+    // tampil semua user
     public function index()
     {
-        $users = User::latest()->get();
+        $users = User::all();
 
-        return response()->json($users);
+        return view('users.index', compact('users'));
     }
 
-    // nampilin detail user berdasarkan id
-    public function show($id)
+    // form tambah user
+    public function create()
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'User tidak ditemukan'
-            ], 404);
-        }
-
-        return response()->json($user);
+        return view('users.create');
     }
 
     // simpan user baru
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'email' => 'required|email',
             'password' => 'required'
         ]);
 
-        $user = User::create([
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
 
-        return response()->json([
-            'message' => 'User berhasil ditambahkan',
-            'data' => $user
-        ]);
+        return redirect()->route('users.index')
+            ->with('success', 'User berhasil ditambahkan');
     }
 
-    // update data user
-    public function update(Request $request, $id)
+    // detail user
+    public function show(User $user)
     {
-        $user = User::find($id);
+        return view('users.show', compact('user'));
+    }
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'User tidak ditemukan'
-            ], 404);
-        }
+    // form edit user
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    // update user
+    public function update(Request $request, User $user)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email',
+        ]);
 
         $user->update([
-            'name' => $request->name ?? $user->name,
-            'email' => $request->email ?? $user->email,
+            'name' => $request->name,
+            'email' => $request->email,
         ]);
 
-        return response()->json([
-            'message' => 'User berhasil diupdate',
-            'data' => $user
-        ]);
+        return redirect()->route('users.index')
+            ->with('success', 'User berhasil diupdate');
     }
 
     // hapus user
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user = User::find($id);
-
-        if (!$user) {
-            return response()->json([
-                'message' => 'User tidak ditemukan'
-            ], 404);
-        }
-
         $user->delete();
 
-        return response()->json([
-            'message' => 'User berhasil dihapus'
-        ]);
+        return redirect()->route('users.index')
+            ->with('success', 'User berhasil dihapus');
     }
 }
+
