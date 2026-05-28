@@ -17,7 +17,7 @@
 
         <label>Nominal:</label>
         <br>
-        <input type="number" name="nominal">
+       <input type="text" name="amount">
         <br><br>
 
         <label>Status:</label>
