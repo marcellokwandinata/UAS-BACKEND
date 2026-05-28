@@ -12,10 +12,7 @@ class TopupController extends Controller
     {
         $topups = Topup::all();
 
-        return response()->json([
-            'success' => true,
-            'data' => $topups
-        ]);
+        return view('create_topup', compact('topups'));
     }
 
     // GET /topups/{id}
@@ -30,10 +27,7 @@ class TopupController extends Controller
             ], 404);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $topup
-        ]);
+        return view('create_topup', compact('topups'));
     }
 
     // POST /topups
@@ -45,9 +39,6 @@ class TopupController extends Controller
             'status' => $request->status,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $topup
-        ]);
+        return view('create_topup', compact('topups'));
     }
 }
