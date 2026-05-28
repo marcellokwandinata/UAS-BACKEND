@@ -1,34 +1,34 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create History</title>
+    <title>History List</title>
 </head>
 <body>
 
-    <h1>Create History</h1>
+<h1>History Data</h1>
 
-    <form method="POST" action="/histories">
-        @csrf
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Amount</th>
+        <th>Action</th>
+    </tr>
 
-        <label>Title:</label>
-        <br>
-        <input type="text" name="title">
-        <br><br>
+    @foreach($histories as $history)
+    <tr>
+        <td>{{ $history->id }}</td>
+        <td>{{ $history->title }}</td>
+        <td>{{ $history->description }}</td>
+        <td>{{ $history->amount }}</td>
+        <td>
+            <a href="/histories/delete/{{ $history->id }}">Hapus</a>
+        </td>
+    </tr>
+    @endforeach
 
-        <label>Description:</label>
-        <br>
-        <input type="text" name="description">
-        <br><br>
-
-        <label>Amount:</label>
-        <br>
-        <input type="text" name="amount">
-        <br><br>
-
-        <button type="submit">
-            Submit
-        </button>
-    </form>
+</table>
 
 </body>
 </html>
