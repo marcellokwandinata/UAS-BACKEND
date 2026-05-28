@@ -29,6 +29,8 @@
 
 <h1>History Data</h1>
 
+<a href="/">Kembali ke Home</a>
+
 <table>
     <tr>
         <th>ID</th>

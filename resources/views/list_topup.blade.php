@@ -24,6 +24,10 @@
 
 <h1>Data Topup</h1>
 
+<a href="/">Home</a>
+
+<br><br>
+
 <a href="/topups/create">Tambah Topup</a>
 
 <br><br>
