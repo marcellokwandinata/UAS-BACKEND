@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class TopupController extends Controller
 {
-    // GET /topups
+   // halaman list
     public function index()
     {
         $topups = Topup::all();
 
-        return view('create_topup', compact('topups'));
+        return view('topup', compact('topups'));
     }
 
     // GET /topups/{id}
@@ -32,16 +32,21 @@ class TopupController extends Controller
     }
 
     // POST /topups
+    // halaman form create
+    public function create()
+    {
+        return view('create_topup');
+    }
+
+    // simpan data
     public function store(Request $request)
     {
-        $topup = Topup::create([
+        Topup::create([
             'payment_method' => $request->payment_method,
             'nominal' => $request->nominal,
             'status' => $request->status,
         ]);
 
-        $topups = Topup::all();
-
-        return view('create_topup', compact('topup'));
+        return redirect('/topups');
     }
 }
