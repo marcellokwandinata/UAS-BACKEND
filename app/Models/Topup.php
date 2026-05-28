@@ -9,7 +9,7 @@ class Topup extends Model
     protected $table = 'topups';
 
     protected $fillable = [
-        'provider',
+        'payment_method',
         'nominal',
         'status'
     ];
