@@ -26,7 +26,7 @@ class HistoryController extends Controller
         if (!$history) {
             return response()->json([
                 'success' => false,
-                'message' => 'History not found'
+                'message' => 'Maaf, History tidak ditemukan..'
             ], 404);
         }
 
@@ -44,7 +44,7 @@ class HistoryController extends Controller
         if (!$history) {
             return response()->json([
                 'success' => false,
-                'message' => 'History not found'
+                'message' => 'Maaf, History tidak ditemukan..'
             ], 404);
         }
 
@@ -52,7 +52,7 @@ class HistoryController extends Controller
 
         return response()->json([
             'success' => true,
-            'message' => 'History deleted successfully'
+            'message' => 'History berhasil dihapus!'
         ]);
     }
 }
