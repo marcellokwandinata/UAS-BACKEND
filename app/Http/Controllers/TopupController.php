@@ -26,9 +26,24 @@ class TopupController extends Controller
         if (!$topup) {
             return response()->json([
                 'success' => false,
-                'message' => 'Maaf, Topup tidak ditemukan..'
+                'message' => 'Maaf, Topup tidak berhasil..'
             ], 404);
         }
+
+        return response()->json([
+            'success' => true,
+            'data' => $topup
+        ]);
+    }
+
+    // POST /topups
+    public function store(Request $request)
+    {
+        $topup = Topup::create([
+            'provider' => $request->provider,
+            'nominal' => $request->nominal,
+            'status' => $request->status,
+        ]);
 
         return response()->json([
             'success' => true,
