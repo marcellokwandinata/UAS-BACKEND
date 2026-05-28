@@ -64,7 +64,7 @@
         <td>{{ $topup->email }}</td>
         <td>{{ $topup->amount }}</td>
         <td>
-            <a href="{{ route('topup.delete', $topup->id) }}">Hapus</a>
+            <a href="/topup/delete/{{ $topup->delete }}">Hapus</a>
         </td>
     </tr>
     @endforeach
