@@ -12,7 +12,7 @@ class TopupController extends Controller
     {
         $topups = Topup::all();
 
-        return view('topup', compact('topups'));
+        return view('list_topup', compact('topups'));
     }
 
     // GET /topups/{id}
@@ -28,7 +28,7 @@ class TopupController extends Controller
         }
 
         $topups = Topup::all();
-        return view('create_topup', compact('topups'));
+        return view('list_topup', compact('topups'));
     }
 
     // POST /topups
