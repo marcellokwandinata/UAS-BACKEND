@@ -4,78 +4,85 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    // tampil semua user
-    public function index()
+    // HALAMAN PERTAMA (LOGIN & REGISTER)
+    
+    // Form Login
+    public function showLogin()
     {
-        $users = User::all();
-
-        return view('users.index', compact('users'));
+        if (Auth::check()) {
+            return redirect()->route('User.index');
+        }
+        return view('User.login');
     }
 
-    // form tambah user
+    // Proses Login
+    public function login(Request $request)
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ]);
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/User');
+        }
+
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
+    }
+
+    // Form Register
     public function create()
     {
-        return view('users.create');
+        return view('User.create');
     }
 
-    // simpan user baru
+    // Proses Register
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-            'password' => 'required'
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
         ]);
 
-        User::create([
-            'name' => $request->name,
+        $user = User::create([
+            'full_name' => $request->full_name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('users.index')
-            ->with('success', 'User berhasil ditambahkan');
+        Auth::login($user);
+
+        return redirect()->route('User.index')->with('success', 'Rekening berhasil dibuat!');
     }
 
-    // detail user
-    public function show(User $user)
+    // Proses Logout (Dipicu dari Halaman Kedua)
+    public function logout(Request $request)
     {
-        return view('users.show', compact('user'));
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login')->with('success', 'Anda telah keluar dari aplikasi.');
     }
-
-    // form edit user
-    public function edit(User $user)
+    
+    // HALAMAN KEDUA 
+    public function index()
     {
-        return view('users.edit', compact('user'));
+        // Proteksi: Jika belum login, tendang balik ke halaman pertama (login)
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        $user = Auth::user();
+        return view('User.index', compact('user'));
     }
 
-    // update user
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email',
-        ]);
-
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-        ]);
-
-        return redirect()->route('users.index')
-            ->with('success', 'User berhasil diupdate');
-    }
-
-    // hapus user
-    public function destroy(User $user)
-    {
-        $user->delete();
-
-        return redirect()->route('users.index')
-            ->with('success', 'User berhasil dihapus');
-    }
 }
-

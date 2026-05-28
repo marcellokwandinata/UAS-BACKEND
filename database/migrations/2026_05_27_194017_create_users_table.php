@@ -11,9 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        // Kita ganti 'create' menjadi 'table' untuk menambahkan kolom ke tabel users yang sudah ada
+        Schema::table('users', function (Blueprint $table) {
+            // Kolom email dan password tidak perlu ditulis lagi karena sudah dibuat di file asli
+            
+            // Ubah kolom name bawaan laravel agar sesuai dengan keinginanmu jika diperlukan, 
+            // atau tambahkan saja kolom full_name dan account_number yang baru:
+            if (!Schema::hasColumn('users', 'full_name')) {
+                $table->string('full_name')->after('id');
+            }
+            
+            if (!Schema::hasColumn('users', 'account_number')) {
+                $table->string('account_number')->nullable()->after('password');
+            }
         });
     }
 
@@ -22,6 +32,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            // Logika untuk menghapus kolom jika migrasi di-rollback
+            $table->dropColumn(['full_name', 'account_number']);
+        });
     }
 };
