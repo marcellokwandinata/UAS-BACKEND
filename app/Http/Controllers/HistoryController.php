@@ -22,14 +22,14 @@ class HistoryController extends Controller
     {
         $history = History::find($id);
 
-        if (!$history) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Maaf, History tidak ditemukan..'
-            ], 404);
+         if (!$history) {
+            return redirect('/histories')
+                ->with('error', 'ID tidak ditemukan!');
         }
 
-        return view('list_history', compact('histories'));
+        return view('list_history', [
+            'histories' => [$history]
+        ]);
     }
 
     // POST /histories
@@ -50,9 +50,13 @@ class HistoryController extends Controller
         $history = History::find($id);
 
         if ($history) {
-        $history->delete();
+            $history->delete();
+
+            return redirect('/histories')
+                ->with('success', 'Data berhasil dihapus!');
         }
 
-        return redirect('/histories');
+        return redirect('/histories')
+            ->with('error', 'Data tidak ditemukan!');
     }
 }
