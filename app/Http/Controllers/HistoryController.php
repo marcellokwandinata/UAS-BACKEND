@@ -12,10 +12,7 @@ class HistoryController extends Controller
     {
         $histories = History::all();
 
-        return response()->json([
-            'success' => true,
-            'data' => $histories
-        ]);
+        return view('create_history', compact('histories'));
     }
 
     // GET /histories/{id}
@@ -30,10 +27,7 @@ class HistoryController extends Controller
             ], 404);
         }
 
-        return response()->json([
-            'success' => true,
-            'data' => $history
-        ]);
+        return view('create_history', compact('histories'));
     }
 
     // POST /histories
@@ -45,10 +39,7 @@ class HistoryController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'data' => $history
-        ]);
+        return view('create_history', compact('histories'));
     }
 
     // DELETE /histories/{id}
@@ -65,9 +56,6 @@ class HistoryController extends Controller
 
         $history->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'History berhasil dihapus!'
-        ]);
+        return view('create_history', compact('histories'));
     }
 }
