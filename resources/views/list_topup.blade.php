@@ -54,7 +54,7 @@
     <p style="color: red;">{{ session('error') }}</p>
 @endif
 
-<table>
+<table border="1" cellpadding="10">
     <tr>
         <th>ID</th>
         <th>Payment Method</th>
