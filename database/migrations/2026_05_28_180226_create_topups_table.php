@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('topups', function (Blueprint $table) {
             $table->id();
-            $table->string('provider');
+            $table->string('payment_method');
             $table->integer('nominal');
             $table->string('status');
             $table->timestamps();
