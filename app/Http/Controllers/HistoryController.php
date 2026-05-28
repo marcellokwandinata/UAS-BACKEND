@@ -36,6 +36,21 @@ class HistoryController extends Controller
         ]);
     }
 
+    // POST /histories
+    public function store(Request $request)
+    {
+        $history = History::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'amount' => $request->amount,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => $history
+        ]);
+    }
+
     // DELETE /histories/{id}
     public function destroy($id)
     {
