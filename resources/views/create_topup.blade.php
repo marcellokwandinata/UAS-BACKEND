@@ -5,30 +5,35 @@
 </head>
 <body>
 
-    <h1>Create Topup</h1>
+<h1>Tambah Topup</h1>
 
-    <form method="POST" action="/topups">
-        @csrf
+<form action="/topups" method="POST">
+    @csrf
 
-        <label>Payment Method:</label>
-        <br>
+    <div>
+        <label>Payment Method</label>
         <input type="text" name="payment_method">
-        <br><br>
+    </div>
 
-        <label>Nominal:</label>
-        <br>
-       <input type="text" name="amount">
-        <br><br>
+    <br>
 
-        <label>Status:</label>
-        <br>
+    <div>
+        <label>Nominal</label>
+        <input type="number" name="nominal">
+    </div>
+
+    <br>
+
+    <div>
+        <label>Status</label>
         <input type="text" name="status">
-        <br><br>
+    </div>
 
-        <button type="submit">
-            Submit
-        </button>
-    </form>
+    <br>
 
+    <button type="submit">
+        Simpan
+    </button>
+</form>
 </body>
 </html>
