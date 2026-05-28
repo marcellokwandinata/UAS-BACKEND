@@ -40,7 +40,7 @@ class TopupController extends Controller
     public function store(Request $request)
     {
         $topup = Topup::create([
-            'provider' => $request->provider,
+            'payment_method' => $request->payment_method,
             'nominal' => $request->nominal,
             'status' => $request->status,
         ]);
