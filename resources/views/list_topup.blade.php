@@ -50,31 +50,24 @@
 
 <br>
 
-<table>
+<table border="1" cellpadding="8">
     <tr>
         <th>ID</th>
-        <th>Payment Method</th>
-        <th>Nominal</th>
-        <th>Status</th>
-        <th>Action</th>
+        <th>Email</th>
+        <th>Amount</th>
+        <th>Aksi</th>
     </tr>
 
     @foreach($topups as $topup)
     <tr>
         <td>{{ $topup->id }}</td>
-        <td>{{ $topup->payment_method }}</td>
-        <td>{{ $topup->nominal }}</td>
-        <td>{{ $topup->status }}</td>
-
+        <td>{{ $topup->email }}</td>
+        <td>{{ $topup->amount }}</td>
         <td>
-            <a href="/topups/delete/{{ $topup->id }}">
-                Hapus
-            </a>
+            <a href="{{ route('topup.delete', $topup->id) }}">Hapus</a>
         </td>
     </tr>
     @endforeach
-
 </table>
-
 </body>
 </html>
