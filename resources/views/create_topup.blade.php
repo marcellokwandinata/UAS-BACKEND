@@ -19,7 +19,7 @@
 
     <div>
         <label>Nominal</label>
-        <input type="number" name="nominal">
+        <input type="text" name="nominal">
     </div>
 
     <br>
