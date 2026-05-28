@@ -21,14 +21,13 @@ class TopupController extends Controller
         $topup = Topup::find($id);
 
         if (!$topup) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Maaf, Topup tidak berhasil..'
-            ], 404);
+            return redirect('/topups')
+                ->with('error', 'ID tidak ditemukan!');
         }
 
-        $topups = Topup::all();
-        return view('list_topup', compact('topups'));
+        return view('list_topup', [
+            'topups' => [$topup]
+        ]);
     }
 
     // POST /topups
@@ -52,12 +51,16 @@ class TopupController extends Controller
 
     public function destroy($id)
     {
-        $topup = Topup::find($id);
+       $topup = Topup::find($id);
 
         if ($topup) {
-        $topup->delete();
-        }      
+            $topup->delete();
 
-        return redirect('/topups');
+            return redirect('/topups')
+                ->with('success', 'Data berhasil dihapus!');
+        }
+
+        return redirect('/topups')
+            ->with('error', 'Data tidak ditemukan!');
     }
 }
