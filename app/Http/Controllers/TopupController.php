@@ -52,12 +52,12 @@ class TopupController extends Controller
 
     public function destroy($id)
     {
-        $history = History::find($id);
+        $topup = Topup::find($id);
 
-        if ($history) {
-            $history->delete();
-        }
+        if ($topup) {
+        $topup->delete();
+        }      
 
-        return redirect('/histories');
+        return redirect('/topups');
     }
 }

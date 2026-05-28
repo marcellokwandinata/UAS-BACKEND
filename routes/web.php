@@ -15,7 +15,7 @@ Route::get('/histories/create', function () {
 });
 Route::get('/histories/{id}', [HistoryController::class, 'show']);
 Route::post('/histories', [HistoryController::class, 'store']);
-Route::delete('/histories/delete/{id}', [HistoryController::class, 'destroy']);
+Route::get('/histories/delete/{id}', [HistoryController::class, 'destroy']);
 
 
 // topups
