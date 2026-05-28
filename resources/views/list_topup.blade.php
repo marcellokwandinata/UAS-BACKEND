@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Topup List</title>
+    <title>Topup Data</title>
 
     <style>
         table {
@@ -22,7 +22,7 @@
 </head>
 <body>
 
-<h1>Data Topup</h1>
+<h1>Topup Data</h1>
 
 <a href="/">Home</a>
 
@@ -32,12 +32,19 @@
 
 <br><br>
 
+<form action="/topups/" method="GET">
+    <input type="number" name="id" placeholder="Cari ID">
+</form>
+
+<br>
+
 <table>
     <tr>
         <th>ID</th>
         <th>Payment Method</th>
         <th>Nominal</th>
         <th>Status</th>
+        <th>Action</th>
     </tr>
 
     @foreach($topups as $topup)
@@ -46,6 +53,12 @@
         <td>{{ $topup->payment_method }}</td>
         <td>{{ $topup->nominal }}</td>
         <td>{{ $topup->status }}</td>
+
+        <td>
+            <a href="/topups/delete/{{ $topup->id }}">
+                Hapus
+            </a>
+        </td>
     </tr>
     @endforeach
 
