@@ -22,7 +22,7 @@
 
         <label>Amount:</label>
         <br>
-        <input type="number" name="amount">
+        <input type="text" name="amount">
         <br><br>
 
         <button type="submit">
