@@ -7,13 +7,15 @@ use Illuminate\Http\Request;
 
 class HistoryController extends Controller
 {
+     // halaman list
     // GET /histories
     public function index()
     {
         $histories = History::all();
 
-        return view('create_history', compact('histories'));
+        return view('list_history', compact('histories'));
     }
+
 
     // GET /histories/{id}
     public function show($id)
@@ -27,7 +29,7 @@ class HistoryController extends Controller
             ], 404);
         }
 
-        return view('create_history', compact('histories'));
+        return view('list_history', compact('histories'));
     }
 
     // POST /histories
@@ -39,7 +41,7 @@ class HistoryController extends Controller
             'amount' => $request->amount,
         ]);
 
-        return view('create_history', compact('histories'));
+        return redirect('/histories');
     }
 
     // DELETE /histories/{id}
@@ -56,6 +58,6 @@ class HistoryController extends Controller
 
         $history->delete();
 
-        return view('create_history', compact('histories'));
+        return redirect('/histories');
     }
 }
