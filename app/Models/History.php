@@ -3,16 +3,29 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class History extends Model
 {
     protected $table = 'histories';
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'title',
         'description',
         'amount'
     ];
+
+     protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id = Str::uuid();
+        });
+    }
 }
 
 
