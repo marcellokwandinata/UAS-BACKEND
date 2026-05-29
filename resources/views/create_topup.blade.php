@@ -75,7 +75,7 @@
     <label>Nominal</label>
     <input type="text" name="nominal" required>
 
-    <button type="submit" class="btn btn-submit">Topup</button>
+    <button type="submit" class="btn btn-submit">Send</button>
 </form>
 
 </body>

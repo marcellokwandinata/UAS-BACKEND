@@ -16,7 +16,7 @@
 
         .section {
             background: white;
-            padding: 2vh 2vw;
+            padding: 3vh 3vw;
             margin-bottom: 3vh;
             border: 1px solid #ddd;
         }
