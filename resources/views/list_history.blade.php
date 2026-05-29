@@ -91,7 +91,7 @@
         <td>{{ $history->description }}</td>
         <td>{{ $history->amount }}</td>
         <td>
-            <a href="/history/delete/{{ $history->id }}" class="hapus">Hapus</a>
+            <a href="/histories/delete/{{ $history->id }}" class="hapus">Hapus</a>
         </td>
     </tr>
     @endforeach
