@@ -2,87 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 
 class UserController extends Controller
 {
-    // HALAMAN PERTAMA (LOGIN & REGISTER)
-    
-    // Form Login
-    public function showLogin()
-    {
-        if (Auth::check()) {
-            return redirect()->route('User.index');
-        }
-        return view('User.login');
-    }
-
-    // Proses Login
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/User');
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->onlyInput('email');
-    }
-
-    // Form Register
-    public function create()
-    {
-        return view('User.create');
-    }
-
-    // Proses Register
-    public function store(Request $request)
-    {
-        $request->validate([
-            'full_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
-        $user = User::create([
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        Auth::login($user);
-
-        return redirect()->route('User.index')->with('success', 'Rekening berhasil dibuat!');
-    }
-
-    // Proses Logout (Dipicu dari Halaman Kedua)
-    public function logout(Request $request)
-    {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-        return redirect()->route('login')->with('success', 'Anda telah keluar dari aplikasi.');
-    }
-    
-    // HALAMAN KEDUA 
-    public function index()
-    {
-        // Proteksi: Jika belum login, tendang balik ke halaman pertama (login)
-        if (!Auth::check()) {
-            return redirect()->route('login');
-        }
-        
+    /**
+     * GET /users
+     * Menampilkan Halaman Utama Akun Pengguna (Dashboard)
+     */
+    public function index() {
+        // Mengambil data user / nasabah yang saat ini sedang aktif login di session
         $user = Auth::user();
+        
+        // Melempar datanya ke file resources/views/User/index.blade.php
         return view('User.index', compact('user'));
     }
 
+    /**
+     * GET /users/{id}
+     * Detail informasi satu nasabah spesifik (untuk kebutuhan internal/pengembangan ke depan)
+     */
+    public function show($id) {
+        $user = User::findOrFail($id);
+        return response()->json($user, 200);
+    }
+
+    /**
+     * PATCH /users/{id}
+     * Update data profil akun nasabah jika ada perubahan data
+     */
+    public function update(Request $request, $id) {
+        $user = User::findOrFail($id);
+        
+        $request->validate([
+            'full_name' => 'sometimes|required|string|max:255',
+            'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$id,
+        ]);
+
+        $user->update($request->only(['full_name', 'email']));
+        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+    }
+
+    /**
+     * DELETE /users/{id}
+     * Menghapus akun nasabah dari database 
+     */
+    public function destroy($id) {
+        $user = User::findOrFail($id);
+        $user->delete();
+        
+        return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
+    }
 }
