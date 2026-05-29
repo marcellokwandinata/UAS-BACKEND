@@ -51,7 +51,7 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
-<br><br>
+<br>
 
 @if(session('success'))
     <p style="color:green">{{ session('success') }}</p>
