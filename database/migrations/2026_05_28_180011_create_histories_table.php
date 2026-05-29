@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('amount');
+            $table->integer('balance_after');
+            $table->timestamp('transaction_time');
             $table->timestamps();
         });
     }
