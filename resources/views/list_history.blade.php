@@ -64,7 +64,7 @@
 
 <a href="/" class="btn">Home</a>
 
-<br><br>
+<br>
 
 @if(session('success'))
     <p style="color:green">{{ session('success') }}</p>
