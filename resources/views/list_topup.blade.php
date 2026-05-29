@@ -41,12 +41,6 @@
         th {
             background: #f0f0f0;
         }
-        
-        input {
-            padding: 1vh 1vw;
-            margin-top: 2vh;
-            font-size: 1vw;
-        }
     </style>
 </head>
 
@@ -57,7 +51,7 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
-<br>
+<br><br>
 
 @if(session('success'))
     <p style="color:green">{{ session('success') }}</p>
@@ -67,17 +61,12 @@
     <p style="color:red">{{ session('error') }}</p>
 @endif
 
-<form action="/topups" method="GET">
-    <input type="text" name="id" placeholder="Cari ID">
-</form>
-
 <table>
     <tr>
-        <th>ID</th>
+        <th>ID-Transaction</th>
         <th>Payment Method</th>
         <th>Nominal</th>
         <th>Status</th>
-        <th>Action</th>
     </tr>
 
     @foreach($topups as $topup)

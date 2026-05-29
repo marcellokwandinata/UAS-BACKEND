@@ -1,94 +1,85 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>History List</title>
+    <title>Create Topup</title>
 
     <style>
         body {
-            font-family: Arial;
             padding: 3vh 3vw;
+            font-family: system-ui, sans-serif;
         }
 
         h1 {
-            font-size: 2vw;
-        }
-
-        a {
-            text-decoration: none;
+            margin-bottom: 1vh; 
         }
 
         .btn {
             display: inline-block;
-            padding: 1vh 1.5vw;
-            margin-right: 1vw;
+            padding: 1vh 2vw;
             border: 1px solid #000;
-            font-size: 1vw;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 2vh;
-            font-size: 1vw;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 1.5vh 1vw;
-            text-align: left;
-        }
-
-        th {
             background: #f0f0f0;
+            color: black;
+            text-decoration: none;
+            font-size: 1vw;
+            cursor: pointer;
+            margin-right: 1vw;
         }
 
-        input {
-            padding: 1vh 1vw;
+        .btn:hover {
+            background: #ddd;
+        }
+
+        .top-actions {
+            margin-top: 0.5vh;
+            margin-bottom: 2vh;
+        }
+
+        form {
+            width: 40vw;
+        }
+
+        label {
+            display: block;
             margin-top: 2vh;
-            font-size: 1vw;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1vh 1vw;
+            margin-top: 1vh;
+        }
+
+        .btn-submit {
+            margin-top: 3vh;
         }
     </style>
 </head>
 
 <body>
 
-<h1>History Data</h1>
+<h1>Create Topup</h1>
 
 <a href="/" class="btn">Home</a>
-<a href="/histories/create" class="btn">Tambah History</a>
+<a href="/topups" class="btn">Kembali ke List</a>
 
 <br>
 
-@if(session('success'))
-    <p style="color:green">{{ session('success') }}</p>
-@endif
+<form action="/topups" method="POST">
+    @csrf
 
-@if(session('error'))
-    <p style="color:red">{{ session('error') }}</p>
-@endif
+    <label>Payment Method</label>
+    <select name="payment_method" required>
+        <option value="">-- Pilih Payment Method --</option>
+        <option value="Transfer to Bank">Transfer to Bank</option>
+        <option value="QRIS">QRIS</option>
+        <option value="TopUp E-Wallet">TopUp E-Wallet</option>
+    </select>
 
-<form action="/histories" method="GET">
-    <input type="text" name="id" placeholder="Cari ID">
+    <label>Nominal</label>
+    <input type="text" name="nominal" required>
+
+    <button type="submit" class="btn btn-submit">Send</button>
 </form>
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Amount</th>
-        <th>Action</th>
-    </tr>
-
-    @foreach($histories as $history)
-    <tr>
-        <td>{{ $history->id }}</td>
-        <td>{{ $history->title }}</td>
-        <td>{{ $history->description }}</td>
-        <td>{{ $history->amount }}</td>
-    </tr>
-    @endforeach
-</table>
 
 </body>
 </html>

@@ -25,15 +25,6 @@
             margin-right: 1vw;
         }
 
-        .btn:hover {
-            background: #ddd;
-        }
-
-        .top-actions {
-            margin-top: 0.5vh;
-            margin-bottom: 2vh;
-        }
-
         form {
             width: 40vw;
         }
@@ -52,6 +43,10 @@
         .btn-submit {
             margin-top: 3vh;
         }
+
+        .saldo {
+            margin: 2vh 0;
+        }
     </style>
 </head>
 
@@ -62,14 +57,16 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups" class="btn">Kembali ke List</a>
 
-<br>
+<div class="saldo">
+    Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
+</div>
 
 <form action="/topups" method="POST">
     @csrf
 
     <label>Payment Method</label>
     <select name="payment_method" required>
-        <option value="">-- Pilih Payment Method --</option>
+        <option value="">-- Pilih --</option>
         <option value="Transfer to Bank">Transfer to Bank</option>
         <option value="QRIS">QRIS</option>
         <option value="TopUp E-Wallet">TopUp E-Wallet</option>
@@ -78,7 +75,7 @@
     <label>Nominal</label>
     <input type="text" name="nominal" required>
 
-    <button type="submit" class="btn btn-submit">Send</button>
+    <button type="submit" class="btn btn-submit">Topup</button>
 </form>
 
 </body>

@@ -52,6 +52,7 @@
 
     <h1>Digital Banking</h1>
 
+    <!-- TOPUP -->
     <div class="section">
         <h2>Topups</h2>
         <div class="menu">
@@ -60,11 +61,11 @@
         </div>
     </div>
 
+    <!-- HISTORY -->
     <div class="section">
         <h2>Histories</h2>
         <div class="menu">
             <a href="/histories" class="btn">View Histories</a>
-            <a href="/histories/create" class="btn">Create History</a>
         </div>
     </div>
 
