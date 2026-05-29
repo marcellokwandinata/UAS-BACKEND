@@ -5,12 +5,35 @@
 
     <style>
         body {
-            padding: 3vh 3vw;
             font-family: system-ui, sans-serif;
+            padding: 30px;
         }
 
-        h1 {
-            margin-bottom: 1vh; 
+        .saldo {
+            margin-top: 12px;
+            padding: 8px 12px;
+            border: 2px solid #000;
+            width: fit-content;
+            font-size: 14px;      
+            font-weight: bold;
+        }
+
+        form {
+            margin-top: 20px;
+            width: 280px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 6px 8px;         
+            margin-top: 5px;
+            font-size: 14px;
         }
 
         .btn {
@@ -25,34 +48,16 @@
             margin-right: 1vw;
         }
 
-        form {
-            width: 40vw;
+        .btn:hover {
+            background: #ddd;
         }
 
-        label {
-            display: block;
-            margin-top: 2vh;
+        .btn-primary {
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
         }
 
-        input, select {
-            width: 100%;
-            padding: 1vh 1vw;
-            margin-top: 1vh;
-        }
-
-        .btn-submit {
-            margin-top: 3vh;
-        }
-
-        .saldo-box {
-            display: inline-block;
-            padding: 1vh 2vw;
-            border: 2px solid #000;
-            background: #fff;
-            font-size: 1.2vw;
-            font-weight: bold;
-            margin: 2vh 0;
-        }
     </style>
 </head>
 
@@ -60,28 +65,30 @@
 
 <h1>Create Topup</h1>
 
+<!-- BUTTON -->
 <a href="/" class="btn">Home</a>
 <a href="/topups" class="btn">Kembali ke List</a>
 
-<div class="saldo-box">
+<!-- SALDO (WAJIB MUNCUL) -->
+<div class="saldo">
     💰 Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
 </div>
 
+<!-- FORM -->
 <form action="/topups" method="POST">
     @csrf
 
     <label>Payment Method</label>
-    <select name="payment_method" required>
-        <option value="">-- Pilih --</option>
-        <option value="Transfer to Bank">Transfer to Bank</option>
+    <select name="payment_method">
         <option value="QRIS">QRIS</option>
-        <option value="TopUp E-Wallet">TopUp E-Wallet</option>
+        <option value="Transfer">Transfer</option>
+        <option value="E-Wallet">E-Wallet</option>
     </select>
 
     <label>Nominal</label>
-    <input type="text" name="nominal" required>
+    <input type="text" name="nominal">
 
-    <button type="submit" class="btn btn-submit">Send</button>
+    <button type="submit">Send</button>
 </form>
 
 </body>
