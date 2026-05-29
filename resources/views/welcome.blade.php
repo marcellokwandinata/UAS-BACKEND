@@ -5,33 +5,45 @@
 
     <style>
         body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
+            font-family: system-ui, sans-serif;
+            margin: 5vh 5vw;
+            background: #f9f9f9;
         }
 
         h1 {
-            margin-bottom: 20px;
+            margin-bottom: 3vh;
+        }
+
+        .section {
+            background: white;
+            padding: 2vh 2vw;
+            margin-bottom: 3vh;
+            border: 1px solid #ddd;
         }
 
         h2 {
-            margin-top: 30px;
+            margin-bottom: 1.5vh;
+            font-size: 1.3vw;
         }
 
-        ul {
-            padding-left: 20px;
+        .menu {
+            display: flex;
+            gap: 1vw;
+            flex-wrap: wrap;
         }
 
-        li {
-            margin-bottom: 10px;
-        }
-
-        a {
+        .btn {
+            display: inline-block;
+            padding: 1vh 1.5vw;
+            border: 1px solid #000;
+            background: #f0f0f0;
+            color: black;
             text-decoration: none;
-            color: blue;
+            font-size: 1vw;
         }
 
-        a:hover {
-            text-decoration: underline;
+        .btn:hover {
+            background: #ddd;
         }
     </style>
 </head>
@@ -40,17 +52,21 @@
 
     <h1>Digital Banking</h1>
 
-    <h2>Histories</h2>
-    <ul>
-        <li><a href="/histories">View Histories</a></li>
-        <li><a href="/histories/create">Create History</a></li>
-    </ul>
+    <div class="section">
+        <h2>Histories</h2>
+        <div class="menu">
+            <a href="/histories" class="btn">View Histories</a>
+            <a href="/histories/create" class="btn">Create History</a>
+        </div>
+    </div>
 
-    <h2>Topups</h2>
-    <ul>
-        <li><a href="/topups">View Topups</a></li>
-        <li><a href="/topups/create">Create Topup</a></li>
-    </ul>
+    <div class="section">
+        <h2>Topups</h2>
+        <div class="menu">
+            <a href="/topups" class="btn">View Topups</a>
+            <a href="/topups/create" class="btn">Create Topup</a>
+        </div>
+    </div>
 
 </body>
 </html>
