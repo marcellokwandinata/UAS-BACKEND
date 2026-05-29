@@ -79,7 +79,7 @@
     </div>
 
     <button type="submit" class="btn btn-submit">
-        Simpan
+        Send
     </button>
 </form>
 </body>
