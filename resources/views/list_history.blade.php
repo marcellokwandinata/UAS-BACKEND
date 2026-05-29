@@ -58,8 +58,8 @@
 
 <h1>History Data</h1>
 
-<a href="/welcome" class="btn">Home</a>
-<a href="/create_historu" class="btn">Tambah History</a>
+<a href="/" class="btn">Home</a>
+<a href="/histories/create" class="btn">Tambah History</a>
 
 <br>
 
@@ -72,7 +72,7 @@
 @endif
 
 <form action="/histories" method="GET">
-    <input type="number" name="id" placeholder="Cari ID">
+    <input type="text" name="id" placeholder="Cari ID">
 </form>
 
 <table>

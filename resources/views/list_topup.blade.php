@@ -13,13 +13,16 @@
             font-size: 2vw;
         }
 
+        a {
+            text-decoration: none;
+        }
+
         .btn {
             display: inline-block;
             padding: 1vh 1.5vw;
             margin-right: 1vw;
             border: 1px solid #000;
             font-size: 1vw;
-            text-decoration: none;
         }
 
         table {
@@ -32,6 +35,7 @@
         th, td {
             border: 1px solid #000;
             padding: 1.5vh 1vw;
+            text-align: left;
         }
 
         th {
@@ -41,6 +45,12 @@
         .hapus {
             color: red;
         }
+
+        input {
+            padding: 1vh 1vw;
+            margin-top: 2vh;
+            font-size: 1vw;
+        }
     </style>
 </head>
 
@@ -48,8 +58,8 @@
 
 <h1>Topup Data</h1>
 
-<a href="/welcome" class="btn">Home</a>
-<a href="/create_topup" class="btn">Tambah Topup</a>
+<a href="/" class="btn">Home</a>
+<a href="/topups/create" class="btn">Tambah Topup</a>
 
 <br>
 
@@ -60,6 +70,10 @@
 @if(session('error'))
     <p style="color:red">{{ session('error') }}</p>
 @endif
+
+<form action="/topups" method="GET">
+    <input type="text" name="id" placeholder="Cari ID">
+</form>
 
 <table>
     <tr>
