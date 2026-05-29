@@ -53,18 +53,18 @@
     <h1>Digital Banking</h1>
 
     <div class="section">
-        <h2>Histories</h2>
-        <div class="menu">
-            <a href="/histories" class="btn">View Histories</a>
-            <a href="/histories/create" class="btn">Create History</a>
-        </div>
-    </div>
-
-    <div class="section">
         <h2>Topups</h2>
         <div class="menu">
             <a href="/topups" class="btn">View Topups</a>
             <a href="/topups/create" class="btn">Create Topup</a>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>Histories</h2>
+        <div class="menu">
+            <a href="/histories" class="btn">View Histories</a>
+            <a href="/histories/create" class="btn">Create History</a>
         </div>
     </div>
 
