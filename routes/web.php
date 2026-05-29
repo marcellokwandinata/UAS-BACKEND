@@ -9,11 +9,10 @@ Route::get('/', function () {
 });
 
 // topups
-Route::get('/topups', [TopupController::class, 'index']);
 Route::get('/topups/create', function () {
     return view('create_topup');
 });
-Route::post('/topups', [TopupController::class, 'store']);
+Route::get('/topups', [TopupController::class, 'index']);
 Route::get('/topups/{id}', [TopupController::class, 'show']);
 
 // histories
