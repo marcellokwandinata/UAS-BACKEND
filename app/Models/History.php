@@ -15,7 +15,9 @@ class History extends Model
     protected $fillable = [
         'title',
         'description',
-        'amount'
+        'amount',
+        'balance_after',
+        'transaction_time'
     ];
 
      protected static function boot()
