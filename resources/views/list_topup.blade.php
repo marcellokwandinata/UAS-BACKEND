@@ -6,55 +6,86 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            min-height: 100vh;
+            margin: 0;
             padding: 3vh 3vw;
+            background: #f6f7fb;
+        }
+
+        .container {
+            width: 90vw;
+            margin: auto;
+        }
+
+        h1 {
+            font-size: 2vw;
+            margin-bottom: 2vh;
+        }
+
+        .nav-btn {
+            display: inline-block;
+            padding: 1vh 1.5vw;
+            margin-right: 1vw;
+            background: #3498db;
+            color: white;
+            border-radius: 0.6vw;
+            text-decoration: none;
+            font-size: 1vw;
+        }
+
+        .add-btn {
+            background: #2ecc71;
         }
 
         table {
+            width: 100%;
             border-collapse: collapse;
-            width: 70vw;
+            font-size: 1vw;
+            background: white;
+            border-radius: 1vw;
+            overflow: hidden;
         }
 
         th, td {
-            border: 1px solid black;
             padding: 1.5vh 1vw;
-            text-align: center;
+            border-bottom: 0.1vh solid #ddd;
+            text-align: left;
         }
 
         th {
-            background-color: #ddd;
+            background: #eee;
         }
 
-        a {
-            text-decoration: none;
-            padding: 1vh 1vw;
-            background: black;
+        .btn-hapus {
+            background: #e74c3c;
             color: white;
-            border-radius: 5px;
+            padding: 0.8vh 1vw;
+            border-radius: 0.5vw;
+            text-decoration: none;
         }
+
+        .msg-success { color: green; }
+        .msg-error { color: red; }
     </style>
 </head>
+
 <body>
+
+<div class="container">
 
 <h1>Topup Data</h1>
 
-<a href="/">Home</a>
-
-<br><br>
-
-<a href="/topups/create">Tambah Topup</a>
-
-<br><br>
+<a href="/home" class="nav-btn">Home</a>
+<a href="/topups/create" class="nav-btn add-btn">Tambah Topup</a>
 
 @if(session('success'))
-    <p style="color: green;">{{ session('success') }}</p>
+    <p class="msg-success">{{ session('success') }}</p>
 @endif
 
 @if(session('error'))
-    <p style="color: red;">{{ session('error') }}</p>
+    <p class="msg-error">{{ session('error') }}</p>
 @endif
 
-<table border="1" cellpadding="10">
+<table>
     <tr>
         <th>ID</th>
         <th>Payment Method</th>
@@ -70,14 +101,14 @@
         <td>{{ $topup->nominal }}</td>
         <td>{{ $topup->status }}</td>
         <td>
-            <a href="/topups/delete/{{ $topup->id }}">
-                Hapus
-            </a>
+            <a href="/topups/delete/{{ $topup->id }}" class="btn-hapus">Hapus</a>
         </td>
     </tr>
     @endforeach
 
 </table>
+
+</div>
 
 </body>
 </html>
