@@ -78,13 +78,6 @@
     <label>Nominal</label>
     <input type="text" name="nominal" required>
 
-    <label>Status</label>
-    <select name="status" required>
-        <option value="">-- Pilih Status --</option>
-        <option value="Success">Success</option>
-        <option value="TidakBerhasil">Tidak Berhasil</option>
-    </select>
-
     <button type="submit" class="btn btn-submit">Simpan</button>
 </form>
 
