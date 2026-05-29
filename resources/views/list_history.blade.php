@@ -19,10 +19,24 @@
 
         .btn {
             display: inline-block;
-            padding: 1vh 1.5vw;
-            margin-right: 1vw;
+            padding: 1vh 2vw;
             border: 1px solid #000;
+            background: #f0f0f0;
+            color: black;
+            text-decoration: none;
             font-size: 1vw;
+            cursor: pointer;
+            margin-right: 1vw;
+        }
+
+        .btn:hover {
+            background: #ddd;
+        }
+
+        .btn-primary {
+            background: #000;
+            color: #fff;
+            border: 1px solid #000;
         }
 
         table {

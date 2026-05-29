@@ -44,7 +44,13 @@
             margin-top: 3vh;
         }
 
-        .saldo {
+        .saldo-box {
+            display: inline-block;
+            padding: 1vh 2vw;
+            border: 2px solid #000;
+            background: #fff;
+            font-size: 1.2vw;
+            font-weight: bold;
             margin: 2vh 0;
         }
     </style>
@@ -57,8 +63,8 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups" class="btn">Kembali ke List</a>
 
-<div class="saldo">
-    Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
+<div class="saldo-box">
+    💰 Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
 </div>
 
 <form action="/topups" method="POST">
