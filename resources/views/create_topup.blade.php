@@ -5,8 +5,33 @@
 
     <style>
         body {
-            font-family: Arial;
             padding: 3vh 3vw;
+            font-family: system-ui, sans-serif;
+        }
+
+        h1 {
+            margin-bottom: 1vh; 
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1vh 2vw;
+            border: 1px solid #000;
+            background: #f0f0f0;
+            color: black;
+            text-decoration: none;
+            font-size: 1vw;
+            cursor: pointer;
+            margin-right: 1vw;
+        }
+
+        .btn:hover {
+            background: #ddd;
+        }
+
+        .top-actions {
+            margin-top: 0.5vh;
+            margin-bottom: 2vh;
         }
 
         form {
@@ -16,29 +41,16 @@
         label {
             display: block;
             margin-top: 2vh;
-            font-size: 1vw;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1vh 1.5vw;
-            margin-right: 1vw;
-            border: 1px solid #000;
-            font-size: 1vw;
         }
 
         input, select {
             width: 100%;
             padding: 1vh 1vw;
-            font-size: 1vw;
             margin-top: 1vh;
         }
 
-        button {
+        .btn-submit {
             margin-top: 3vh;
-            padding: 1vh 2vw;
-            font-size: 1vw;
-            cursor: pointer;
         }
     </style>
 </head>
@@ -73,48 +85,8 @@
         <option value="TidakBerhasil">Tidak Berhasil</option>
     </select>
 
-    <button type="submit">Simpan</button>
+    <button type="submit" class="btn btn-submit">Simpan</button>
 </form>
 
 </body>
 </html>
-
-<!-- <!DOCTYPE html>
-<html>
-<head>
-    <title>Create Topup</title>
-</head>
-<body>
-
-<h1>Tambah Topup</h1>
-
-<form action="/topups" method="POST">
-    @csrf
-
-    <div>
-        <label>Payment Method</label>
-        <input type="text" name="payment_method">
-    </div>
-
-    <br>
-
-    <div>
-        <label>Nominal</label>
-        <input type="text" name="nominal">
-    </div>
-
-    <br>
-
-    <div>
-        <label>Status</label>
-        <input type="text" name="status">
-    </div>
-
-    <br>
-
-    <button type="submit">
-        Simpan
-    </button>
-</form>
-</body>
-</html> -->

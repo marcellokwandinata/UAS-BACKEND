@@ -42,8 +42,19 @@
             background: #f0f0f0;
         }
 
-        .hapus {
-            color: red;
+        .btn-delete {
+            display: inline-block;
+            padding: 0.8vh 1.2vw;
+            background: #ff4d4d;
+            color: white;
+            border: 1px solid #ff4d4d;
+            font-size: 0.9vw;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background: #e60000;
         }
 
         input {
@@ -91,7 +102,7 @@
         <td>{{ $history->description }}</td>
         <td>{{ $history->amount }}</td>
         <td>
-            <a href="/histories/delete/{{ $history->id }}" class="hapus">Hapus</a>
+            <a href="/histories/delete/{{ $history->id }}" class="btn-delete">Hapus</a>
         </td>
     </tr>
     @endforeach
