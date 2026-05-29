@@ -62,7 +62,7 @@
 
 <table>
     <tr>
-        <th>ID</th>
+        <th>Transaction-ID</th>
         <th>Title</th>
         <th>Description</th>
         <th>Amount</th>

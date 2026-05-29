@@ -63,7 +63,7 @@
 
 <table>
     <tr>
-        <th>ID-Transaction</th>
+        <th>Transaction-ID</th>
         <th>Payment Method</th>
         <th>Nominal</th>
         <th>Status</th>
