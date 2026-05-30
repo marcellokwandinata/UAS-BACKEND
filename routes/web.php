@@ -13,8 +13,8 @@ Route::get('/cards/create', function () {
     return view('create_cards');
 });
 
-Route::get('/cards', [CardsController::class, 'index']);
-Route::get('/cards/{id}', [CardsController::class, 'show']);
+Route::get('/cards', [CardsController::class, 'index'])->name('cards_index');
+Route::get('/cards/create', [CardsController::class, 'create'])->name('create_cards');
 Route::post('/cards', [CardsController::class, 'store']);
 
 // securities

@@ -28,7 +28,7 @@ class CardsController
 
         return $cards;
     }
-    
+
     public function create()
     {
         return view('create_cards');
@@ -43,7 +43,7 @@ class CardsController
 
             $id = $_GET['id'];
 
-            $stmt = $mysqli->prepare("SELECT * FROM cards WHERE id = ?");
+            $card = DB::table('cards')->where('id', $id)->first();
             $stmt->bind_param("s", $id);
             $stmt->execute();
 

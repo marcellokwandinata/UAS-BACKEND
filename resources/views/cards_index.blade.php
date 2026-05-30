@@ -19,7 +19,8 @@
                     <h6 class="fw-bold"><i class="bi bi-lock text-primary"></i> PIN Transaksi</h6>
                     <small class="text-muted">Terakhir diubah: 01 Jan 2026</small>
                 </div>
-                <a href="{{ route('cards_edit', 'pin') }}" class="btn btn-sm btn-outline-primary">Ubah</a>
+                {{-- Diarahkan ke route khusus atau aksi spesifik jika diperlukan nantinya --}}
+                <a href="#" class="btn btn-sm btn-outline-primary">Ubah</a>
             </div>
         </div>
     </div>
@@ -32,7 +33,7 @@
                     <h6 class="fw-bold"><i class="bi bi-phone text-success"></i> Two-Factor Authentication</h6>
                     <small class="text-muted">Status: <span class="badge bg-success">Aktif</span></small>
                 </div>
-                <a href="{{ route('cards_edit', '2fa') }}" class="btn btn-sm btn-outline-success">Kelola</a>
+                <a href="#" class="btn btn-sm btn-outline-success">Kelola</a>
             </div>
         </div>
     </div>
@@ -45,7 +46,8 @@
                     <h6 class="fw-bold"><i class="bi bi-laptop text-warning"></i> Sesi Aktif</h6>
                     <small class="text-muted">2 perangkat aktif</small>
                 </div>
-                <a href="{{ route('cards_show', 'sessions') }}" class="btn btn-sm btn-outline-warning">Lihat</a>
+                {{-- Menggunakan route detail sessions bawaan --}}
+                <a href="{{ route('show_cards', 'sessions') }}" class="btn btn-sm btn-outline-warning">Lihat</a>
             </div>
         </div>
     </div>
@@ -58,7 +60,7 @@
                     <h6 class="fw-bold"><i class="bi bi-slash-circle text-danger"></i> Blokir Akun</h6>
                     <small class="text-muted">Nonaktifkan akun sementara</small>
                 </div>
-                <a href="{{ route('cards_edit', 'block') }}" class="btn btn-sm btn-outline-danger">Kelola</a>
+                <a href="#" class="btn btn-sm btn-outline-danger">Kelola</a>
             </div>
         </div>
     </div>
@@ -92,13 +94,15 @@
                     </td>
                     <td>{{ \Carbon\Carbon::parse($card->created_at)->format('d M Y, H:i') }}</td>
                     <td class="d-flex gap-1">
-                        <a href="{{ route('cards_show', $card->id) }}" class="btn btn-sm btn-info text-white">
+                        {{-- Tombol Detail / Lihat --}}
+                        <a href="{{ route('show_cards', $card->id) }}" class="btn btn-sm btn-info text-white">
                             <i class="bi bi-eye"></i>
                         </a>
-                        <a href="{{ route('cards_edit', $card->id) }}" class="btn btn-sm btn-warning text-white">
-                            <i class="bi bi-pencil"></i>
-                        </a>
-                        <form action="{{ route('cards_destroy', $card->id) }}" method="POST"
+                        
+                        {{-- TOMBOL CARDS_EDIT DI SINI SUDAH DIHAPUS --}}
+
+                        {{-- Tombol Hapus Data --}}
+                        <form action="{{ route('cards.destroy', $card->id) }}" method="POST"
                             onsubmit="return confirm('Yakin hapus data ini?')">
                             @csrf
                             @method('DELETE')
