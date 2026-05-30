@@ -9,50 +9,68 @@ use App\Models\User;
 class UserController extends Controller
 {
     /**
-     * GET /users
-     * Menampilkan Halaman Utama Akun Pengguna (Dashboard)
+     * GET /user
+     * Menampilkan dashboard utama nasabah setelah login.
      */
-    public function index() {
-        // Mengambil data user / nasabah yang saat ini sedang aktif login di session
+    public function index()
+    {
         $user = Auth::user();
-        
-        // Melempar datanya ke file resources/views/User/index.blade.php
         return view('User.index', compact('user'));
     }
 
     /**
-     * GET /users/{id}
-     * Detail informasi satu nasabah spesifik (untuk kebutuhan internal/pengembangan ke depan)
+     * GET /user/{id}
+     * Menampilkan detail profil satu nasabah.
      */
-    public function show($id) {
+    public function show($id)
+    {
         $user = User::findOrFail($id);
-        return response()->json($user, 200);
+        return view('User.show', compact('user'));
     }
 
     /**
-     * PATCH /users/{id}
-     * Update data profil akun nasabah jika ada perubahan data
+     * GET /user/{id}/edit
+     * Menampilkan form edit profil nasabah.
      */
-    public function update(Request $request, $id) {
+    public function edit($id)
+    {
         $user = User::findOrFail($id);
-        
+
+        if (Auth::id() != $user->id) {
+            return redirect()->route('user.index')->with('error', 'Akses dilarang!');
+        }
+
+        return view('User.edit', compact('user'));
+    }
+
+    /**
+     * PATCH /user/{id}
+     * Menyimpan perubahan data profil nasabah.
+     */
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
         $request->validate([
-            'full_name' => 'sometimes|required|string|max:255',
-            'email' => 'sometimes|required|string|email|max:255|unique:users,email,'.$id,
+            'full_name' => 'required|string|max:255',
+            'email'     => 'required|string|email|max:255|unique:users,email,' . $id,
         ]);
 
         $user->update($request->only(['full_name', 'email']));
-        return redirect()->back()->with('success', 'Profil berhasil diperbarui!');
+
+        return redirect()->route('user.index')->with('success', 'Profil berhasil diperbarui!');
     }
 
     /**
-     * DELETE /users/{id}
-     * Menghapus akun nasabah dari database 
+     * DELETE /user/{id}
+     * Menghapus akun nasabah dari database.
      */
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $user = User::findOrFail($id);
+        Auth::logout();
         $user->delete();
-        
+
         return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
     }
 }

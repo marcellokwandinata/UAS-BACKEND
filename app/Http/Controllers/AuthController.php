@@ -10,10 +10,11 @@ use App\Models\User;
 class AuthController extends Controller
 {
     /**
-     * GET /auth
-     * Tampilkan halaman login awal
+     * GET /login
+     * Menampilkan halaman login.
      */
-    public function index() {
+    public function index()
+    {
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
@@ -21,67 +22,76 @@ class AuthController extends Controller
     }
 
     /**
-     * GET /auth/create
-     * Tampilkan form pendaftaran nasabah baru
+     * GET /register
+     * Menampilkan form pendaftaran akun baru.
      */
-    public function create() {
+    public function create()
+    {
+        if (Auth::check()) {
+            return redirect()->route('user.index');
+        }
         return view('User.create');
     }
 
     /**
-     * POST /auth
-     * Eksekusi verifikasi proses masuk (Login)
+     * POST /login
+     * Memproses verifikasi login nasabah.
      */
-    public function login(Request $request) {
-        $credentials = $request->validate([
-            'email' => 'required|email',
+    public function login(Request $request)
+    {
+        $request->validate([
+            'email'    => 'required|email',
             'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($request->only('email', 'password'))) {
             $request->session()->regenerate();
             return redirect()->route('user.index');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()->withErrors([
+            'email' => 'Email atau password salah.',
+        ])->onlyInput('email');
     }
 
     /**
-     * POST /auth/store
-     * Simpan akun baru ke database phpMyAdmin + Auto Login
+     * POST /register
+     * Menyimpan data nasabah baru ke database dan generate nomor rekening.
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'full_name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6',
+            'email'     => 'required|string|email|max:255|unique:users',
+            'password'  => 'required|string|min:6',
         ]);
 
-        // Menyimpan data pendaftaran dan generate otomatis 10 digit nomor rekening acak
+        // Generate nomor rekening unik: awalan 1000 + 6 angka acak
+        do {
+            $accountNumber = '1000' . rand(100000, 999999);
+        } while (User::where('account_number', $accountNumber)->exists());
+
         $user = User::create([
-            'full_name' => $request->full_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'account_number' => '1000' . rand(100000, 999999), 
+            'full_name'      => $request->full_name,
+            'email'          => $request->email,
+            'password'       => Hash::make($request->password),
+            'account_number' => $accountNumber,
         ]);
 
-        // Otomatis ubah status nasabah jadi aktif login setelah sukses mendaftar
         Auth::login($user);
 
-        // Alihkan langsung ke halaman utama pengguna melalui endpoint /users
-        return redirect()->route('user.index');
+        return redirect()->route('user.index')->with('success', 'Akun berhasil dibuat!');
     }
 
     /**
-     * DELETE /auth/{id}
-     * Proses keluar dari sistem (Logout) dan menghancurkan session
+     * POST /logout
+     * Keluar dari aplikasi.
      */
-    public function logout(Request $request, $id) {
+    public function logout(Request $request)
+    {
         Auth::logout();
-        
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        
         return redirect()->route('login');
     }
 }

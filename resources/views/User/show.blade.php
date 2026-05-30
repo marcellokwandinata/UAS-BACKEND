@@ -1,6 +1,19 @@
-<h1>Detail Rekening Nasabah</h1>
-<p><b>Nomor Rekening (ID):</b> {{ $user->id }}</p>
-<p><b>Nama Lengkap:</b> {{ $user->full_name }}</p>
-<p><b>Email:</b> {{ $user->email }}</p>
+<h1>Detail Profil Nasabah</h1>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th style="width: 150px">Nama Lengkap</th>
+        <td>{{ $user->full_name }}</td>
+    </tr>
+    <tr>
+        <th>Nomor Rekening</th>
+        <td>{{ $user->account_number }}</td>
+    </tr>
+    <tr>
+        <th>Email</th>
+        <td>{{ $user->email }}</td>
+    </tr>
+</table>
+
 <br>
-<a href="{{ route('User.index') }}">Kembali</a>
+<a href="{{ route('user.index') }}">Kembali</a>

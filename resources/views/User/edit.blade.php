@@ -1,18 +1,35 @@
-<h1>Ubah Data Nasabah</h1>
-<form method="POST" action="{{ route('User.update', $user->id) }}">
+<h1>Edit Profil</h1>
+
+@if ($errors->any())
+    <div style="color: red;">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+<form method="POST" action="{{ route('user.update', $user->id) }}">
     @csrf
-    @method('PUT')
-    
-    <label>Nama Lengkap:</label><br>
-    <input type="text" name="full_name" value="{{ $user->full_name }}" required><br><br>
-
-    <label>Email:</label><br>
-    <input type="email" name="email" value="{{ $user->email }}" required><br><br>
-
-    <label>Password Baru (Kosongkan jika tidak diubah):</label><br>
-    <input type="password" name="password"><br><br>
-
-    <button type="submit">Simpan Perubahan</button>
+    @method('PATCH')
+    Nama Lengkap:
+    <br>
+    <input type="text" name="full_name" value="{{ old('full_name', $user->full_name) }}" required>
+    <br><br>
+    Email:
+    <br>
+    <input type="email" name="email" value="{{ old('email', $user->email) }}" required>
+    <br><br>
+    <button type="submit">Simpan</button>
 </form>
+
 <br>
-<a href="{{ route('User.index') }}">Kembali</a>
+<a href="{{ route('user.index') }}">Kembali</a>
+
+<br><br>
+<form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display:inline;">
+    @csrf
+    @method('DELETE')
+    <button type="submit" onclick="return confirm('Yakin ingin hapus akun ini?')">Hapus Akun</button>
+</form>

@@ -8,18 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('full_name'); // Sesuai dengan form register kamu
-            $table->string('email')->unique();
-            $table->string('password');
-            $table->string('account_number'); // Untuk nomor rekening acak
-            $table->timestamps();
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('name', 'full_name');
+            $table->string('account_number')->unique()->after('password');
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->renameColumn('full_name', 'name');
+            $table->dropColumn('account_number');
+        });
     }
 };
