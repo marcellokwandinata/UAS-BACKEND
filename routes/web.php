@@ -10,7 +10,7 @@ Route::get('/', function () {
 
 // cards
 Route::get('/cards/create', function () {
-    return view('create_card');
+    return view('create_cards');
 });
 
 Route::get('/cards', [CardsController::class, 'index']);

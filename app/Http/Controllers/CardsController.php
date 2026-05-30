@@ -28,6 +28,11 @@ class CardsController
 
         return $cards;
     }
+    
+    public function create()
+    {
+        return view('create_cards');
+    }
 
 
     public function show()
