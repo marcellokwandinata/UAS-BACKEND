@@ -1,5 +1,9 @@
 <?php
-require_once('database.php');
+
+namespace App\Http\Controllers;
+
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class CardsController
 {
@@ -8,8 +12,9 @@ class CardsController
     {
         global $mysqli;
 
-        $stmt = $mysqli->prepare("SELECT * FROM cards ORDER BY created_at DESC");
-        $stmt->execute();
+        $cards = DB::table('cards')->get();
+        // $stmt = $mysqli->prepare("SELECT * FROM cards ORDER BY created_at DESC");
+        return view('cards_index', compact('cards'));
 
         $result = $stmt->get_result();
         $cards = [];
