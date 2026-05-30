@@ -20,15 +20,15 @@ Route::get('/cards/create', function () {
     return view('create_card');
 });
 
-Route::get('/cards', [CardController::class, 'index']);
-Route::get('/cards/{id}', [CardController::class, 'show']);
-Route::post('/cards', [CardController::class, 'store']);
+Route::get('/cards', [CardsController::class, 'index']);
+Route::get('/cards/{id}', [CardsController::class, 'show']);
+Route::post('/cards', [CardsController::class, 'store']);
 
 // securities
-Route::get('/securities/create', function () {
+Route::get('/security/create', function () {
     return view('create_security');
 });
 
-Route::get('/securities', [SecurityController::class, 'index']);
-Route::get('/securities/{id}', [SecurityController::class, 'show']);
-Route::post('/securities', [SecurityController::class, 'store']);
+Route::get('/security', [SecurityController::class, 'index']);
+Route::get('/security/{id}', [SecurityController::class, 'show']);
+Route::post('/security', [SecurityController::class, 'store']);
