@@ -13,6 +13,7 @@ class History extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'transaction_code',
         'title',
         'description',
         'amount',
