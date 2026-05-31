@@ -19,7 +19,7 @@ class TopupController extends Controller
                     ->with('error', 'Kode transaksi tidak ditemukan.');
             }
         } else {
-            $topups = Topup::all();
+            $topups = Topup::orderBy('created_at', 'desc')->get();
         }
 
         return view('list_topup', compact('topups'));
