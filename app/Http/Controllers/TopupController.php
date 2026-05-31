@@ -58,6 +58,7 @@ class TopupController extends Controller
 
         // auto masuk ke history
         History::create([
+            'transaction_code' => $transactionCode,
             'title' => 'Topup via ' . $topup->payment_method,
             'description' => 'Transaksi berhasil',
             'amount' => $nominal,
