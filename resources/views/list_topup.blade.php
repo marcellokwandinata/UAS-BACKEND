@@ -104,6 +104,8 @@
     <p style="color:red">{{ session('error') }}</p>
 @endif
 
+<p>Total Transaksi: {{ count($topups) }}</p>
+
 <table>
     <tr>
         <th>Transaction-ID</th>
@@ -116,8 +118,10 @@
     <tr>
         <td>{{ $topup->id }}</td>
         <td>{{ $topup->payment_method }}</td>
-        <td>{{ $topup->nominal }}</td>
-        <td>{{ $topup->status }}</td>
+        <td>Rp {{ number_format($topup->nominal, 0, ',', '.') }}</td>
+        <td>
+            {{ $topup->status == 'Success' ? '✔ Berhasil' : '✖ Gagal' }}
+        </td>
     </tr>
     @endforeach
 </table>
