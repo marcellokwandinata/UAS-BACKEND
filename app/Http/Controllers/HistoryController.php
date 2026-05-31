@@ -12,7 +12,7 @@ class HistoryController extends Controller
     public function index(Request $request)
     {
          if ($request->id) {
-            $histories = History::where('id', $request->id)->get();
+            $histories = History::where('id', 'like', '%' . $request->id . '%')->get();
             if ($histories->isEmpty()) {
                 return redirect('/histories')
                     ->with('error', 'ID tidak ditemukan!');
