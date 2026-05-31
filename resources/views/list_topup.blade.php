@@ -19,14 +19,15 @@
 
         .btn {
             display: inline-block;
-            padding: 1vh 2vw;
+            padding: 0.8vh 1.5vw;
             border: 1px solid #000;
             background: #f0f0f0;
             color: black;
             text-decoration: none;
-            font-size: 1vw;
+            font-size: 0.9vw;
             cursor: pointer;
-            margin-right: 1vw;
+            min-width: 80px;
+            text-align: center;
         }
 
         .btn:hover {
@@ -55,6 +56,26 @@
         th {
             background: #f0f0f0;
         }
+
+        .search-form {
+            margin-top: 2vh;
+            display: flex;
+            gap: 0.5vw;
+            align-items: center;
+        }
+
+        .search-form input {
+            width: 220px;
+            height: 38px;
+            padding: 0 10px;
+            font-size: 14px;
+        }
+
+        .search-form .btn-search {
+            height: 38px;
+            width: 90px;
+            padding: 0;
+        }
     </style>
 </head>
 
@@ -65,10 +86,10 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
-<form action="/topups" method="GET">
+<form action="/topups" method="GET" class="search-form">
     <input type="text" name="id" placeholder="Cari ID">
 
-    <button type="submit" class="btn">
+    <button type="submit" class="btn btn-search">
         Cari
     </button>
 </form>
