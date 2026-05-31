@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Create Topup</title>
+    <title>Form Top Up</title>
 
     <style>
         body {
@@ -63,13 +63,12 @@
 
 <body>
 
-<h1>Create Topup</h1>
+<h1>Form Top Up</h1>
 
-<!-- BUTTON -->
-<a href="/" class="btn">Home</a>
-<a href="/topups" class="btn">Kembali ke List</a>
+<!-- TOMBOL -->
+<a href="/" class="btn">Beranda</a>
+<a href="/topups" class="btn">Kembali</a>
 
-<!-- SALDO (WAJIB MUNCUL) -->
 <div class="saldo">
     💰 Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
 </div>
@@ -78,17 +77,17 @@
 <form action="/topups" method="POST">
     @csrf
 
-    <label>Payment Method</label>
+    <label>Metode Pembayaran</label>
     <select name="payment_method">
         <option value="QRIS">QRIS</option>
-        <option value="Transfer">Transfer</option>
+        <option value="Transfer">Transfer Bank</option>
         <option value="E-Wallet">E-Wallet</option>
     </select>
 
     <label>Nominal</label>
     <input type="text" name="nominal">
 
-    <button type="submit">Send</button>
+    <button type="submit">Proses Transaksi</button>
 </form>
 
 </body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>History List</title>
+    <title>Riwayat Transaksi</title>
 
     <style>
         body {
@@ -81,12 +81,12 @@
 
 <body>
 
-<h1>History Data</h1>
+<h1>Riwayat Transaksi</h1>
 
-<a href="/" class="btn">Home</a>
+<a href="/" class="btn">Beranda</a>
 
 <form action="/histories" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Transaction Code (TRX001)">
+    <input type="text" name="id" placeholder="Cari Kode Transaksi (TRX001)">
 
     <button type="submit" class="btn btn-search">
         Cari
@@ -107,12 +107,12 @@
 
 <table>
     <tr>
-        <th>Transaction Code</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Amount</th>
-        <th>Saldo After</th>
-        <th>Waktu</th>
+        <th>Kode Transaksi</th>
+        <th>Transaksi</th>
+        <th>Keterangan</th>
+        <th>Nominal</th>
+        <th>Sisa Saldo</th>
+        <th>Waktu Transaksi</th>
     </tr>
 
     @foreach($histories as $history)

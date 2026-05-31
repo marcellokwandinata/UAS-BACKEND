@@ -54,18 +54,18 @@
 
     <!-- TOPUP -->
     <div class="section">
-        <h2>Topups</h2>
+        <h2>Menu Top Up</h2>
         <div class="menu">
-            <a href="/topups" class="btn">View Topups</a>
-            <a href="/topups/create" class="btn">Create Topup</a>
+            <a href="/topups" class="btn">Data Top Up</a>
+            <a href="/topups/create" class="btn">Tambah Top Up</a>
         </div>
     </div>
 
     <!-- HISTORY -->
     <div class="section">
-        <h2>Histories</h2>
+        <h2>Riwayat Transaksi</h2>
         <div class="menu">
-            <a href="/histories" class="btn">View Histories</a>
+            <a href="/histories" class="btn">Data Riwayat</a>
         </div>
     </div>
 

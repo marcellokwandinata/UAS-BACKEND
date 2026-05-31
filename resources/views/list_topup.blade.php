@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Topup List</title>
+    <title>Data Top Up</title>
 
     <style>
         body {
@@ -81,13 +81,13 @@
 
 <body>
 
-<h1>Topup Data</h1>
+<h1>Data Top Up</h1>
 
-<a href="/" class="btn">Home</a>
-<a href="/topups/create" class="btn">Tambah Topup</a>
+<a href="/" class="btn">Beranda</a>
+<a href="/topups/create" class="btn">Tambah Top Up</a>
 
 <form action="/topups" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Transaction Code (TRX001)">
+    <input type="text" name="id" placeholder="Cari Kode Transaksi (TRX001)">
 
     <button type="submit" class="btn btn-search">
         Cari
@@ -108,8 +108,8 @@
 
 <table>
     <tr>
-        <th>Transaction Code</th>
-        <th>Payment Method</th>
+        <th>Kode Transaksi</th>
+        <th>Metode Pembayaran</th>
         <th>Nominal</th>
         <th>Status</th>
     </tr>
