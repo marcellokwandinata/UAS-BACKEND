@@ -87,7 +87,7 @@
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
 <form action="/topups" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari ID">
+    <input type="text" name="id" placeholder="Cari Transaction ID">
 
     <button type="submit" class="btn btn-search">
         Cari
