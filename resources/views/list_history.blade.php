@@ -103,6 +103,8 @@
     <p style="color:red">{{ session('error') }}</p>
 @endif
 
+<p><b>Total History:</b> {{ count($histories) }}</p>
+
 <table>
     <tr>
         <th>Transaction-ID</th>
