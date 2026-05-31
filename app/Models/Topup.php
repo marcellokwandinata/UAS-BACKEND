@@ -13,6 +13,7 @@ class Topup extends Model
     protected $keyType = 'string';
 
     protected $fillable = [
+        'transaction_code',
         'payment_method',
         'nominal',
         'status'

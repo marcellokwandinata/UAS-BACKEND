@@ -49,8 +49,19 @@ class TopupController extends Controller
         $newBalance = $balance - $nominal;
         session(['balance' => $newBalance]);
 
+        $lastTopup = Topup::latest()->first();
+
+        if ($lastTopup && $lastTopup->transaction_code) {
+            $number = (int) substr($lastTopup->transaction_code, 3) + 1;
+        } else {
+            $number = 1;
+        }
+
+        $transactionCode = 'TRX' . str_pad($number, 3, '0', STR_PAD_LEFT);
+
         // simpan topup
         $topup = Topup::create([
+            'transaction_code' => $transactionCode,
             'payment_method' => $request->payment_method,
             'nominal' => $nominal,
             'status' => 'Success',
