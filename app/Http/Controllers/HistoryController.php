@@ -12,7 +12,8 @@ class HistoryController extends Controller
     public function index(Request $request)
     {
          if ($request->id) {
-            $histories = History::where('id', 'like', '%' . $request->id . '%')->get();
+            $histories = History::where('transaction_code', 'like', '%' . $request->id . '%')->get();
+
             if ($histories->isEmpty()) {
                 return redirect('/histories')
                     ->with('error', 'Kode transaksi tidak ditemukan.');

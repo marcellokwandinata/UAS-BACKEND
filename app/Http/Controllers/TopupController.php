@@ -12,10 +12,11 @@ class TopupController extends Controller
     public function index(Request $request)
     {
         if ($request->id) {
-            $topups = Topup::where('id', 'like', '%' . $request->id . '%')->get();
+            $topups = Topup::where('transaction_code', 'like', '%' . $request->id . '%')->get();
+
             if ($topups->isEmpty()) {
                 return redirect('/topups')
-                    ->with('error', 'ID tidak ditemukan!');
+                    ->with('error', 'Kode transaksi tidak ditemukan.');
             }
         } else {
             $topups = Topup::all();
