@@ -122,7 +122,11 @@
         <td>{{ $history->description }}</td>
         <td>Rp {{ number_format($history->amount, 0, ',', '.') }}</td>
         <td>Rp {{ number_format($history->balance_after ?? 0, 0, ',', '.') }}</td>
-        <td>{{ $history->transaction_time ?? '-' }}</td>
+        <td>
+            {{ $history->transaction_time 
+                ? \Carbon\Carbon::parse($history->transaction_time)->format('d-m-Y H:i')
+                : '-' }}
+        </td>
     </tr>
     @endforeach
 </table>
