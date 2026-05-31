@@ -11,7 +11,12 @@ class TopupController extends Controller
    // halaman list topup
     public function index()
     {
-        $topups = Topup::all();
+        if ($request->id) {
+            $topups = Topup::where('id', $request->id)->get();
+        } else {
+            $topups = Topup::all();
+        }
+        
         return view('list_topup', compact('topups'));
     }
 
