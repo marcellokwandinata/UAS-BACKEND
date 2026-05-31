@@ -121,7 +121,7 @@
         <td>{{ $history->title }}</td>
         <td>{{ $history->description }}</td>
         <td>Rp {{ number_format($history->amount, 0, ',', '.') }}</td>
-        <td>{{ $history->balance_after ?? '-' }}</td>
+        <td>Rp {{ number_format($history->balance_after ?? 0, 0, ',', '.') }}</td>
         <td>{{ $history->transaction_time ?? '-' }}</td>
     </tr>
     @endforeach
