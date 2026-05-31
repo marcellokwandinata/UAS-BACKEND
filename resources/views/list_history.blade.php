@@ -86,7 +86,7 @@
 <a href="/" class="btn">Home</a>
 
 <form action="/histories" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Transaction Code">
+    <input type="text" name="id" placeholder="Cari Transaction Code (TRX001)">
 
     <button type="submit" class="btn btn-search">
         Cari
