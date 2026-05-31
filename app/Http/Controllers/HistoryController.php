@@ -9,7 +9,7 @@ class HistoryController extends Controller
 {
     // halaman list history
     // GET /histories
-    public function index()
+    public function index(Request $request)
     {
          if ($request->id) {
             $histories = History::where('id', $request->id)->get();

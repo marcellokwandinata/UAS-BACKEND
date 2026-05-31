@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class TopupController extends Controller
 {
    // halaman list topup
-    public function index()
+    public function index(Request $request)
     {
         if ($request->id) {
             $topups = Topup::where('id', $request->id)->get();
@@ -20,7 +20,7 @@ class TopupController extends Controller
         } else {
             $topups = Topup::all();
         }
-        
+
         return view('list_topup', compact('topups'));
     }
 
