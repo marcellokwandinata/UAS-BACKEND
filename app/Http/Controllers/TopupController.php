@@ -13,6 +13,10 @@ class TopupController extends Controller
     {
         if ($request->id) {
             $topups = Topup::where('id', $request->id)->get();
+            if ($topups->isEmpty()) {
+                return redirect('/topups')
+                    ->with('error', 'ID tidak ditemukan!');
+            }
         } else {
             $topups = Topup::all();
         }

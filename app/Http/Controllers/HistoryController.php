@@ -11,13 +11,14 @@ class HistoryController extends Controller
     // GET /histories
     public function index()
     {
-        if ($request->id) {
-            $histories = History::where('id', $request->id)
-                ->orderBy('created_at', 'desc')
-                ->get();
+         if ($request->id) {
+            $histories = History::where('id', $request->id)->get();
+            if ($histories->isEmpty()) {
+                return redirect('/histories')
+                    ->with('error', 'ID tidak ditemukan!');
+            }
         } else {
-            $histories = History::orderBy('created_at', 'desc')
-                ->get();
+            $histories = History::orderBy('created_at', 'desc')->get();
         }
 
         return view('list_history', compact('histories'));
