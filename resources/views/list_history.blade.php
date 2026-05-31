@@ -120,7 +120,7 @@
         <td>{{ $history->id }}</td>
         <td>{{ $history->title }}</td>
         <td>{{ $history->description }}</td>
-        <td>{{ $history->amount }}</td>
+        <td>Rp {{ number_format($history->nominal, 0, ',', '.') }}</td>
         <td>{{ $history->balance_after ?? '-' }}</td>
         <td>{{ $history->transaction_time ?? '-' }}</td>
     </tr>
