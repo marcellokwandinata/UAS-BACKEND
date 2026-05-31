@@ -76,6 +76,32 @@
             width: 90px;
             padding: 0;
         }
+
+        .alert-success,
+        .alert-error,
+        .saldo-info {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: fit-content;
+            font-size: 14px;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .saldo-info {
+            background: #f0f0f0;
+            color: #000;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 
@@ -97,12 +123,20 @@
 <br>
 
 @if(session('success'))
-    <p style="color:green">{{ session('success') }}</p>
+    <div class="alert-success">
+        ✓ {{ session('success') }}
+    </div>
 @endif
 
 @if(session('error'))
-    <p style="color:red">{{ session('error') }}</p>
+    <div class="alert-error">
+        ✖ {{ session('error') }}
+    </div>
 @endif
+
+<div class="saldo-info">
+    Saldo Saat Ini: <strong>Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}</strong>
+</div>
 
 <p>Total Transaksi: {{ count($topups) }}</p>
 
