@@ -64,6 +64,14 @@
 
 <a href="/" class="btn">Home</a>
 
+<form action="/histories" method="GET">
+    <input type="text" name="id" placeholder="Cari ID">
+
+    <button type="submit" class="btn">
+        Cari
+    </button>
+</form>
+
 <br>
 
 @if(session('success'))

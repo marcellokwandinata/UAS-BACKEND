@@ -65,6 +65,14 @@
 <a href="/" class="btn">Home</a>
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
+<form action="/topups" method="GET">
+    <input type="text" name="id" placeholder="Cari ID">
+
+    <button type="submit" class="btn">
+        Cari
+    </button>
+</form>
+
 <br>
 
 @if(session('success'))
