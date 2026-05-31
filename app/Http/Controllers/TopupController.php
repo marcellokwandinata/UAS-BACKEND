@@ -40,14 +40,8 @@ class TopupController extends Controller
 
         $nominal = (int) $request->nominal;
 
-        // cek saldo
-        if ($nominal > $balance) {
-            return redirect('/topups')
-                ->with('error', 'Saldo tidak mencukupi.');
-        }
-
         // update saldo
-        $newBalance = $balance - $nominal;
+        $newBalance = $balance + $nominal;
         session(['balance' => $newBalance]);
 
         $lastTopup = Topup::latest()->first();
