@@ -87,7 +87,7 @@
 <a href="/topups/create" class="btn">Tambah Topup</a>
 
 <form action="/topups" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Transaction ID">
+    <input type="text" name="id" placeholder="Cari Transaction Code">
 
     <button type="submit" class="btn btn-search">
         Cari
@@ -108,7 +108,7 @@
 
 <table>
     <tr>
-        <th>Transaction-ID</th>
+        <th>Transaction Code</th>
         <th>Payment Method</th>
         <th>Nominal</th>
         <th>Status</th>
@@ -116,7 +116,7 @@
 
     @foreach($topups as $topup)
     <tr>
-        <td>{{ $topup->id }}</td>
+        <td>{{ $topup->transaction_code }}</td>
         <td>{{ $topup->payment_method }}</td>
         <td>Rp {{ number_format($topup->nominal, 0, ',', '.') }}</td>
         <td>

@@ -86,7 +86,7 @@
 <a href="/" class="btn">Home</a>
 
 <form action="/histories" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Transaction ID">
+    <input type="text" name="id" placeholder="Cari Transaction Code">
 
     <button type="submit" class="btn btn-search">
         Cari
@@ -107,7 +107,7 @@
 
 <table>
     <tr>
-        <th>Transaction-ID</th>
+        <th>Transaction Code</th>
         <th>Title</th>
         <th>Description</th>
         <th>Amount</th>
@@ -117,7 +117,7 @@
 
     @foreach($histories as $history)
     <tr>
-        <td>{{ $history->id }}</td>
+        <td>{{ $history->transaction_code }}</td>
         <td>{{ $history->title }}</td>
         <td>{{ $history->description }}</td>
         <td>Rp {{ number_format($history->amount, 0, ',', '.') }}</td>
