@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('histories', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('transaction_code')->unique();
             $table->string('title');
             $table->text('description')->nullable();
             $table->integer('amount');
