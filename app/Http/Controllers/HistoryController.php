@@ -15,7 +15,7 @@ class HistoryController extends Controller
             $histories = History::where('id', 'like', '%' . $request->id . '%')->get();
             if ($histories->isEmpty()) {
                 return redirect('/histories')
-                    ->with('error', 'ID tidak ditemukan!');
+                    ->with('error', 'Kode transaksi tidak ditemukan.');
             }
         } else {
             $histories = History::orderBy('created_at', 'desc')->get();

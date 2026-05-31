@@ -42,7 +42,7 @@ class TopupController extends Controller
         // cek saldo
         if ($nominal > $balance) {
             return redirect('/topups')
-                ->with('error', 'Saldo tidak cukup!');
+                ->with('error', 'Saldo tidak mencukupi.');
         }
 
         // update saldo
@@ -70,15 +70,15 @@ class TopupController extends Controller
         // auto masuk ke history
         History::create([
             'transaction_code' => $transactionCode,
-            'title' => 'Topup via ' . $topup->payment_method,
-            'description' => 'Transaksi berhasil',
+            'title' => 'Top Up ' . $topup->payment_method,
+            'description' => 'Berhasil',
             'amount' => $nominal,
             'balance_after' => $newBalance,
             'transaction_time' => now(),
         ]);
 
         return redirect('/topups')
-            ->with('success', 'Topup berhasil!');
+            ->with('success', 'Transaksi berhasil dilakukan.');
     }
 
     // GET /topups/{id}
@@ -88,7 +88,7 @@ class TopupController extends Controller
 
         if (!$topup) {
             return redirect('/topups')
-                ->with('error', 'ID tidak ditemukan!');
+                ->with('error', 'Kode transaksi tidak ditemukan.');
         }
 
         return view('list_topup', [
