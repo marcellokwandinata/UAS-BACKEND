@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('topups', function (Blueprint $table) {
             $table->uuid('id')->primary();
+            $table->string('transaction_code')->unique();
             $table->string('payment_method');
             $table->integer('nominal');
             $table->string('status');
