@@ -24,6 +24,10 @@
     <br>
     <input type="password" name="password" required>
     <br><br>
+    Konfirmasi Password:
+    <br>
+    <input type="password" name="password_confirmation" required>
+    <br><br>
     <button type="submit">Daftar & Buka Rekening</button>
 </form>
 

@@ -63,7 +63,7 @@ class AuthController extends Controller
         $request->validate([
             'full_name' => 'required|string|max:255',
             'email'     => 'required|string|email|max:255|unique:users',
-            'password'  => 'required|string|min:6',
+            'password'  => 'required|string|min:6|confirmed', //confirmed untuk konfirm ulang pw
         ]);
 
         // Generate nomor rekening unik: awalan 1000 + 6 angka acak
