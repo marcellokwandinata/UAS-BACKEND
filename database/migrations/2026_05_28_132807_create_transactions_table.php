@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->string('type'); // 'deposit', 'withdrawal', 'transfer'
+            $table->decimal('amount', 15, 2);
+            $table->string('recipient_account')->nullable();
+            $table->text('description')->nullable();
+            $table->string('status')->default('success'); // 'pending', 'success', 'failed'
             $table->timestamps();
         });
     }
