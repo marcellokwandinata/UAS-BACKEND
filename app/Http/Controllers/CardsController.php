@@ -135,62 +135,62 @@ class CardsController
     }
 
 
-    public function update()
-    {
-        global $mysqli;
+    // public function update()
+    // {
+    //     global $mysqli;
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-            $id         = $_POST['id'];
-            $card_type  = $_POST['card_type'];
-            $expired_at = $_POST['expired_at'];
-            $status     = $_POST['status'];
-            $updated_at = date('Y-m-d H:i:s');
+    //         $id         = $_POST['id'];
+    //         $card_type  = $_POST['card_type'];
+    //         $expired_at = $_POST['expired_at'];
+    //         $status     = $_POST['status'];
+    //         $updated_at = date('Y-m-d H:i:s');
 
-            $check = $mysqli->prepare("SELECT id FROM cards WHERE id = ?");
-            $check->bind_param("s", $id);
-            $check->execute();
-            $check->store_result();
+    //         $check = $mysqli->prepare("SELECT id FROM cards WHERE id = ?");
+    //         $check->bind_param("s", $id);
+    //         $check->execute();
+    //         $check->store_result();
 
-            if ($check->num_rows === 0) {
+    //         if ($check->num_rows === 0) {
 
-                echo "Kartu tidak ditemukan!";
-                echo "<br><a href='cards.php'>Kembali ke daftar kartu</a>";
+    //             echo "Kartu tidak ditemukan!";
+    //             echo "<br><a href='cards.php'>Kembali ke daftar kartu</a>";
 
-                $check->close();
-                $mysqli->close();
-                exit;
-            }
+    //             $check->close();
+    //             $mysqli->close();
+    //             exit;
+    //         }
 
-            $check->close();
+    //         $check->close();
 
-            $stmt = $mysqli->prepare(
-                "UPDATE cards SET card_type = ?, expired_at = ?, status = ?, updated_at = ?
-                 WHERE id = ?"
-            );
-            $stmt->bind_param(
-                "sssss",
-                $card_type,
-                $expired_at,
-                $status,
-                $updated_at,
-                $id
-            );
+    //         $stmt = $mysqli->prepare(
+    //             "UPDATE cards SET card_type = ?, expired_at = ?, status = ?, updated_at = ?
+    //              WHERE id = ?"
+    //         );
+    //         $stmt->bind_param(
+    //             "sssss",
+    //             $card_type,
+    //             $expired_at,
+    //             $status,
+    //             $updated_at,
+    //             $id
+    //         );
 
-            if ($stmt->execute()) {
+    //         if ($stmt->execute()) {
 
-                echo "Kartu berhasil diperbarui!";
-                echo "<br><a href='cards.php'>Kembali ke daftar kartu</a>";
+    //             echo "Kartu berhasil diperbarui!";
+    //             echo "<br><a href='cards.php'>Kembali ke daftar kartu</a>";
 
-            } else {
+    //         } else {
 
-                echo "Error: " . $stmt->error;
-            }
+    //             echo "Error: " . $stmt->error;
+    //         }
 
-            $stmt->close();
-            $mysqli->close();
-        }
-    }
+    //         $stmt->close();
+    //         $mysqli->close();
+    //     }
+    // }
 
 
     public function delete()
