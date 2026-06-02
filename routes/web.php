@@ -23,4 +23,7 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/user/{id}',      [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}',     [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/logout',          [AuthController::class, 'logout'])->name('logout');
+    Route::get('/user/{id}/change-password',   [UserController::class, 'changePasswordForm'])->name('user.changePasswordForm');
+    Route::patch('/user/{id}/change-password', [UserController::class, 'changePassword'])->name('user.changePassword');
+
 });

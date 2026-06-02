@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 
 class UserController extends Controller
@@ -61,7 +62,7 @@ class UserController extends Controller
         return redirect()->route('user.index')->with('success', 'Profil berhasil diperbarui!');
     }
 
-    /**
+   /**
      * DELETE /user/{id}
      * Menghapus akun nasabah dari database.
      */
@@ -72,5 +73,48 @@ class UserController extends Controller
         $user->delete();
 
         return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
+    }
+
+    /**
+     * GET /user/{id}/change-password
+     * Menampilkan form ganti password.
+     */
+    public function changePasswordForm($id)
+    {
+        $user = User::findOrFail($id);
+
+        if (Auth::id() != $user->id) {
+            return redirect()->route('user.index')->with('error', 'Akses dilarang!');
+        }
+
+        return view('User.change_password', compact('user'));
+    }
+
+    /**
+     * PATCH /user/{id}/change-password
+     * Menyimpan password baru nasabah.
+     */
+    public function changePassword(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        if (Auth::id() != $user->id) {
+            return redirect()->route('user.index')->with('error', 'Akses dilarang!');
+        }
+
+        $request->validate([
+            'current_password' => 'required',
+            'new_password'     => 'required|string|min:6|confirmed',
+        ]);
+
+        if (!Hash::check($request->current_password, $user->password)) {
+            return back()->withErrors(['current_password' => 'Password lama salah.']);
+        }
+
+        $user->update([
+            'password' => Hash::make($request->new_password),
+        ]);
+
+        return redirect()->route('user.index')->with('success', 'Password berhasil diubah!');
     }
 }
