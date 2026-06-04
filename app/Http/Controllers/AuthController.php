@@ -18,7 +18,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
-        return view('User.login');
+        return view('Auth.login');
     }
 
     /**
@@ -30,7 +30,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
-        return view('User.create');
+        return view('Auth.create');
     }
 
     /**
