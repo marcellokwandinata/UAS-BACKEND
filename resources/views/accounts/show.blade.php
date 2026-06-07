@@ -1,4 +1,4 @@
-<h1>Detail Akun</h1>
+<h1>Dashboard Akun</h1>
 <p>
     <strong>Account Number:</strong>
     {{ $account->account_number }}
@@ -11,8 +11,22 @@
     <strong>Account Type:</strong>
     {{ $account->account_type }}
 </p>
+<hr>
+<h3>Menu Banking</h3>
 <p>
-    <strong>User ID:</strong>
-    {{ $account->user_id }}
+    <a href="{{ route('beneficiaries.index') }}">
+        Manage Beneficiaries
+    </a>
 </p>
+<p>
+    <a href="#">
+        Transfer Money
+    </a>
+</p>
+<p>
+    <a href="#">
+        Transaction History
+    </a>
+</p>
+<br>
 <a href="{{ route('accounts.index') }}">Kembali</a>

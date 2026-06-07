@@ -1,6 +1,7 @@
 <h1>Daftar Akun</h1>
 
-<a href="{{ route('accounts.create') }}">Create new Account</a>
+<a href="{{ route('accounts.create') }}">Create New Account</a>
+
 <br><br>
 
 @if ($accounts->isEmpty())
@@ -12,26 +13,25 @@
         <tr>
             <th style="width: 50px">No</th>
             <th style="width: 200px">Account Number</th>
-            <th style="width: 150px">Balance</th>
             <th style="width: 150px">Type</th>
-            <th style="width: 120px">Aksi</th>
+            <th style="width: 200px">Aksi</th>
         </tr>
     </thead>
     <tbody>
         @foreach($accounts as $account)
         <tr>
-            <td style="text-align: center">{{ $loop->iteration }}</td>
-            <td>
-                <a href="{{ route('accounts.show', $account) }}">
-                    {{ $account->account_number }}
-                </a>
+            <td style="text-align: center">
+                {{ $loop->iteration }}
             </td>
-            <td>Rp {{ number_format($account->balance, 2) }}</td>
+            <td>{{ $account->account_number }}</td>
             <td>{{ $account->account_type }}</td>
             <td style="text-align: center">
+                <a href="{{ route('accounts.show', $account) }}">Masuk</a>
                 <a href="{{ route('accounts.edit', $account) }}">Ubah</a>
-                <form action="{{ route('accounts.destroy', $account) }}" method="post" 
-                style="display:inline;">
+                <form
+                    action="{{ route('accounts.destroy', $account) }}"
+                    method="POST"
+                    style="display:inline;">
                     @csrf @method('DELETE')
                     <button type="submit">Hapus</button>
                 </form>
