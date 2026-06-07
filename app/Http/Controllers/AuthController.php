@@ -9,10 +9,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    /**
-     * GET /login
-     * Menampilkan halaman login.
-     */
+    // Menampilkan halaman login
     public function index()
     {
         if (Auth::check()) {
@@ -21,10 +18,7 @@ class AuthController extends Controller
         return view('Auth.login');
     }
 
-    /**
-     * GET /register
-     * Menampilkan form pendaftaran akun baru.
-     */
+    // Menampilkan form pendaftaran akun baru
     public function create()
     {
         if (Auth::check()) {
@@ -33,10 +27,7 @@ class AuthController extends Controller
         return view('Auth.create');
     }
 
-    /**
-     * POST /login
-     * Memproses verifikasi login nasabah.
-     */
+    // Verifikasi login nasabah
     public function login(Request $request)
     {
         $request->validate([
@@ -54,10 +45,7 @@ class AuthController extends Controller
         ])->onlyInput('email');
     }
 
-    /**
-     * POST /register
-     * Menyimpan data nasabah baru ke database dan generate nomor rekening.
-     */
+    // Menyimpan data nasabah baru ke database dan membuat nomor rekening
     public function store(Request $request)
     {
         $request->validate([
@@ -66,7 +54,7 @@ class AuthController extends Controller
             'password'  => 'required|string|min:6|confirmed', //confirmed untuk konfirm ulang pw
         ]);
 
-        // Generate nomor rekening unik: awalan 1000 + 6 angka acak
+        // Membuat nomor rekening unik yg awalan 1000 + 6 angka acak
         do {
             $accountNumber = '1000' . rand(100000, 999999);
         } while (User::where('account_number', $accountNumber)->exists());
@@ -83,10 +71,7 @@ class AuthController extends Controller
         return redirect()->route('user.index')->with('success', 'Akun berhasil dibuat!');
     }
 
-    /**
-     * POST /logout
-     * Keluar dari aplikasi.
-     */
+    // Keluar dari akun atau logout
     public function logout(Request $request)
     {
         Auth::logout();
