@@ -6,11 +6,11 @@
     <input name="account_number" value="{{ $account->account_number }}" required>
     <br>
     <br>
-    Balance:
+    <!-- Balance:
     <br>
     <input type="number" name="balance" value="{{ $account->balance }}" required>
     <br>
-    <br>
+    <br> -->
     Account Type:
     <br>
     <input name="account_type" value="{{ $account->account_type }}" required>
