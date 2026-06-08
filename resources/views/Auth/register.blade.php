@@ -1,4 +1,4 @@
-<h1>Login Admin Digital Banking</h1>
+<h1>Daftar Akun Baru</h1>
 
 @if ($errors->any())
     <div style="color: red;">
@@ -10,13 +10,13 @@
     </div>
 @endif
 
-@if (session('success'))
-    <p style="color: green;">{{ session('success') }}</p>
-@endif
-
-<form method="POST" action="{{ route('admin.login.perform') }}">
+<form method="POST" action="{{ route('user.store') }}">
     @csrf
-    Email Admin:
+    Nama Lengkap:
+    <br>
+    <input type="text" name="full_name" value="{{ old('full_name') }}" required>
+    <br><br>
+    Email:
     <br>
     <input type="email" name="email" value="{{ old('email') }}" required>
     <br><br>
@@ -25,11 +25,16 @@
     <input type="password" name="password" id="password" required>
     <button type="button" onclick="togglePassword('password')">Tampilkan</button>
     <br><br>
-    <button type="submit">Masuk sebagai Admin</button>
+    Konfirmasi Password:
+    <br>
+    <input type="password" name="password_confirmation" id="password_confirmation" required>
+    <button type="button" onclick="togglePassword('password_confirmation')">Tampilkan</button>
+    <br><br>
+    <button type="submit">Daftar & Buka Rekening</button>
 </form>
 
 <br>
-<a href="{{ route('login') }}">Login sebagai Nasabah</a>
+<a href="{{ route('login') }}">Sudah punya akun? Login di sini</a>
 
 <script>
     function togglePassword(id) {
