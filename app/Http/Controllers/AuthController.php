@@ -24,7 +24,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
-        return view('Auth.create');
+        return view('Auth.register');
     }
 
     // Verifikasi login nasabah
