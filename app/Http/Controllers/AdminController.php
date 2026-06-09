@@ -16,7 +16,7 @@ class AdminController extends Controller
         if (Auth::guard('admin')->check()) {
             return redirect()->route('admin.dashboard');
         }
-        return view('Admin.login');
+        return view('Auth.admin_login');
     }
 
     // Memproses verifikasi login admin
@@ -40,7 +40,7 @@ class AdminController extends Controller
     // Menampilkan form register admin
     public function register()
     {
-        return view('Admin.register');
+        return view('Auth.admin_register');
     }
 
     // Menyimpan data admin baru ke database
@@ -92,6 +92,6 @@ class AdminController extends Controller
         Auth::guard('admin')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('admin.login');
+        return redirect()->route('Auth.admin_login');
     }
 }

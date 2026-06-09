@@ -15,7 +15,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
-        return view('Auth.login');
+        return view('Auth.user_login');
     }
 
     // Menampilkan form pendaftaran akun baru
@@ -24,7 +24,7 @@ class AuthController extends Controller
         if (Auth::check()) {
             return redirect()->route('user.index');
         }
-        return view('Auth.register');
+        return view('Auth.user_register');
     }
 
     // Verifikasi login nasabah
