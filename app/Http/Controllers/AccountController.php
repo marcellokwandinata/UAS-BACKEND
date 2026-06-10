@@ -33,6 +33,7 @@ class AccountController extends Controller
         $request->validate([
             'user_id' => 'required',
             'account_number' => 'required|string|max:255|unique:accounts',
+            'account_name' => 'required|string|max:255',
             'balance' => 'required|numeric',
             'account_type' => 'required|string|max:255',
         ]);
@@ -41,6 +42,7 @@ class AccountController extends Controller
             'user_id',
             'account_number',
             'balance',
+            'account_name',
             'account_type'
         ));
 
@@ -73,12 +75,14 @@ class AccountController extends Controller
         $request->validate([
             'account_number' => 'required|string|max:255',
             'balance' => 'required|numeric',
+            'account_name' => 'required|string|max:255',
             'account_type' => 'required|string|max:255',
         ]);
 
         $account->update($request->only(
             'account_number',
             'balance',
+            'account_name',
             'account_type'
         ));
 

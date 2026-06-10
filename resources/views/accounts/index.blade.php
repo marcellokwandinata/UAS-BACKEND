@@ -27,7 +27,7 @@
             <td>{{ $account->account_type }}</td>
             <td style="text-align: center">
                 <a href="{{ route('accounts.show', $account) }}">Masuk</a>
-                <a href="{{ route('accounts.edit', $account) }}">Ubah</a>
+                <a href="{{ route('accounts.edit', $account) }}">Edit Account</a>
                 <form
                     action="{{ route('accounts.destroy', $account) }}"
                     method="POST"

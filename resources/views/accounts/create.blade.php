@@ -11,6 +11,11 @@
     <input name="account_number" required>
     <br>
     <br>
+     Account Name:
+    <br>
+    <input name="account_name" required>
+    <br>
+    <br>
     Balance:
     <br>
     <input type="number" name="balance" required>

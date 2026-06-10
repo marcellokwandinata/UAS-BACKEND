@@ -11,6 +11,10 @@
     <strong>Account Type:</strong>
     {{ $account->account_type }}
 </p>
+<p>
+    <strong>Account Name:</strong>
+    {{ $account->account_name }}
+</p>
 <hr>
 <h3>Menu Banking</h3>
 <p>
