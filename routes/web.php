@@ -11,10 +11,10 @@ Route::get('/', function () {
 });
 
 // AUTH NASABAH (Login & Register)
-Route::get('/login',     [AuthController::class, 'index'])->name('login');
-Route::post('/login',    [AuthController::class, 'login'])->name('login.perform');
-Route::get('/register',  [AuthController::class, 'create'])->name('user.create');
-Route::post('/register', [AuthController::class, 'store'])->name('user.store');
+Route::get('/user/login',     [AuthController::class, 'index'])->name('login');
+Route::post('/user/login',    [AuthController::class, 'login'])->name('login.perform');
+Route::get('/user/register',  [AuthController::class, 'create'])->name('user.create');
+Route::post('/user/register', [AuthController::class, 'store'])->name('user.store');
 
 // USER NASABAH 
 Route::middleware(['auth'])->group(function () {
@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/{id}',                    [UserController::class, 'destroy'])->name('user.destroy');
     Route::get('/user/{id}/change-password',       [UserController::class, 'changePasswordForm'])->name('user.changePasswordForm');
     Route::patch('/user/{id}/change-password',     [UserController::class, 'changePassword'])->name('user.changePassword');
-    Route::post('/logout',                         [AuthController::class, 'logout'])->name('logout');
+    Route::post('/user/logout',                    [AuthController::class, 'logout'])->name('user.logout');
 });
 
 // ADMIN 

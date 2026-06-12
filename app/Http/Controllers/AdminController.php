@@ -63,11 +63,17 @@ class AdminController extends Controller
         return redirect()->route('admin.dashboard');
     }
 
-    // Menampilkan daftar semua nasabah yang terdaftar
-    public function dashboard()
+   // Menampilkan daftar semua nasabah, dengan fitur search
+    public function dashboard(Request $request)
     {
-        $users = User::all();
-        return view('Admin.dashboard', compact('users'));
+        $search = $request->input('search');
+
+        $users = User::when($search, function ($query, $search) {
+            $query->where('full_name', 'like', '%' . $search . '%')
+                  ->orWhere('account_number', 'like', '%' . $search . '%');
+        })->get();
+
+        return view('Admin.dashboard', compact('users', 'search'));
     }
 
     // Menampilkan detail satu nasabah dari sisi admin

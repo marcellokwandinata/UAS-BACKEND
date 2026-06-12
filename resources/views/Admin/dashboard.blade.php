@@ -1,12 +1,22 @@
 <h1>Dashboard Admin</h1>
 
-<p>Selamat datang, {{ Auth::guard('admin')->user()->full_name }}</p>
+<p>Selamat datang kembali, {{ Auth::guard('admin')->user()->full_name }}</p>
 
 @if (session('success'))
     <p style="color: green;">{{ session('success') }}</p>
 @endif
 
 <h3>Daftar Semua Nasabah</h3>
+
+<form method="GET" action="{{ route('admin.dashboard') }}">
+    Cari nama atau nomor rekening:
+    <br>
+    <input type="text" name="search" value="{{ $search ?? '' }}">
+    <button type="submit">Cari</button>
+    <a href="{{ route('admin.dashboard') }}">Hapus</a>
+</form>
+
+<br>
 
 @if ($users->isEmpty())
     <p>Belum ada nasabah yang terdaftar.</p>
@@ -18,7 +28,7 @@
             <th style="width: 200px">Nama Lengkap</th>
             <th style="width: 200px">Email</th>
             <th style="width: 150px">Nomor Rekening</th>
-            <th style="width: 120px">Aksi</th>
+            <th style="width: 120px">Opsi</th>
         </tr>
     </thead>
     <tbody>
