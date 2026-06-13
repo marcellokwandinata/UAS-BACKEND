@@ -26,6 +26,8 @@
     <button type="button" onclick="togglePassword('password')">Tampilkan</button>
     <br><br>
     <button type="submit">Masuk sebagai Admin</button>
+    <br>
+<a href="{{ route('admin.register') }}">Daftar sebagai admin</a>
 </form>
 
 <br>
