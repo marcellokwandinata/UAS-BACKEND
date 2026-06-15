@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+<<<<<<< Updated upstream
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+=======
+use App\Http\Controllers\TransactionController;
+>>>>>>> Stashed changes
 
 // Redirect ke login saat buka domain utama
 Route::get('/', function () {
@@ -24,3 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user/{id}',     [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/logout',          [AuthController::class, 'logout'])->name('logout');
 });
+
+Route::get('/transaction', [TransactionController::class,'index'])->name('transaction.index');
+Route::get('/transfer', [TransactionController::class, 'transferForm'])->name('transfer.form');
+Route::post('/transfer', [TransactionController::class, 'transfer'])->name('transfer.submit');
