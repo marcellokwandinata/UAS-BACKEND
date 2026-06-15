@@ -31,12 +31,25 @@ class TransactionController extends Controller
      */
     public function index(Request $request)
     {
-        $user = $this->resolveUser($request);
+        $user = auth()->user();
+        
+        // Jika tidak authenticated, check untuk API fallback
         if (! $user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'User tidak terautentikasi atau user_id tidak valid.',
-            ], 401);
+            $userId = $request->input('user_id') ?: $request->header('X-User-Id');
+            if ($userId) {
+                $user = User::find($userId);
+            }
+        }
+
+        // Jika masih tidak ada user, return error
+        if (! $user) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User tidak terautentikasi atau user_id tidak valid.',
+                ], 401);
+            }
+            return redirect()->route('login');
         }
 
         // Ambil transaksi di mana user merupakan pengirim atau penerima transfer
@@ -48,11 +61,29 @@ class TransactionController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Riwayat transaksi berhasil diambil.',
-            'data' => $transactions,
-        ]);
+        // Return JSON jika request adalah API
+        if ($request->wantsJson()) {
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Riwayat transaksi berhasil diambil.',
+                'data' => $transactions,
+            ]);
+        }
+
+        // Return view untuk web
+        return view('Transaction.index', compact('transactions'));
+    }
+
+    /**
+     * Tampilkan form transfer.
+     */
+    public function transferForm()
+    {
+        if (! auth()->check()) {
+            return redirect()->route('login');
+        }
+
+        return view('Transaction.transfer');
     }
 
     /**
@@ -201,12 +232,22 @@ class TransactionController extends Controller
      */
     public function transfer(Request $request)
     {
-        $user = $this->resolveUser($request);
+        $user = auth()->user();
         if (! $user) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'User tidak terautentikasi atau user_id tidak valid.',
-            ], 401);
+            $userId = $request->input('user_id') ?: $request->header('X-User-Id');
+            if ($userId) {
+                $user = User::find($userId);
+            }
+        }
+
+        if (! $user) {
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'User tidak terautentikasi atau user_id tidak valid.',
+                ], 401);
+            }
+            return redirect()->route('login');
         }
 
         $validator = Validator::make($request->all(), [
@@ -221,11 +262,14 @@ class TransactionController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Validasi gagal.',
-                'errors' => $validator->errors(),
-            ], 422);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Validasi gagal.',
+                    'errors' => $validator->errors(),
+                ], 422);
+            }
+            return back()->withErrors($validator)->withInput();
         }
 
         $recipientAccount = $request->input('recipient_account');
@@ -234,27 +278,36 @@ class TransactionController extends Controller
 
         // Cek apakah transfer ke diri sendiri
         if ($recipientAccount === $user->account_number) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Tidak dapat melakukan transfer ke rekening sendiri.',
-            ], 400);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Tidak dapat melakukan transfer ke rekening sendiri.',
+                ], 400);
+            }
+            return back()->withErrors(['recipient_account' => 'Tidak dapat melakukan transfer ke rekening sendiri.'])->withInput();
         }
 
         // Cek apakah nomor rekening penerima ada
         $recipient = User::where('account_number', $recipientAccount)->first();
         if (! $recipient) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Nomor rekening tujuan tidak ditemukan.',
-            ], 404);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Nomor rekening tujuan tidak ditemukan.',
+                ], 404);
+            }
+            return back()->withErrors(['recipient_account' => 'Nomor rekening tujuan tidak ditemukan.'])->withInput();
         }
 
         // Cek kecukupan saldo
         if ($user->balance < $amount) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Saldo tidak mencukupi untuk melakukan transfer.',
-            ], 400);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Saldo tidak mencukupi untuk melakukan transfer.',
+                ], 400);
+            }
+            return back()->withErrors(['amount' => 'Saldo tidak mencukupi untuk melakukan transfer.'])->withInput();
         }
 
         try {
@@ -278,20 +331,28 @@ class TransactionController extends Controller
                 ]);
             });
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Transfer berhasil dilakukan.',
-                'data' => [
-                    'transaction' => $transaction,
-                    'new_balance' => $user->balance,
-                ],
-            ]);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Transfer berhasil dilakukan.',
+                    'data' => [
+                        'transaction' => $transaction,
+                        'new_balance' => $user->balance,
+                    ],
+                ]);
+            }
+
+            return redirect()->route('transfer.form')
+                ->with('success', 'Transfer berhasil dilakukan. Saldo Anda sekarang: Rp ' . number_format($user->balance, 0, ',', '.'));
         } catch (\Exception $e) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Terjadi kesalahan sistem saat memproses transfer.',
-                'error' => $e->getMessage(),
-            ], 500);
+            if ($request->wantsJson()) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Terjadi kesalahan sistem saat memproses transfer.',
+                    'error' => $e->getMessage(),
+                ], 500);
+            }
+            return back()->withErrors(['error' => 'Terjadi kesalahan sistem saat memproses transfer.'])->withInput();
         }
     }
 

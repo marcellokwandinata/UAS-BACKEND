@@ -1,12 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-<<<<<<< Updated upstream
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-=======
 use App\Http\Controllers\TransactionController;
->>>>>>> Stashed changes
 
 // Redirect ke login saat buka domain utama
 Route::get('/', function () {
@@ -26,9 +23,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/{id}/edit',   [UserController::class, 'edit'])->name('user.edit');
     Route::patch('/user/{id}',      [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}',     [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/user/add-balance',[UserController::class, 'addBalance'])->name('user.addBalance');
+    Route::post('/user/reset-balance',[UserController::class, 'resetBalance'])->name('user.resetBalance');
     Route::post('/logout',          [AuthController::class, 'logout'])->name('logout');
+    
+    // TRANSACTION
+    Route::get('/transaction',      [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transfer',         [TransactionController::class, 'transferForm'])->name('transfer.form');
+    Route::post('/transfer',        [TransactionController::class, 'transfer'])->name('transfer.submit');
 });
-
-Route::get('/transaction', [TransactionController::class,'index'])->name('transaction.index');
-Route::get('/transfer', [TransactionController::class, 'transferForm'])->name('transfer.form');
-Route::post('/transfer', [TransactionController::class, 'transfer'])->name('transfer.submit');
