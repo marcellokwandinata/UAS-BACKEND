@@ -3,7 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+<<<<<<< HEAD
+use App\Http\Controllers\TransactionController;
+=======
 use App\Http\Controllers\AdminController;
+>>>>>>> 3da7b1a131c8fe49c37fb8daa3899273775b36c9
 
 // Redirect ke login saat buka domain utama
 Route::get('/', function () {
@@ -18,6 +22,21 @@ Route::post('/user/register', [AuthController::class, 'store'])->name('user.stor
 
 // USER NASABAH 
 Route::middleware(['auth'])->group(function () {
+<<<<<<< HEAD
+    Route::get('/user',             [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/{id}',        [UserController::class, 'show'])->name('user.show');
+    Route::get('/user/{id}/edit',   [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/user/{id}',      [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}',     [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/user/add-balance',[UserController::class, 'addBalance'])->name('user.addBalance');
+    Route::post('/user/reset-balance',[UserController::class, 'resetBalance'])->name('user.resetBalance');
+    Route::post('/logout',          [AuthController::class, 'logout'])->name('logout');
+    
+    // TRANSACTION
+    Route::get('/transaction',      [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transfer',         [TransactionController::class, 'transferForm'])->name('transfer.form');
+    Route::post('/transfer',        [TransactionController::class, 'transfer'])->name('transfer.submit');
+=======
     Route::get('/user',                            [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{id}',                       [UserController::class, 'show'])->name('user.show');
     Route::get('/user/{id}/edit',                  [UserController::class, 'edit'])->name('user.edit');
@@ -39,4 +58,5 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/user/{id}',    [AdminController::class, 'show'])->name('admin.user.show');
     Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('admin.user.destroy');
     Route::post('/admin/logout',      [AdminController::class, 'logout'])->name('admin.logout');
+>>>>>>> 3da7b1a131c8fe49c37fb8daa3899273775b36c9
 });

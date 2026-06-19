@@ -60,6 +60,38 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
     }
 
+<<<<<<< HEAD
+    /**
+     * POST /user/add-balance
+     * Menambahkan saldo nasabah (demo purpose).
+     */
+    public function addBalance(Request $request)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+        ]);
+
+        $user = Auth::user();
+        $amount = (float) $request->input('amount');
+        
+        $user->balance += $amount;
+        $user->save();
+
+        return redirect()->route('user.index')->with('success', 'Saldo berhasil ditambahkan sebesar Rp ' . number_format($amount, 0, ',', '.'));
+    }
+
+    /**
+     * POST /user/reset-balance
+     * Mereset saldo nasabah ke 0 (demo purpose).
+     */
+    public function resetBalance(Request $request)
+    {
+        $user = Auth::user();
+        $user->balance = 0;
+        $user->save();
+
+        return redirect()->route('user.index')->with('success', 'Saldo berhasil direset ke Rp 0');
+=======
     // Menampilkan halaman ganti password
     public function changePasswordForm($id)
     {
@@ -95,5 +127,6 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('user.index')->with('success', 'Password berhasil diubah!');
+>>>>>>> 3da7b1a131c8fe49c37fb8daa3899273775b36c9
     }
 }

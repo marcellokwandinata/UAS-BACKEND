@@ -9,16 +9,18 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('name', 'full_name');
-            $table->string('account_number')->unique()->after('password');
+            if (Schema::hasColumn('users', 'name') && !Schema::hasColumn('users', 'full_name')) {
+                $table->renameColumn('name', 'full_name');
+            }
         });
     }
 
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->renameColumn('full_name', 'name');
-            $table->dropColumn('account_number');
+            if (Schema::hasColumn('users', 'full_name') && !Schema::hasColumn('users', 'name')) {
+                $table->renameColumn('full_name', 'name');
+            }
         });
     }
 };
