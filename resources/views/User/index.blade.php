@@ -59,13 +59,10 @@
 <div style="margin-bottom: 20px;">
     <a href="{{ route('user.show', $user->id) }}"><button>Lihat Detail</button></a>
     <a href="{{ route('user.edit', $user->id) }}"><button>Edit Profil</button></a>
+    <a href="{{ route('user.changePasswordForm', $user->id) }}"><button>Ganti Password</button></a>
 </div>
 
 <br>
-<form action="{{ route('logout') }}" method="POST" style="display:inline;">
-    <a href="{{ route('user.show', $user->id) }}"><button>Lihat Detail</button></a>
-    <a href="{{ route('user.edit', $user->id) }}"><button>Edit Profil</button></a>
-    <a href="{{ route('user.changePasswordForm', $user->id) }}"><button>Ganti Password</button></a>
 
 <br><br>
 <form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
