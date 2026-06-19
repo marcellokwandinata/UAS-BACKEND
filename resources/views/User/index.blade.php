@@ -28,6 +28,7 @@
 </table>
 
 <br>
+<<<<<<< HEAD
 <div style="margin-bottom: 20px; padding: 15px; background-color: #f9f9f9; border: 1px solid #ddd; display: flex; gap: 30px;">
     <div style="flex: 1;">
         <h3>Tambah Saldo</h3>
@@ -63,6 +64,14 @@
 
 <br>
 <form action="{{ route('logout') }}" method="POST" style="display:inline;">
+=======
+<a href="{{ route('user.show', $user->id) }}"><button>Lihat Detail</button></a>
+<a href="{{ route('user.edit', $user->id) }}"><button>Edit Profil</button></a>
+<a href="{{ route('user.changePasswordForm', $user->id) }}"><button>Ganti Password</button></a>
+
+<br><br>
+<form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
+>>>>>>> 3da7b1a131c8fe49c37fb8daa3899273775b36c9
     @csrf
     <button type="submit">Logout</button>
 </form>
