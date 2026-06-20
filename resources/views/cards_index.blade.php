@@ -10,20 +10,25 @@
     </a>
 </div>
 
-<div class="row g-4">
-    {{-- Card PIN --}}
-    <div class="col-md-6">
-        <div class="card border-0 shadow-sm">
-            <div class="card-body d-flex justify-content-between align-items-center">
-                <div>
-                    <h6 class="fw-bold"><i class="bi bi-lock text-primary"></i> PIN Transaksi</h6>
-                    <small class="text-muted">Terakhir diubah: 01 Jan 2026</small>
-                </div>
-                {{-- Diarahkan ke route khusus atau aksi spesifik jika diperlukan nantinya --}}
-                <a href="#" class="btn btn-sm btn-outline-primary">Ubah</a>
+{{-- Card PIN --}}
+<div class="col-md-6">
+    <div class="card border-0 shadow-sm">
+        <div class="card-body d-flex justify-content-between align-items-center">
+            <div>
+                <h6 class="fw-bold"><i class="bi bi-lock text-primary"></i> PIN Transaksi</h6>
+                <small class="text-muted">
+                    Terakhir diubah: 
+                    @if($pinSecurity)
+                        {{ \Carbon\Carbon::parse($pinSecurity->updated_at)->translatedFormat('d M Y') }}
+                    @else
+                        Belum pernah diubah
+                    @endif
+                </small>
             </div>
+            <a href="{{ route('security.pin') }}" class="btn btn-sm btn-outline-primary">Ubah</a>
         </div>
     </div>
+</div>
 
     {{-- Card 2FA --}}
     <div class="col-md-6">
@@ -33,7 +38,7 @@
                     <h6 class="fw-bold"><i class="bi bi-phone text-success"></i> Two-Factor Authentication</h6>
                     <small class="text-muted">Status: <span class="badge bg-success">Aktif</span></small>
                 </div>
-                <a href="#" class="btn btn-sm btn-outline-success">Kelola</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-success">Kelola</a>
             </div>
         </div>
     </div>
@@ -46,7 +51,6 @@
                     <h6 class="fw-bold"><i class="bi bi-laptop text-warning"></i> Sesi Aktif</h6>
                     <small class="text-muted">2 perangkat aktif</small>
                 </div>
-                {{-- Menggunakan route detail sessions bawaan --}}
                 <a href="{{ route('show_cards', 'sessions') }}" class="btn btn-sm btn-outline-warning">Lihat</a>
             </div>
         </div>
@@ -60,7 +64,7 @@
                     <h6 class="fw-bold"><i class="bi bi-slash-circle text-danger"></i> Blokir Akun</h6>
                     <small class="text-muted">Nonaktifkan akun sementara</small>
                 </div>
-                <a href="#" class="btn btn-sm btn-outline-danger">Kelola</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-danger">Kelola</a>
             </div>
         </div>
     </div>
@@ -98,8 +102,11 @@
                         <a href="{{ route('show_cards', $card->id) }}" class="btn btn-sm btn-info text-white">
                             <i class="bi bi-eye"></i>
                         </a>
-                        
-                        {{-- TOMBOL CARDS_EDIT DI SINI SUDAH DIHAPUS --}}
+
+                        {{-- Tombol Edit --}}
+                        <a href="{{ route('cards.edit', $card->id) }}" class="btn btn-sm btn-warning text-white">
+                            <i class="bi bi-pencil"></i>
+                        </a>
 
                         {{-- Tombol Hapus Data --}}
                         <form action="{{ route('cards.destroy', $card->id) }}" method="POST"

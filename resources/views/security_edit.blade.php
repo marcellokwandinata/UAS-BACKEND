@@ -54,41 +54,51 @@
 <body>
 <h1>Edit Security</h1>
 
-<!-- BUTTON -->
-<a href="/" class="btn">Home</a>
-<a href="/securities" class="btn">Kembali ke List</a>
+@extends('layouts.app')
 
-<!-- SALDO -->
-<div class="saldo">
-    💰 Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
+@section('title', 'Ubah Keamanan')
+
+@section('content')
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4 class="fw-bold"><i class="bi bi-shield-lock"></i> Ubah Kartu</h4>
+    <div class="d-flex gap-2">
+        <a href="/" class="btn btn-secondary">Home</a>
+        <a href="{{ route('security.index') }}" class="btn btn-outline-secondary">Kembali ke List</a>
+    </div>
 </div>
 
-<!-- FORM -->
-<form action="/securities/{{ $security->id }}" method="POST">
-    @csrf
-    @method('PUT')
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+        <form action="{{ route('security.update', $security->id) }}" method="POST">
+            @csrf
+            @method('PATCH')
 
-    <label>Nama Pengaturan</label>
-    <input type="text" name="name" value="{{ old('name', $security->name) }}">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Nama Pengaturan</label>
+                <input type="text" name="name" class="form-control"
+                    value="{{ old('name', $security->name) }}" required>
+            </div>
 
-    <label>Tipe Keamanan</label>
-    <select name="type">
-        <option value="pin" {{ $security->type == 'pin' ? 'selected' : '' }}>PIN Transaksi</option>
-        <option value="2fa" {{ $security->type == '2fa' ? 'selected' : '' }}>Two-Factor Authentication</option>
-        <option value="password" {{ $security->type == 'password' ? 'selected' : '' }}>Password</option>
-        <option value="biometric" {{ $security->type == 'biometric' ? 'selected' : '' }}>Biometrik</option>
-    </select>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Tipe Keamanan</label>
+                <select name="type" class="form-select">
+                    <option value="pin" {{ $security->type == 'pin' ? 'selected' : '' }}>PIN Transaksi</option>
+                    <option value="2fa" {{ $security->type == '2fa' ? 'selected' : '' }}>Two-Factor Authentication</option>
+                    <option value="password" {{ $security->type == 'password' ? 'selected' : '' }}>Password</option>
+                    <option value="biometric" {{ $security->type == 'biometric' ? 'selected' : '' }}>Biometrik</option>
+                </select>
+            </div>
 
-    <label>Nilai / Kode Baru</label>
-    <input type="password" name="value" placeholder="Kosongkan jika tidak ingin mengubah">
+            <div class="mb-3">
+                <label class="form-label fw-bold">Status</label>
+                <select name="status" class="form-select">
+                    <option value="aktif" {{ $security->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
+                    <option value="nonaktif" {{ $security->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
+                </select>
+            </div>
 
-    <label>Status</label>
-    <select name="status">
-        <option value="aktif" {{ $security->status == 'aktif' ? 'selected' : '' }}>Aktif</option>
-        <option value="nonaktif" {{ $security->status == 'nonaktif' ? 'selected' : '' }}>Nonaktif</option>
-    </select>
-
-    <button type="submit" class="btn btn-primary" style="margin-top: 15px;">Update</button>
-</form>
-</body>
-</html>
+            <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </form>
+    </div>
+</div>
+@endsection

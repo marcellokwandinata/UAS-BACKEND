@@ -19,7 +19,7 @@
                     <h6 class="fw-bold"><i class="bi bi-lock text-primary"></i> PIN Transaksi</h6>
                     <small class="text-muted">Terakhir diubah: 01 Jan 2025</small>
                 </div>
-                <a href="{{ route('security.edit', 'pin') }}" class="btn btn-sm btn-outline-primary">Ubah</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-primary">Ubah</a>
             </div>
         </div>
     </div>
@@ -32,7 +32,7 @@
                     <h6 class="fw-bold"><i class="bi bi-phone text-success"></i> Two-Factor Authentication</h6>
                     <small class="text-muted">Status: <span class="badge bg-success">Aktif</span></small>
                 </div>
-                <a href="{{ route('security.edit', '2fa') }}" class="btn btn-sm btn-outline-success">Kelola</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-success">Kelola</a>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                     <h6 class="fw-bold"><i class="bi bi-laptop text-warning"></i> Sesi Aktif</h6>
                     <small class="text-muted">2 perangkat aktif</small>
                 </div>
-                <a href="{{ route('security.show', 'sessions') }}" class="btn btn-sm btn-outline-warning">Lihat</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-warning">Lihat</a>
             </div>
         </div>
     </div>
@@ -58,7 +58,7 @@
                     <h6 class="fw-bold"><i class="bi bi-slash-circle text-danger"></i> Blokir Akun</h6>
                     <small class="text-muted">Nonaktifkan akun sementara</small>
                 </div>
-                <a href="{{ route('security.edit', 'block') }}" class="btn btn-sm btn-outline-danger">Kelola</a>
+                <a href="{{ route('security.index') }}" class="btn btn-sm btn-outline-danger">Kelola</a>
             </div>
         </div>
     </div>

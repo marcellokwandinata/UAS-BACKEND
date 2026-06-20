@@ -1,124 +1,103 @@
 <?php
 
-class SecurityController
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class SecurityController extends Controller
 {
-
-    public function deleteUser()
+    public function index()
     {
-        global $mysqli;
-
-        if (isset($_GET['id'])) {
-
-            $id = $_GET['id'];
-
-            $check = $mysqli->prepare("SELECT id FROM users WHERE id = ?");
-            $check->bind_param("i", $id);
-            $check->execute();
-            $check->store_result();
-
-            if ($check->num_rows === 0) {
-
-                echo "User not found!";
-                echo "<br><a href='view_users.php'>Kembali ke daftar users</a>";
-
-                $check->close();
-                $mysqli->close();
-                exit;
-            }
-
-            $check->close();
-
-            $stmt = $mysqli->prepare("DELETE FROM users WHERE id = ?");
-            $stmt->bind_param("i", $id);
-
-            if ($stmt->execute()) {
-
-                echo "User berhasil dihapus!";
-                echo "<br><a href='view_users.php'>Kembali ke daftar users</a>";
-
-            } else {
-
-                echo "Error: " . $stmt->error;
-            }
-
-            $stmt->close();
-            $mysqli->close();
-
-        } else {
-
-            echo "ID tidak ditemukan!";
-        }
+        $securities = DB::table('securities')->get();
+        return view('security_index', compact('securities'));
     }
 
-
-    public function login()
+    public function create()
     {
-        global $mysqli;
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $username = $_POST['username'];
-            $password = $_POST['password'];
-
-            $stmt = $mysqli->prepare(
-                "SELECT id, username, password FROM users WHERE username = ?"
-            );
-
-            $stmt->bind_param("s", $username);
-            $stmt->execute();
-
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-
-                $user = $result->fetch_assoc();
-
-                if ($password == $user['password']) {
-
-                    echo "Login berhasil!";
-                    echo "<br>Selamat datang di Digital Banking";
-
-                } else {
-
-                    echo "Password salah!";
-                }
-
-            } else {
-
-                echo "Username tidak ditemukan!";
-            }
-
-            $stmt->close();
-            $mysqli->close();
-        }
+        return view('create_security');
     }
 
-
-    public function verifyOTP()
+    public function show($id)
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-            $otp = $_POST['otp'];
-
-            if ($otp == "123456") {
-
-                echo "OTP valid. Transaksi berhasil.";
-
-            } else {
-
-                echo "OTP tidak valid!";
-            }
-        }
+        $security = DB::table('securities')->where('id', $id)->first();
+        if (!$security) abort(404);
+        return view('security_show', compact('security'));
     }
 
-
-    // LOGOUT
-    public function logout()
+    public function store(Request $request)
     {
-        session_start();
-        session_destroy();
+         DB::table('securities')->insert([
+        'id'         => uniqid('', true),
+        'user_id'    => auth()->id(),
+        'name'       => $request->name,
+        'type'       => $request->type,
+        'status'     => $request->status,
+        'created_at' => now(),
+        'updated_at' => now(),
+        ]);
 
-        echo "Logout berhasil!";
+        return redirect('/securities')->with('success', 'Data berhasil ditambahkan.');
     }
+
+    public function edit($id)
+    {
+        $security = DB::table('securities')->where('id', $id)->first();
+        if (!$security) abort(404);
+        return view('security_edit', compact('security'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        DB::table('securities')->where('id', $id)->update([
+            'name'       => $request->name,
+            'type'       => $request->type,
+            'status'     => $request->status,
+            'updated_at' => now(),
+        ]);
+
+        return redirect('/securities')->with('success', 'Data berhasil diperbarui.');
+    }
+
+    public function destroy($id)
+    {
+        DB::table('securities')->where('id', $id)->delete();
+        return redirect('/securities')->with('success', 'Data berhasil dihapus.');
+    }
+    public function pinEdit()
+    {
+        return view('security_pin');
+    }
+
+    public function pinUpdate(Request $request)
+{
+    if ($request->new_pin !== $request->confirm_pin) {
+        return back()->withErrors(['PIN baru dan konfirmasi PIN tidak cocok.']);
+    }
+
+    if (strlen($request->new_pin) !== 6 || !ctype_digit($request->new_pin)) {
+        return back()->withErrors(['PIN harus 6 digit angka.']);
+    }
+
+    $existing = DB::table('securities')->where('type', 'pin')->first();
+
+    if ($existing) {
+        DB::table('securities')->where('type', 'pin')->update([
+            'status'     => 'aktif',
+            'updated_at' => now(),
+        ]);
+    } else {
+        DB::table('securities')->insert([
+            'user_id'    => auth()->id(),
+            'name'       => 'PIN Transaksi',
+            'type'       => 'pin',
+            'status'     => 'aktif',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+    }
+
+    return redirect()->route('security.pin')->with('success', 'PIN anda berhasil diubah.');
 }
-?>
+
+}
