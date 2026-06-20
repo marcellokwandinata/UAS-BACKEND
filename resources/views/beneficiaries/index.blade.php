@@ -22,8 +22,9 @@
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>
-                <a href="{{ route('beneficiaries.show', $beneficiary) }}">
-                    {{ $beneficiary->beneficiary_name }}
+                <a href="{{ route('transfer.form', [
+                'account_number' => $beneficiary->account_number]) }}">
+                {{ $beneficiary->beneficiary_name }}
                 </a>
             </td>
             <td>{{ $beneficiary->account_number }}</td>
