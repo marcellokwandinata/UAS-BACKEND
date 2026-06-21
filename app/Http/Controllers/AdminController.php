@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Admin;
 use App\Models\User;
+use App\Models\transaction;
 
 class AdminController extends Controller
 {
@@ -80,7 +81,13 @@ class AdminController extends Controller
     public function show($id)
     {
         $user = User::findOrFail($id);
-        return view('Admin.show', compact('user'));
+
+        $transactions = transaction::where('user_id' , $user->id)
+            ->orWhere('recipient_account' , $user->account_number)
+            ->latest()
+            ->get();
+            
+        return view('Admin.show', compact('user' , 'transactions'));
     }
 
     // Menghapus akun nasabah dari sisi admin
