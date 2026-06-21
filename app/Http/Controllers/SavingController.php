@@ -106,22 +106,37 @@ class SavingController extends Controller
 
     public function deposit(Request $request, $id)
     {
-        $saving = Saving::findOrFail($id);
+         $saving = Saving::findOrFail($id);
 
-        if ($saving->user_id != Auth::id()) {
-            abort(403);
-        }
+    if ($saving->user_id != Auth::id()) {
+        abort(403);
+    }
 
-        $request->validate([
-            'amount' => 'required|numeric|min:1000',
-        ]);
+    $request->validate([
+        'amount' => 'required|numeric|min:1000',
+    ]);
 
-        DB::transaction(function () use ($saving, $request) {
-            $saving->increment('current_amount', $request->amount);
-        });
+    $user = Auth::user();
+    $amount = $request->amount;
 
-        return redirect()
-            ->route('saving.show', $saving->id)
-            ->with('success', 'Dana berhasil ditambahkan.');
+    // Cek saldo rekening
+    if ($user->balance < $amount) {
+        return back()->with('error', 'Saldo rekening tidak mencukupi.');
+    }
+
+    DB::transaction(function () use ($user, $saving, $amount) {
+
+        // Kurangi saldo rekening
+        $user->balance -= $amount;
+        $user->save();
+
+        // Tambah saldo tabungan
+        $saving->current_amount += $amount;
+        $saving->save();
+    });
+
+    return redirect()
+        ->route('saving.show', $saving->id)
+        ->with('success', 'Dana berhasil ditambahkan ke tabungan.');
     }
 }
