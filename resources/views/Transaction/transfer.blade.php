@@ -19,7 +19,7 @@
     
     Nomor Rekening Tujuan:
     <br>
-    <input type="text" name="recipient_account" value="{{ old('recipient_account') }}" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
+    <input type="text" name="recipient_account" value="{{ old('recipient_account', $accountNumber ?? '') }}" required style="width: 100%; padding: 8px; margin-bottom: 10px;">
     <br><br>
     
     Nominal Transfer (Rp):

@@ -3,16 +3,21 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CardsController;
 use App\Http\Controllers\SecurityController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminController;
 
-// Redirect ke login saat buka domain utama
+// Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect('/accounts');
 });
 
+Route::resource('posts', PostController::class);
+
+Route::resource('beneficiaries', BeneficiaryController::class);
 // AUTH NASABAH (Login & Register)
 Route::get('/user/login',     [AuthController::class, 'index'])->name('login');
 Route::post('/user/login',    [AuthController::class, 'login'])->name('login.perform');

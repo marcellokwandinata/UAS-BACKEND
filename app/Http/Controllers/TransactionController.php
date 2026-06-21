@@ -77,13 +77,14 @@ class TransactionController extends Controller
     /**
      * Tampilkan form transfer.
      */
-    public function transferForm()
+    public function transferForm(Request $request)
     {
-        if (! auth()->check()) {
-            return redirect()->route('login');
-        }
-
-        return view('Transaction.transfer');
+        // if (! auth()->check()) {
+        //     return redirect()->route('login');
+        // }
+         $accountNumber = $request->account_number;
+         return view('Transaction.transfer', compact('accountNumber'));
+        //return view('Transaction.transfer');
     }
 
     /**
