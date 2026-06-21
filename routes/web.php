@@ -8,6 +8,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SavingController;
 
 // Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
@@ -48,6 +49,16 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/user/{id}/change-password',       [UserController::class, 'changePasswordForm'])->name('user.changePasswordForm');
     Route::patch('/user/{id}/change-password',     [UserController::class, 'changePassword'])->name('user.changePassword');
     Route::post('/user/logout',                    [AuthController::class, 'logout'])->name('user.logout');
+
+    //SAVING
+    Route::get('/saving', [SavingController::class, 'index'])->name('saving.index');
+    Route::get('/saving/create', [SavingController::class, 'create'])->name('saving.create');
+    Route::post('/saving/store', [SavingController::class, 'store'])->name('saving.store');
+    Route::get('/saving/{id}', [SavingController::class, 'show'])->name('saving.show');
+    Route::get('/saving/{id}/edit', [SavingController::class, 'edit'])->name('saving.edit');
+    Route::patch('/saving/{id}', [SavingController::class, 'update'])->name('saving.update');
+    Route::delete('/saving/{id}', [SavingController::class, 'destroy'])->name('saving.destroy');
+    Route::post('/saving/{id}/deposit', [SavingController::class, 'deposit'])->name('saving.deposit');
 });
 
 // ADMIN 

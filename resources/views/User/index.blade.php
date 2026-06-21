@@ -54,6 +54,7 @@
 <div style="margin-bottom: 20px;">
     <a href="{{ route('transaction.index') }}"><button>Riwayat Transaksi</button></a>
     <a href="{{ route('transfer.form') }}"><button>Transfer Saldo</button></a>
+    <a href="{{ route('saving.index') }}"><button>Tabungan Saya</button></a>
 </div>
 
 <div style="margin-bottom: 20px;">

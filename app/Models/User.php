@@ -60,6 +60,11 @@ class User extends Authenticatable
         });
     }
 
+    public function savings()
+    {
+    return $this->hasMany(Saving::class);
+    }
+
     /**
      * Generate a unique 10-digit account number.
      */
