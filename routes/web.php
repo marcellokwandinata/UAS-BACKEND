@@ -14,7 +14,7 @@ use App\Http\Controllers\TopupController;
 
 // Redirect ke halaman login saat buka domain utama
 Route::get('/', function () {
-    return redirect('/login');
+    return redirect()->route('login');
 });
 
 Route::get('/reset-balance', function () {
