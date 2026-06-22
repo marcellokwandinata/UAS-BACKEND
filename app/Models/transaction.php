@@ -20,7 +20,7 @@ class transaction extends Model
         'status',             // Status transaksi: 'pending', 'success', atau 'failed'
     ];
 
-    // 3. Casting Data (Opsional tapi direkomendasikan): Mengubah tipe data field secara otomatis saat dipanggil di Laravel
+    // 3. Casting Data (Opsion  al tapi direkomendasikan): Mengubah tipe data field secara otomatis saat dipanggil di Laravel
     protected $casts = [
         'amount' => 'decimal:2', // Memastikan nominal uang dibaca sebagai desimal/float
     ];

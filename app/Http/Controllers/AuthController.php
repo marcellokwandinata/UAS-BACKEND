@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function create()
     {
         if (Auth::check()) {
-            return redirect()->route('user.index');
+            return redirect()->route('login');
         }
         return view('Auth.user_register');
     }

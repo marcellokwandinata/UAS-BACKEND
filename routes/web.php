@@ -12,7 +12,7 @@ use App\Http\Controllers\TopupController;
 
 // Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
-    return redirect('/user');
+    return redirect()->route('login');
 });
 
 Route::get('/reset-balance', function () {
