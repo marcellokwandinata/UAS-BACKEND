@@ -385,7 +385,7 @@
     </div>
 
     <div class="back-btn">
-        <a href="{{ route('user.index') }}" class="btn btn-light">← Kembali ke Dashboard</a>
+        <a href="{{ route('user.index') }}" class="btn btn-light">← Halaman Utama</a>
     </div>
 
 </div>

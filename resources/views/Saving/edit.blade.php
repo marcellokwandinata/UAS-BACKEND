@@ -36,4 +36,4 @@
     <button type="submit">Simpan Perubahan</button>
 </form>
 <br>
-<a href="{{ route('saving.show', $saving->id) }}">Kembali</a>
+<a href="{{ route('saving.show', $saving->id) }}">← Kembali</a>

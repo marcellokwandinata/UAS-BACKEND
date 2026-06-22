@@ -156,8 +156,8 @@
 
             <div class="button-group">
 
-                <a href="{{ route('transaction.index') }}" class="btn">
-                    Kembali
+                <a href="{{ route('user.index') }}" class="btn">
+                    ← Halaman Utama
                 </a>
 
                 <button type="submit" class="btn btn-primary">

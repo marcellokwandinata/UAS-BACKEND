@@ -53,4 +53,4 @@
     <button type="submit">Hapus</button>
 </form>
 <br>
-<a href="{{ route('saving.index') }}">Kembali</a>
+<a href="{{ route('saving.index') }}">← Halaman Utama</a>
