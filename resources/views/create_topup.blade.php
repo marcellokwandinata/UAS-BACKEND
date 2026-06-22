@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ganti Password</title>
+    <title>Top Up Saldo</title>
 
     <style>
         body {
@@ -37,10 +37,13 @@
             padding: 25px;
         }
 
-        .form-box {
+        .saldo {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         label {
@@ -50,7 +53,8 @@
             font-weight: bold;
         }
 
-        input {
+        input,
+        select {
             width: 100%;
             height: 42px;
             border: none;
@@ -58,7 +62,6 @@
             padding: 0 10px;
             font-size: 15px;
             box-sizing: border-box;
-            background: #f8f8f8;
         }
 
         .button-group {
@@ -86,14 +89,6 @@
             background: black;
             color: white;
         }
-
-        .error-box {
-            background: #ffe5e5;
-            color: red;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 15px;
-        }
     </style>
 </head>
 
@@ -105,56 +100,46 @@
 
 <div class="container">
 
-    <h1>Ganti Password</h1>
+    <h1>Top Up Saldo</h1>
     <div class="subtitle">
-        Ubah password akun Anda untuk keamanan.
+        Tambahkan saldo ke rekening Anda.
     </div>
 
     <div class="card">
 
-        <div class="form-box">
-
-            @if ($errors->any())
-                <div class="error-box">
-                    <ul style="margin:0; padding-left:18px;">
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-
-            <form method="POST" action="{{ route('user.changePassword', $user->id) }}">
-                @csrf
-                @method('PATCH')
-
-                <label>Password Lama</label>
-                <input type="password" name="current_password" required>
-
-                <label>Password Baru</label>
-                <input type="password" name="new_password" required>
-
-                <label>Konfirmasi Password Baru</label>
-                <input type="password" name="new_password_confirmation" required>
-
-                <div class="button-group">
-
-                    <a href="{{ route('user.index') }}" class="btn">
-                        Kembali
-                    </a>
-
-                    <button type="submit" class="btn btn-primary">
-                        Simpan Password
-                    </button>
-
-                </div>
-            </form>
-
+        <div class="saldo">
+            Saldo Saat Ini:
+            Rp {{ number_format(Auth::user()->balance,0,',','.') }}
         </div>
 
+        <form action="/topups" method="POST">
+            @csrf
+
+            <label>Metode Pembayaran</label>
+            <select name="payment_method">
+                <option value="QRIS">QRIS</option>
+                <option value="Transfer Bank">Transfer Bank</option>
+                <option value="E-Wallet">E-Wallet</option>
+            </select>
+
+            <label>Nominal Top Up</label>
+            <input type="number"
+                   name="nominal"
+                   placeholder="Contoh: 100000"
+                   required>
+
+            <div class="button-group">
+
+                <a href="{{ route('user.index') }}" class="btn">
+                    Kembali
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Proses Top Up
+                </button>
+            </div>
+        </form>
     </div>
-
 </div>
-
 </body>
 </html>
