@@ -367,7 +367,6 @@
 
             <!-- Tombol aksi -->
             <div class="card-actions">
-                <a href="{{ route('cards.setLimitForm', $card->id) }}" class="btn btn-outline">Set Limit</a>
                 <form action="{{ route('cards.destroy', $card->id) }}" method="POST" style="display:inline;"
                     onsubmit="return confirm('Yakin hapus kartu ini?')">
                     @csrf
