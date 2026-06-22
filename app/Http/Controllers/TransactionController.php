@@ -92,7 +92,7 @@ class TransactionController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Validasi gagal.', 'errors' => $validator->errors()], 422);
         }
 
-        $amount      = (int)$request->input('amount');
+        $amount = (float) str_replace(['.', ','], '', $request->amount);
         $description = $request->input('description') ?: 'Deposit / Top Up Saldo';
 
         try {
@@ -140,7 +140,7 @@ class TransactionController extends Controller
             return response()->json(['status' => 'error', 'message' => 'Validasi gagal.', 'errors' => $validator->errors()], 422);
         }
 
-        $amount      = (int) $request->input('amount');
+        $amount = (float) str_replace(['.', ','], '', $request->amount);
         $description = $request->input('description') ?: 'Tarik Tunai';
 
         if ($user->balance < $amount) {
@@ -206,7 +206,7 @@ class TransactionController extends Controller
         }
 
         $recipientAccount = $request->input('recipient_account');
-        $amount = (int) str_replace('.', '', $request->amount);
+        $amount = (float) str_replace(['.', ','], '', $request->amount);
         $description      = $request->input('description') ?: 'Transfer Saldo';
 
         if ($recipientAccount === $user->account_number) {
