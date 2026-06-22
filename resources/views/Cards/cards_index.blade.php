@@ -98,10 +98,6 @@
                     </td>
                     <td>{{ \Carbon\Carbon::parse($card->created_at)->format('d M Y, H:i') }}</td>
                     <td class="d-flex gap-1">
-                        {{-- Tombol Detail / Lihat --}}
-                        <a href="{{ route('show_cards', $card->id) }}" class="btn btn-sm btn-info text-white">
-                            <i class="bi bi-eye"></i>
-                        </a>
 
                         {{-- Tombol Edit --}}
                         <a href="{{ route('cards.edit', $card->id) }}" class="btn btn-sm btn-warning text-white">
