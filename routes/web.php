@@ -10,7 +10,7 @@ use App\Http\Controllers\AdminController;
 
 // Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
-    return redirect('/accounts');
+    return redirect('/user');
 });
 
 Route::resource('posts', PostController::class);
