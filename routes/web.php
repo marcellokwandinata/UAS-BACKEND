@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\BeneficiaryController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
@@ -8,9 +10,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\TopupController;
 
-// Redirect ke login saat buka domain utama
+// Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
-    return redirect()->route('login');
+    return redirect('/accounts');
 });
 
 Route::get('/reset-balance', function () {
@@ -19,6 +21,11 @@ Route::get('/reset-balance', function () {
 
     return "Balance reset ke 5.000.000";
 });
+
+=======
+Route::resource('posts', PostController::class);
+
+Route::resource('beneficiaries', BeneficiaryController::class);
 
 // AUTH NASABAH (Login & Register)
 Route::get('/user/login', [AuthController::class, 'index'])->name('login');
@@ -70,5 +77,10 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/user/{id}', [AdminController::class, 'show'])->name('admin.user.show');
     Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('admin.user.destroy');
+
     Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
+=======
+    Route::post('/admin/logout',      [AdminController::class, 'logout'])->name('admin.logout');
+});
+
