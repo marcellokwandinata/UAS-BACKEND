@@ -1,7 +1,23 @@
+@if(session('success'))
+    <div style="background:#ddffdd; color:green; padding:10px; margin-bottom:10px;">
+        {{ session('success') }}
+    </div>
+    <script>
+        alert("{{ session('success') }}");
+    </script>
+@endif
+
+@if(session('error'))
+    <div style="background:#ffdddd; color:red; padding:10px; margin-bottom:10px;">
+        {{ session('error') }}
+    </div>
+    <script>
+        alert("{{ session('error') }}");
+    </script>
+@endif
+
 <h1>Daftar Beneficiary</h1>
-
 <a href="{{ route('beneficiaries.create') }}">Tambah Beneficiary</a>
-
 <br><br>
 
 @if ($beneficiaries->isEmpty())

@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\Topup;
+use App\Models\History;
+use App\Models\Beneficiary;
 
 class UserController extends Controller
 {
@@ -13,7 +16,8 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('User.index', compact('user'));
+        $beneficiaries = Beneficiary::all();
+        return view('User.index', compact('user', 'beneficiaries'));
     }
 
     // Menampilkan detail profil nasabah
@@ -60,10 +64,6 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
     }
 
-    /**
-     * POST /user/add-balance
-     * Menambahkan saldo nasabah (demo purpose).
-     */
     public function addBalance(Request $request)
     {
         $request->validate([
@@ -72,17 +72,48 @@ class UserController extends Controller
 
         $user = Auth::user();
         $amount = (float) $request->input('amount');
-        
+
+        // Tambah saldo user
         $user->balance += $amount;
         $user->save();
 
-        return redirect()->route('user.index')->with('success', 'Saldo berhasil ditambahkan sebesar Rp ' . number_format($amount, 0, ',', '.'));
+        // Generate kode transaksi
+        $lastTopup = Topup::latest()->first();
+
+        if ($lastTopup && $lastTopup->transaction_code) {
+            $number = (int) substr($lastTopup->transaction_code, 3) + 1;
+        } else {
+            $number = 1;
+        }
+
+        $transactionCode = 'TRX' . str_pad($number, 3, '0', STR_PAD_LEFT);
+
+        // Simpan ke tabel topups
+        Topup::create([
+            'transaction_code' => $transactionCode,
+            'payment_method' => 'Top Up Saldo',
+            'nominal' => $amount,
+            'status' => 'Success',
+        ]);
+
+        // Simpan ke history
+        History::create([
+            'transaction_code' => $transactionCode,
+            'title' => 'Top Up Saldo',
+            'description' => 'Berhasil',
+            'amount' => $amount,
+            'balance_after' => $user->balance,
+            'transaction_time' => now(),
+        ]);
+
+        return redirect()->route('user.index')
+            ->with(
+                'success',
+                'Top Up berhasil sebesar Rp ' .
+                number_format($amount, 0, ',', '.')
+            );
     }
 
-    /**
-     * POST /user/reset-balance
-     * Mereset saldo nasabah ke 0 (demo purpose).
-     */
     public function resetBalance(Request $request)
     {
         $user = Auth::user();
