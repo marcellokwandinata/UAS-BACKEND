@@ -111,3 +111,64 @@
         Kirim saldo ke rekening tujuan.
     </div>
 
+    <div class="card">
+
+        {{-- ERROR --}}
+        @if ($errors->any())
+            <div class="error-box">
+                <ul style="margin:0; padding-left: 18px;">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        {{-- SUCCESS --}}
+        @if (session('success'))
+            <div class="success-box">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <form method="POST" action="{{ route('transfer.submit') }}">
+            @csrf
+
+            <label>Nomor Rekening Tujuan</label>
+            <input type="text"
+                   name="recipient_account"
+                   value="{{ old('recipient_account') }}"
+                   required>
+
+            <label>Nominal Transfer (Rp)</label>
+            <input type="number"
+                   name="amount"
+                   value="{{ old('amount') }}"
+                   min="1000"
+                   step="1000"
+                   required>
+
+            <label>Keterangan (Opsional)</label>
+            <input type="text"
+                   name="description"
+                   value="{{ old('description') }}"
+                   maxlength="255">
+
+            <div class="button-group">
+
+                <a href="{{ route('transaction.index') }}" class="btn">
+                    Kembali
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Lanjutkan Transfer
+                </button>
+
+            </div>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

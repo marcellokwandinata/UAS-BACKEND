@@ -22,7 +22,6 @@ Route::get('/reset-balance', function () {
     return "Balance reset ke 5.000.000";
 });
 
-=======
 Route::resource('posts', PostController::class);
 
 Route::resource('beneficiaries', BeneficiaryController::class);
@@ -80,7 +79,3 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
-=======
-    Route::post('/admin/logout',      [AdminController::class, 'logout'])->name('admin.logout');
-});
-
