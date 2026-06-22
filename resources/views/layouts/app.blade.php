@@ -29,7 +29,7 @@
                 <div class="flex items-center gap-4">
                     @auth
                         <span class="text-gray-700">{{ auth()->user()->name }}</span>
-                        <form method="POST" action="{{ route('logout') }}" class="inline">
+                        <form method="POST" action="{{ route('user.logout') }}" class="inline">
                             @csrf
                             <button type="submit" class="text-red-600 hover:text-red-700 font-medium">
                                 Logout
