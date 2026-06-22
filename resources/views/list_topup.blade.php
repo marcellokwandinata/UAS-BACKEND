@@ -163,8 +163,7 @@
         @endif
 
         <div class="saldo">
-            Saldo Saat Ini:
-            Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
+            Saldo Saat Ini: <strong>Rp {{ number_format(Auth::user()->balance, 0, ',', '.') }}</strong>
         </div>
 
         <div class="info">

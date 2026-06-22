@@ -62,10 +62,6 @@ class UserController extends Controller
         return redirect()->route('login')->with('success', 'Akun berhasil dihapus.');
     }
 
-    /**
-     * POST /user/add-balance
-     * Menambahkan saldo nasabah (demo purpose).
-     */
     public function addBalance(Request $request)
     {
         $request->validate([
@@ -116,10 +112,6 @@ class UserController extends Controller
             );
     }
 
-    /**
-     * POST /user/reset-balance
-     * Mereset saldo nasabah ke 0 (demo purpose).
-     */
     public function resetBalance(Request $request)
     {
         $user = Auth::user();
