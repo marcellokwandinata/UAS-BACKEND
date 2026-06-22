@@ -12,9 +12,7 @@ use App\Http\Controllers\TopupController;
 
 // Redirect ke halaman accounts saat buka domain utama
 Route::get('/', function () {
-    return redirect()->route('user');
-    return redirect('/accounts');
-
+    return redirect()->route('login');
 });
 
 Route::get('/reset-balance', function () {
@@ -37,7 +35,7 @@ Route::post('/user/register', [AuthController::class, 'store'])->name('user.stor
 Route::middleware(['auth'])->group(function () {
 
     // USER NASABAH
-    Route::get('/user', [UserController::class, 'index'])->name('user');
+    Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{id}', [UserController::class, 'show'])->name('user.show');
     Route::get('/user/{id}/edit', [UserController::class, 'edit'])->name('user.edit');
     Route::patch('/user/{id}', [UserController::class, 'update'])->name('user.update');
