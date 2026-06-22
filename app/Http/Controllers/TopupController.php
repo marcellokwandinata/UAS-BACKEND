@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\History;
 use App\Models\Topup;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TopupController extends Controller
 {
@@ -35,14 +36,20 @@ class TopupController extends Controller
     // simpen topup
     public function store(Request $request)
     {
-        // saldo awal sebagai contoh
-        $balance = session('balance', 5000000);
+        $request->validate([
+            'payment_method' => 'required',
+            'nominal' => 'required|numeric|min:1000',
+        ]);
+
+        $user = Auth::user();
 
         $nominal = (int) $request->nominal;
 
-        // update saldo
-        $newBalance = $balance + $nominal;
-        session(['balance' => $newBalance]);
+        // tambah saldo user
+        $user->balance += $nominal;
+        $user->save();
+
+        $newBalance = $user->balance;
 
         $lastTopup = Topup::latest()->first();
 
@@ -62,7 +69,7 @@ class TopupController extends Controller
             'status' => 'Success',
         ]);
 
-        // auto masuk ke history
+        // simpan riwayat
         History::create([
             'transaction_code' => $transactionCode,
             'title' => 'Top Up ' . $topup->payment_method,
@@ -73,7 +80,7 @@ class TopupController extends Controller
         ]);
 
         return redirect('/topups')
-            ->with('success', 'Transaksi berhasil dilakukan.');
+            ->with('success', 'Top up berhasil.');
     }
 
     // GET /topups/{id}

@@ -1,135 +1,227 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Riwayat Transaksi</title>
+    <title>Riwayat Top Up</title>
 
     <style>
         body {
-            font-family: Arial;
-            padding: 3vh 3vw;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+        }
+
+        .navbar {
+            background: #dcdcdc;
+            padding: 18px 35px;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 1100px;
+            margin: 30px auto;
         }
 
         h1 {
-            font-size: 2vw;
+            margin-bottom: 5px;
         }
 
-        a {
-            text-decoration: none;
+        .subtitle {
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #dcdcdc;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            height: 42px;
+            border: none;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 15px;
         }
 
         .btn {
-            display: inline-block;
-            padding: 0.8vh 1.5vw;
-            border: 1px solid #000;
-            background: #f0f0f0;
-            color: black;
-            text-decoration: none;
-            font-size: 0.9vw;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+            height: 42px;
             cursor: pointer;
-            min-width: 80px;
-            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: black;
         }
 
-        .btn:hover {
-            background: #ddd;
+        .btn-dark {
+            background: black;
+            color: white;
         }
 
-        .btn-primary {
-            background: #000;
-            color: #fff;
-            border: 1px solid #000;
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .success {
+            color: green;
+            margin-bottom: 10px;
+        }
+
+        .error {
+            color: red;
+            margin-bottom: 10px;
+        }
+
+        .info {
+            margin-bottom: 15px;
+            color: #555;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 2vh;
-            font-size: 1vw;
-        }
-
-        th, td {
-            border: 1px solid #000;
-            padding: 1.5vh 1vw;
-            text-align: left;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
         }
 
         th {
-            background: #f0f0f0;
+            background: #ececec;
         }
 
-        .search-form {
-            margin-top: 2vh;
-            display: flex;
-            gap: 0.5vw;
-            align-items: center;
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
         }
 
-        .search-form input {
-            width: 220px;
-            height: 38px;
-            padding: 0 10px;
-            font-size: 14px;
-        }
-
-        .search-form .btn-search {
-            height: 38px;
-            width: 90px;
-            padding: 0;
+        tr:hover {
+            background: #f8f8f8;
         }
     </style>
 </head>
 
 <body>
 
-<h1>Riwayat Transaksi</h1>
+<div class="navbar">
+    DIGITAL BANKING
+</div>
 
-<a href="/" class="btn">Beranda</a>
+<div class="container">
 
-<form action="/histories" method="GET" class="search-form">
-    <input type="text" name="id" placeholder="Cari Kode Transaksi (TRX001)">
+    <h1>Riwayat Top Up</h1>
 
-    <button type="submit" class="btn btn-search">
-        Cari
-    </button>
-</form>
+    <div class="subtitle">
+        Daftar seluruh transaksi top up Anda.
+    </div>
 
-<br>
+    <div class="card">
 
-@if(session('success'))
-    <p style="color:green">{{ session('success') }}</p>
-@endif
+        <div class="button-group">
+            <a href="{{ route('user.index') }}" class="btn">
+                Dashboard
+            </a>
 
-@if(session('error'))
-    <p style="color:red">{{ session('error') }}</p>
-@endif
+            <a href="/topups/create" class="btn">
+                Top Up Baru
+            </a>
+        </div>
 
-<p><b>Total History:</b> {{ count($histories) }}</p>
+        <form action="/histories" method="GET">
 
-<table>
-    <tr>
-        <th>Kode Transaksi</th>
-        <th>Transaksi</th>
-        <th>Keterangan</th>
-        <th>Nominal</th>
-        <th>Sisa Saldo</th>
-        <th>Waktu Transaksi</th>
-    </tr>
+            <div class="search-box">
+                <input type="text"
+                       name="id"
+                       placeholder="Cari kode transaksi (TRX001)">
 
-    @foreach($histories as $history)
-    <tr>
-        <td>{{ $history->transaction_code }}</td>
-        <td>{{ $history->title }}</td>
-        <td>{{ $history->description }}</td>
-        <td>Rp {{ number_format($history->amount, 0, ',', '.') }}</td>
-        <td>Rp {{ number_format($history->balance_after ?? 0, 0, ',', '.') }}</td>
-        <td>
-            {{ $history->transaction_time 
-                ? \Carbon\Carbon::parse($history->transaction_time)->format('d-m-Y H:i')
-                : '-' }}
-        </td>
-    </tr>
-    @endforeach
-</table>
+                <button type="submit" class="btn btn-dark">
+                    Cari
+                </button>
+            </div>
 
+        </form>
+
+        @if(session('success'))
+            <div class="success">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if(session('error'))
+            <div class="error">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <div class="info">
+            Total Riwayat: <b>{{ count($histories) }}</b>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Kode</th>
+                    <th>Transaksi</th>
+                    <th>Keterangan</th>
+                    <th>Nominal</th>
+                    <th>Saldo Akhir</th>
+                    <th>Waktu</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+            @forelse($histories as $history)
+
+                <tr>
+                    <td>{{ $history->transaction_code }}</td>
+
+                    <td>{{ $history->title }}</td>
+
+                    <td>{{ $history->description }}</td>
+
+                    <td>
+                        Rp {{ number_format($history->amount,0,',','.') }}
+                    </td>
+
+                    <td>
+                        Rp {{ number_format($history->balance_after ?? 0,0,',','.') }}
+                    </td>
+
+                    <td>
+                        {{ $history->transaction_time
+                        ? \Carbon\Carbon::parse($history->transaction_time)->format('d-m-Y H:i')
+                        : '-' }}
+                    </td>
+                </tr>
+
+            @empty
+
+                <tr>
+                    <td colspan="6">
+                        Belum ada riwayat top up.
+                    </td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 </body>
 </html>

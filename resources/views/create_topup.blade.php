@@ -1,94 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Form Top Up</title>
+    <title>Top Up Saldo</title>
 
     <style>
         body {
-            font-family: system-ui, sans-serif;
-            padding: 30px;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
         }
 
-        .saldo {
-            margin-top: 12px;
-            padding: 8px 12px;
-            border: 2px solid #000;
-            width: fit-content;
-            font-size: 14px;      
+        .navbar {
+            background: #dcdcdc;
+            padding: 18px 35px;
+            font-size: 28px;
             font-weight: bold;
         }
 
-        form {
-            margin-top: 20px;
-            width: 280px;
+        .container {
+            width: 900px;
+            margin: 30px auto;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: gray;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: #dcdcdc;
+            border-radius: 10px;
+            padding: 25px;
+        }
+
+        .saldo {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
 
         label {
             display: block;
-            margin-top: 10px;
-            font-size: 14px;
+            margin-top: 15px;
+            margin-bottom: 8px;
+            font-weight: bold;
         }
 
-        input, select {
+        input,
+        select {
             width: 100%;
-            padding: 6px 8px;         
-            margin-top: 5px;
-            font-size: 14px;
+            height: 42px;
+            border: none;
+            border-radius: 8px;
+            padding: 0 10px;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+
+        .button-group {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
         }
 
         .btn {
-            display: inline-block;
-            padding: 1vh 2vw;
-            border: 1px solid #000;
-            background: #f0f0f0;
-            color: black;
-            text-decoration: none;
-            font-size: 1vw;
+            border: none;
+            border-radius: 8px;
+            height: 45px;
+            padding: 0 25px;
             cursor: pointer;
-            margin-right: 1vw;
-        }
-
-        .btn:hover {
-            background: #ddd;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            color: black;
         }
 
         .btn-primary {
-            background: #000;
-            color: #fff;
-            border: 1px solid #000;
+            background: black;
+            color: white;
         }
-
     </style>
 </head>
 
 <body>
 
-<h1>Form Top Up</h1>
-
-<!-- TOMBOL -->
-<a href="/" class="btn">Beranda</a>
-<a href="/topups" class="btn">Kembali</a>
-
-<div class="saldo">
-    💰 Saldo: Rp {{ number_format(session('balance', 5000000), 0, ',', '.') }}
+<div class="navbar">
+    DIGITAL BANKING
 </div>
 
-<!-- FORM -->
-<form action="/topups" method="POST">
-    @csrf
+<div class="container">
 
-    <label>Metode Pembayaran</label>
-    <select name="payment_method">
-        <option value="QRIS">QRIS</option>
-        <option value="Transfer">Transfer Bank</option>
-        <option value="E-Wallet">E-Wallet</option>
-    </select>
+    <h1>Top Up Saldo</h1>
+    <div class="subtitle">
+        Tambahkan saldo ke rekening Anda.
+    </div>
 
-    <label>Nominal</label>
-    <input type="text" name="nominal">
+    <div class="card">
 
-    <button type="submit">Proses Transaksi</button>
-</form>
+        <div class="saldo">
+            Saldo Saat Ini:
+            Rp {{ number_format(Auth::user()->balance,0,',','.') }}
+        </div>
 
+        <form action="/topups" method="POST">
+            @csrf
+
+            <label>Metode Pembayaran</label>
+            <select name="payment_method">
+                <option value="QRIS">QRIS</option>
+                <option value="Transfer Bank">Transfer Bank</option>
+                <option value="E-Wallet">E-Wallet</option>
+            </select>
+
+            <label>Nominal Top Up</label>
+            <input type="number"
+                   name="nominal"
+                   placeholder="Contoh: 100000"
+                   required>
+
+            <div class="button-group">
+
+                <a href="{{ route('user.index') }}" class="btn">
+                    Kembali
+                </a>
+
+                <button type="submit" class="btn btn-primary">
+                    Proses Top Up
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
