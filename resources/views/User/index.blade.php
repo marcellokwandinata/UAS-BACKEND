@@ -21,29 +21,6 @@
             width: 1000px;
             margin: 25px auto;
         }
-
-<<<<<<< HEAD
-<br>
-
-<div style="margin-bottom: 20px;">
-    <a href="{{ route('transaction.index') }}"><button>Riwayat Transaksi</button></a>
-    <a href="{{ route('transfer.form') }}"><button>Transfer Saldo</button></a>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <a href="{{ route('user.show', $user->id) }}"><button>Lihat Detail</button></a>
-    <a href="{{ route('user.edit', $user->id) }}"><button>Edit Profil</button></a>
-    <a href="{{ route('user.changePasswordForm', $user->id) }}"><button>Ganti Password</button></a>
-</div>
-
-<br>
-
-<br><br>
-<form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
-    @csrf
-    <button type="submit">Logout</button>
-</form>
-=======
         h1 {
             margin-bottom: 5px;
         }
@@ -209,4 +186,4 @@
 
 </body>
 </html>
->>>>>>> 1da3cd3e4a976760b1c22de2e9a090bc8e10c7f5
+

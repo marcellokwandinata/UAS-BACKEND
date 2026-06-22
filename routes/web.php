@@ -10,6 +10,19 @@ use App\Http\Controllers\TopupController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\AdminController;
 
+// Redirect ke halaman accounts saat buka domain utama
+Route::get('/', function () {
+    return redirect('/accounts');
+});
+
+Route::get('/reset-balance', function () {
+    session()->forget('balance');
+    session(['balance' => 5000000]);
+
+    return "Balance reset ke 5.000.000";
+});
+
+
 Route::resource('posts', PostController::class);
 
 Route::resource('beneficiaries', BeneficiaryController::class);
@@ -65,4 +78,3 @@ Route::middleware(['auth:admin'])->group(function () {
 
     Route::post('/admin/logout', [AdminController::class, 'logout'])->name('admin.logout');
 });
-
