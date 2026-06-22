@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Topup;
 use App\Models\History;
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -73,11 +74,12 @@ class UserController extends Controller
         ]);
 
         $user = Auth::user();
-        $amount = (float) $request->input('amount');
+        $amount = (int) $request->input('amount');
 
         // Tambah saldo user
-        $user->balance += $amount;
-        $user->save();
+        DB::table('users')->where('id', $user->id)->increment('balance', $amount);
+        $user->refresh();
+    
 
         // Generate kode transaksi
         $lastTopup = Topup::latest()->first();

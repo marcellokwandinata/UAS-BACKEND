@@ -143,9 +143,9 @@
             <label>Nominal Transfer (Rp)</label>
             <input type="number"
                    name="amount"
+                   inputmode="numeric"
+                   placeholder="Contoh: 1000000"
                    value="{{ old('amount') }}"
-                   min="1000"
-                   step="1000"
                    required>
 
             <label>Keterangan (Opsional)</label>

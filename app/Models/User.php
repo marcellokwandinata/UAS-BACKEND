@@ -72,3 +72,4 @@ class User extends Authenticatable
         return $accountNumber;
     }
 }
+    
