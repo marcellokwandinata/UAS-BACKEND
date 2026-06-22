@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Riwayat Transaksi</title>
+    <title>Riwayat Top Up</title>
 
     <style>
         body {
@@ -37,10 +37,19 @@
             padding: 20px;
         }
 
-        .button-group {
+        .search-box {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            height: 42px;
+            border: none;
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 15px;
         }
 
         .btn {
@@ -63,19 +72,10 @@
             color: white;
         }
 
-        .search-box {
+        .button-group {
             display: flex;
             gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .search-box input {
-            flex: 1;
-            height: 42px;
-            border: none;
-            border-radius: 8px;
-            padding: 0 12px;
-            font-size: 15px;
+            margin-bottom: 20px;
         }
 
         .success {
@@ -86,6 +86,11 @@
         .error {
             color: red;
             margin-bottom: 10px;
+        }
+
+        .info {
+            margin-bottom: 15px;
+            color: #555;
         }
 
         table {
@@ -109,16 +114,6 @@
         tr:hover {
             background: #f8f8f8;
         }
-
-        .income {
-            color: green;
-            font-weight: bold;
-        }
-
-        .outcome {
-            color: red;
-            font-weight: bold;
-        }
     </style>
 </head>
 
@@ -130,9 +125,10 @@
 
 <div class="container">
 
-    <h1>Riwayat Transaksi</h1>
+    <h1>Riwayat Top Up</h1>
+
     <div class="subtitle">
-        Semua aktivitas keuangan Anda tercatat di sini.
+        Daftar seluruh transaksi top up Anda.
     </div>
 
     <div class="card">
@@ -142,88 +138,90 @@
                 Dashboard
             </a>
 
-            <a href="{{ route('transfer.form') }}" class="btn">
-                Transfer Saldo
+            <a href="/topups/create" class="btn">
+                Top Up Baru
             </a>
         </div>
 
-        <form method="GET" action="">
+        <form action="/histories" method="GET">
+
             <div class="search-box">
-                <input type="text" name="search" placeholder="Cari transaksi...">
-                <button type="submit" class="btn btn-dark">Cari</button>
+                <input type="text"
+                       name="id"
+                       placeholder="Cari kode transaksi (TRX001)">
+
+                <button type="submit" class="btn btn-dark">
+                    Cari
+                </button>
             </div>
+
         </form>
 
-        @if ($errors->any())
-            <div class="error">
-                {{ $errors->first() }}
-            </div>
-        @endif
-
-        @if (session('success'))
+        @if(session('success'))
             <div class="success">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if (session('error'))
+        @if(session('error'))
             <div class="error">
                 {{ session('error') }}
             </div>
         @endif
 
+        <div class="info">
+            Total Riwayat: <b>{{ count($histories) }}</b>
+        </div>
+
         <table>
             <thead>
                 <tr>
-                    <th>Tanggal</th>
-                    <th>Tipe</th>
-                    <th>Deskripsi</th>
+                    <th>Kode</th>
+                    <th>Transaksi</th>
+                    <th>Keterangan</th>
                     <th>Nominal</th>
-                    <th>Status</th>
+                    <th>Saldo Akhir</th>
+                    <th>Waktu</th>
                 </tr>
             </thead>
 
             <tbody>
-            @forelse($transactions ?? [] as $transaction)
 
-                @php
-                    $isIncoming = $transaction->recipient_account === auth()->user()->account_number;
-                @endphp
+            @forelse($histories as $history)
 
                 <tr>
-                    <td>{{ $transaction->created_at->format('d M Y H:i') }}</td>
+                    <td>{{ $history->transaction_code }}</td>
 
-                    <td>{{ ucfirst($transaction->type) }}</td>
+                    <td>{{ $history->title }}</td>
 
-                    <td>{{ $transaction->description }}</td>
+                    <td>{{ $history->description }}</td>
 
                     <td>
-                        @if($transaction->type === 'deposit' || $isIncoming)
-                            <span class="income">
-                                +Rp {{ number_format($transaction->amount,0,',','.') }}
-                            </span>
-                        @else
-                            <span class="outcome">
-                                -Rp {{ number_format($transaction->amount,0,',','.') }}
-                            </span>
-                        @endif
+                        Rp {{ number_format($history->amount,0,',','.') }}
                     </td>
 
-                    <td>{{ ucfirst($transaction->status) }}</td>
+                    <td>
+                        Rp {{ number_format($history->balance_after ?? 0,0,',','.') }}
+                    </td>
+
+                    <td>
+                        {{ $history->transaction_time
+                        ? \Carbon\Carbon::parse($history->transaction_time)->format('d-m-Y H:i')
+                        : '-' }}
+                    </td>
                 </tr>
 
             @empty
+
                 <tr>
-                    <td colspan="5" style="color:#888;">
-                        Belum ada transaksi
+                    <td colspan="6">
+                        Belum ada riwayat top up.
                     </td>
                 </tr>
             @endforelse
             </tbody>
         </table>
-
     </div>
 </div>
-
 </body>
 </html>
