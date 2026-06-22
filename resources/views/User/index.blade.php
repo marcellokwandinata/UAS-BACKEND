@@ -162,8 +162,8 @@
 
         <div class="menu">
 
-            <a href="{{ route('user.show', $user->id) }}">
-                <button>Lihat Detail</button>
+            <a href="{{ route('cards.byUser', $user->id) }}">
+                <button>Kartu Saya</button>
             </a>
 
             <a href="{{ route('user.edit', $user->id) }}">
