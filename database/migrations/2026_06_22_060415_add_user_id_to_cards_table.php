@@ -6,16 +6,14 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
+public function up(): void
+{
     Schema::table('cards', function (Blueprint $table) {
-        $table->foreignId('user_id')->nullable()->after('id')->constrained()->cascadeOnDelete();
+        if (!Schema::hasColumn('cards', 'user_id')) {
+            $table->unsignedBigInteger('user_id')->nullable()->after('id');
+        }
     });
-    }
-
+}
     public function down(): void
     {
     Schema::table('cards', function (Blueprint $table) {

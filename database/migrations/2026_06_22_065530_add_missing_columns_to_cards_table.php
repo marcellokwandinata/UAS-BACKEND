@@ -9,11 +9,26 @@ return new class extends Migration
 public function up(): void
 {
     Schema::table('cards', function (Blueprint $table) {
-        $table->string('cardholder_name')->nullable()->after('user_id');
-        $table->string('card_type')->nullable()->after('cardholder_name');
-        $table->string('expired_at')->nullable()->after('card_type');
-        $table->decimal('card_limit', 15, 2)->nullable()->after('expired_at');
-        $table->string('status')->default('aktif')->after('card_limit');
+        $columns = [
+            'cardholder_name', 'expiry_date', 'cvv', 'card_type',
+            'card_number', 'status', 'balance', 'pin'
+        ];
+
+        foreach ($columns as $column) {
+            if (!Schema::hasColumn('cards', $column)) {
+                match($column) {
+                    'cardholder_name' => $table->string('cardholder_name')->nullable()->after('user_id'),
+                    'expiry_date'     => $table->string('expiry_date')->nullable(),
+                    'cvv'             => $table->string('cvv')->nullable(),
+                    'card_type'       => $table->string('card_type')->nullable(),
+                    'card_number'     => $table->string('card_number')->nullable(),
+                    'status'          => $table->string('status')->nullable(),
+                    'balance'         => $table->bigInteger('balance')->default(0),
+                    'pin'             => $table->string('pin')->nullable(),
+                    default           => null,
+                };
+            }
+        }
     });
 }
 

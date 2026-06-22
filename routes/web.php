@@ -12,9 +12,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\TopupController;
 
-// Redirect ke halaman accounts saat buka domain utama
+// Redirect ke halaman login saat buka domain utama
 Route::get('/', function () {
-    return redirect('/accounts');
+    return redirect('/login');
 });
 
 Route::get('/reset-balance', function () {
@@ -28,7 +28,7 @@ Route::resource('posts', PostController::class);
 Route::resource('beneficiaries', BeneficiaryController::class);
 
 // AUTH NASABAH (Login & Register)
-Route::get('/user/login', [AuthController::class, 'index'])->name('login');
+Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/user/login', [AuthController::class, 'login'])->name('login.perform');
 Route::get('/user/register', [AuthController::class, 'create'])->name('user.create');
 Route::post('/user/register', [AuthController::class, 'store'])->name('user.store');

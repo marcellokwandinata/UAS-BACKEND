@@ -10,10 +10,11 @@ return new class extends Migration
   public function up(): void
 {
     Schema::table('cards', function (Blueprint $table) {
-        $table->string('card_number')->nullable()->after('user_id');
+        if (!Schema::hasColumn('cards', 'card_number')) {
+            $table->string('card_number')->nullable()->after('user_id');
+        }
     });
 }
-
 public function down(): void
 {
     Schema::table('cards', function (Blueprint $table) {
