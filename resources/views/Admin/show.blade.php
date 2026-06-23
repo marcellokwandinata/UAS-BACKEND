@@ -2,73 +2,6 @@
 <html>
 <head>
     <title>Detail Nasabah</title>
-
-<table border="1" cellpadding="5" cellspacing="0">
-    <tr>
-        <th style="width: 150px">Nama Lengkap</th>
-        <td>{{ $user->full_name }}</td>
-    </tr>
-    <tr>
-        <th>Email</th>
-        <td>{{ $user->email }}</td>
-    </tr>
-    <tr>
-        <th>Nomor Rekening</th>
-        <td>{{ $user->account_number }}</td>
-    </tr>
-    <tr>
-        <th>Saldo</th>
-        <td>Rp {{ number_format($user->balance, 0, ',', '.') }}</td>
-    </tr>
-    <tr>
-        <th>Tanggal Daftar</th>
-        <td>{{ $user->created_at }}</td>
-    </tr>
-</table>
-
-<br>
-<h3>Riwayat Transaksi</h3>
-
-@if ($transactions->isEmpty())
-    <p>Belum ada riwayat transaksi.</p>
-@else
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-        <tr>
-            <th style="width: 50px">No</th>
-            <th style="width: 150px">Tanggal</th>
-            <th style="width: 100px">Jenis</th>
-            <th style="width: 150px">Nominal</th>
-            <th style="width: 150px">Rekening Tujuan</th>
-            <th style="width: 200px">Keterangan</th>
-            <th style="width: 100px">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($transactions as $trx)
-        <tr>
-            <td style="text-align: center">{{ $loop->iteration }}</td>
-            <td>{{ $trx->created_at }}</td>
-            <td style="text-align: center">{{ ucfirst($trx->type) }}</td>
-            <td>Rp {{ number_format($trx->amount, 0, ',', '.') }}</td>
-            <td>{{ $trx->recipient_account ?? '-' }}</td>
-            <td>{{ $trx->description ?? '-' }}</td>
-            <td style="text-align: center">{{ ucfirst($trx->status) }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-@endif
-
-<br>
-<a href="{{ route('admin.dashboard') }}">Kembali</a>
-
-<br><br>
-<form action="{{ route('admin.user.destroy', $user->id) }}" method="POST" style="display:inline;">
-    @csrf
-    @method('DELETE')
-    <button type="submit" onclick="return confirm('Yakin ingin menutup akun nasabah ini?')">Tutup Akun Nasabah</button>
-</form>
     <style>
         body {
             margin: 0;
@@ -159,6 +92,44 @@
             background: black;
             color: white;
         }
+
+        .transaction-card h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .transaction-table th {
+            background: #dcdcdc;
+            padding: 12px;
+            text-align: center;
+        }
+
+        .transaction-table td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            text-align: center;
+        }
+
+        .transaction-table tr:hover {
+            background: #f8f8f8;
+        }
+
+        .status {
+            background: #d4edda;
+            color: green;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -199,6 +170,47 @@
 
     <div class="card">
 
+    <div class="card transaction-card">
+
+    <h2>Riwayat Transaksi</h2>
+        @if ($transactions->isEmpty())
+            <p>Belum ada riwayat transaksi.</p>
+        @else
+        <table class="transaction-table">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Tanggal</th>
+                    <th>Jenis</th>
+                    <th>Nominal</th>
+                    <th>Rekening Tujuan</th>
+                    <th>Keterangan</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($transactions as $trx)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ \Carbon\Carbon::parse($trx->created_at)->format('d M Y H:i') }}</td>
+                    <td>{{ ucfirst($trx->type) }}</td>
+                    <td>
+                        Rp {{ number_format($trx->amount,0,',','.') }}
+                    </td>
+                    <td>{{ $trx->recipient_account ?? '-' }}</td>
+                    <td>{{ $trx->description ?? '-' }}</td>
+                    <td>
+                        <span class="status">
+                            {{ ucfirst($trx->status) }}
+                        </span>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+        @endif
+    </div>
+
         <div class="box">
 
             <div class="row">
@@ -214,6 +226,13 @@
             <div class="row">
                 <div class="label">Nomor Rekening</div>
                 <div class="value">{{ $user->account_number }}</div>
+            </div>
+
+            <div class="row">
+                <div class="label">Saldo</div>
+                <div class="value">
+                    Rp {{ number_format($user->balance, 0, ',', '.') }}
+                </div>
             </div>
 
             <div class="row">
