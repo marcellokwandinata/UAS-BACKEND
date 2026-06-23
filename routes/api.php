@@ -23,3 +23,5 @@ Route::prefix('transactions')->group(function () {
 });
 
 Route::get('/balance', [TransactionController::class, 'balance'])->name('balance');
+
+
