@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/securities/create',            [SecurityController::class, 'create'])->name('security.create');
     Route::get('/securities/pin',               [SecurityController::class, 'pinEdit'])->name('security.pin');
     Route::patch('/securities/pin',             [SecurityController::class, 'pinUpdate'])->name('security.pin.update');
+    Route::get('/securities/change-password',   [SecurityController::class, 'changePasswordForm'])->name('security.changePasswordForm');
+    Route::patch('/securities/change-password', [SecurityController::class, 'changePassword'])->name('security.changePassword');
 
     // FITUR BARU: Riwayat Login
     Route::get('/securities/login-history',     [SecurityController::class, 'loginHistory'])->name('security.loginHistory');

@@ -181,8 +181,8 @@
                 <button>Edit Profil</button>
             </a>
 
-            <a href="{{ route('user.changePasswordForm', $user->id) }}">
-                <button>Ganti Password</button>
+            <a href="{{ route('security.changePasswordForm') }}">
+            <button>Ganti Password</button>
             </a>
 
             <form action="{{ route('user.logout') }}" method="POST">
