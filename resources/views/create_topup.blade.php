@@ -131,7 +131,7 @@
             <div class="button-group">
 
                 <a href="{{ route('user.index') }}" class="btn">
-                    Kembali
+                    ← Halaman Utama
                 </a>
 
                 <button type="submit" class="btn btn-primary">

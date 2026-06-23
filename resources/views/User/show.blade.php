@@ -127,7 +127,7 @@
 
         <div class="button-group">
             <a href="{{ route('user.index') }}" class="btn btn-primary">
-                Kembali ke Dashboard
+                ← Halaman Utama
             </a>
         </div>
 

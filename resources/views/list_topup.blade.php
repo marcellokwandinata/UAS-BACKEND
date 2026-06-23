@@ -141,7 +141,7 @@
     <div class="card">
 
         <div class="button-group">
-            <a href="/" class="btn">Beranda</a>
+            <a href="/" class="btn">← Halaman Utama</a>
             <a href="/topups/create" class="btn">Tambah Top Up</a>
         </div>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Beneficiary;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BeneficiaryController extends Controller
@@ -32,33 +33,37 @@ class BeneficiaryController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'beneficiary_name' => 'required|string|max:255',
-            'account_number' => 'required|string|max:255',
-        ]);
+{
+    $request->validate([
+        'account_number' => 'required',
+        'beneficiary_name' => 'required'
+    ]);
 
-        Beneficiary::create(
-            $request->only(
-                'beneficiary_name',
-                'account_number'
-            )
-        );
+    $userTujuan = User::where('account_number', $request->account_number)->first();
 
-        return redirect()
-            ->route('beneficiaries.index')
-            ->with('success', 'Beneficiary created successfully');
+    if (!$userTujuan) {
+        return back()
+            ->withInput()
+            ->with('error', 'Nomor rekening tidak ditemukan.');
     }
+
+    Beneficiary::create([
+        'user_id' => auth()->id(),
+        'account_number' => $userTujuan->account_number,
+        'beneficiary_name' => $userTujuan->full_name
+    ]);
+
+    return redirect()
+        ->route('beneficiaries.index')
+        ->with('success', 'Beneficiary berhasil ditambahkan.');
+}
 
     /**
      * Display the specified resource.
      */
     public function show(Beneficiary $beneficiary)
     {
-        return view(
-            'beneficiaries.show',
-            compact('beneficiary')
-        );
+        return view('beneficiaries.show', compact('beneficiary'));
     }
 
     /**
@@ -66,10 +71,7 @@ class BeneficiaryController extends Controller
      */
     public function edit(Beneficiary $beneficiary)
     {
-        return view(
-            'beneficiaries.edit',
-            compact('beneficiary')
-        );
+        return view('beneficiaries.edit', compact('beneficiary'));
     }
 
     /**
@@ -83,10 +85,7 @@ class BeneficiaryController extends Controller
         ]);
 
         $beneficiary->update(
-            $request->only(
-                'beneficiary_name',
-                'account_number'
-            )
+            $request->only('beneficiary_name', 'account_number')
         );
 
         return redirect()

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Transfer Saldo</title>
+    <title>Buat Tabungan</title>
 
     <style>
         body {
@@ -106,9 +106,9 @@
 
 <div class="container">
 
-    <h1>Transfer Saldo</h1>
+    <h1>Buat Tabungan</h1>
     <div class="subtitle">
-        Kirim saldo ke rekening tujuan.
+        Buat target tabungan baru kamu.
     </div>
 
     <div class="card">
@@ -131,37 +131,26 @@
             </div>
         @endif
 
-        <form method="POST" action="{{ route('transfer.submit') }}">
+        <form method="POST" action="{{ route('saving.store') }}">
             @csrf
 
-            <label>Nomor Rekening Tujuan</label>
-            <input type="text"
-                   name="recipient_account"
-                   value="{{ old('recipient_account', $accountNumber ?? '') }}"
-                   required>
+            <label>Nama Tabungan</label>
+            <input type="text" name="saving_name" required>
 
-            <label>Nominal Transfer (Rp)</label>
-            <input type="number"
-                   name="amount"
-                   inputmode="numeric"
-                   placeholder="Contoh: 1000000"
-                   value="{{ old('amount') }}"
-                   required>
+            <label>Target Dana</label>
+            <input type="number" name="target_amount" required>
 
-            <label>Keterangan (Opsional)</label>
-            <input type="text"
-                   name="description"
-                   value="{{ old('description') }}"
-                   maxlength="255">
+            <label>Target Tanggal</label>
+            <input type="date" name="target_date">
 
             <div class="button-group">
 
-                <a href="{{ route('user.index') }}" class="btn">
-                    ← Halaman Utama
+                <a href="{{ route('saving.index') }}" class="btn">
+                    ← Kembali
                 </a>
 
                 <button type="submit" class="btn btn-primary">
-                    Lanjutkan Transfer
+                    Simpan
                 </button>
 
             </div>

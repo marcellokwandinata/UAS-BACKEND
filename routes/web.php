@@ -9,6 +9,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\AdminController;
+
+use App\Http\Controllers\SavingController;
+
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\TopupController;
 
@@ -47,6 +50,27 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/logout',                      [AuthController::class, 'logout'])->name('user.logout');
 
     // TRANSACTION
+    Route::get('/transaction',      [TransactionController::class, 'index'])->name('transaction.index');
+    Route::get('/transfer',         [TransactionController::class, 'transferForm'])->name('transfer.form');
+    Route::post('/transfer',        [TransactionController::class, 'transfer'])->name('transfer.submit');
+    Route::get('/user',                            [UserController::class, 'index'])->name('user.index');
+    Route::get('/user/{id}',                       [UserController::class, 'show'])->name('user.show');
+    Route::get('/user/{id}/edit',                  [UserController::class, 'edit'])->name('user.edit');
+    Route::patch('/user/{id}',                     [UserController::class, 'update'])->name('user.update');
+    Route::delete('/user/{id}',                    [UserController::class, 'destroy'])->name('user.destroy');
+    Route::get('/user/{id}/change-password',       [UserController::class, 'changePasswordForm'])->name('user.changePasswordForm');
+    Route::patch('/user/{id}/change-password',     [UserController::class, 'changePassword'])->name('user.changePassword');
+    Route::post('/user/logout',                    [AuthController::class, 'logout'])->name('user.logout');
+
+    //SAVING
+    Route::get('/saving', [SavingController::class, 'index'])->name('saving.index');
+    Route::get('/saving/create', [SavingController::class, 'create'])->name('saving.create');
+    Route::post('/saving/store', [SavingController::class, 'store'])->name('saving.store');
+    Route::get('/saving/{id}', [SavingController::class, 'show'])->name('saving.show');
+    Route::get('/saving/{id}/edit', [SavingController::class, 'edit'])->name('saving.edit');
+    Route::patch('/saving/{id}', [SavingController::class, 'update'])->name('saving.update');
+    Route::delete('/saving/{id}', [SavingController::class, 'destroy'])->name('saving.destroy');
+    Route::post('/saving/{id}/deposit', [SavingController::class, 'deposit'])->name('saving.deposit');
     Route::get('/transaction',  [TransactionController::class, 'index'])->name('transaction.index');
     Route::get('/transfer',     [TransactionController::class, 'transferForm'])->name('transfer.form');
     Route::post('/transfer',    [TransactionController::class, 'transfer'])->name('transfer.submit');
