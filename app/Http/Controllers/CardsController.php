@@ -88,9 +88,21 @@ public function store(Request $request)
 
     public function destroy($id)
     {
+        $card = DB::table('cards')->where('id', $id)->first();
+
+        if (!$card) {
+            return redirect()->back()
+                ->with('error', 'Kartu tidak ditemukan.');
+        }
+
+        $userId = $card->user_id;
+
         DB::table('cards')->where('id', $id)->delete();
-        return redirect('/cards')->with('success', 'Kartu berhasil dihapus.');
+
+        return redirect('/cards/user/' . $userId)
+            ->with('success', 'Kartu berhasil dihapus.');
     }
+
     public function setLimitForm($id)
     {
         $card = DB::table('cards')->where('id', $id)->first();

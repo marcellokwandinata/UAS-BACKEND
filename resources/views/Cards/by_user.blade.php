@@ -296,17 +296,34 @@
 
 <div class="container">
 
+@if(session('success'))
+    <div style="
+        background:#d4edda;
+        color:#155724;
+        padding:15px;
+        border-radius:10px;
+        margin-bottom:20px;
+    ">
+        {{ session('success') }}
+    </div>
+@endif
+
+@if(session('error'))
+    <div style="
+        background:#f8d7da;
+        color:#721c24;
+        padding:15px;
+        border-radius:10px;
+        margin-bottom:20px;
+    ">
+        {{ session('error') }}
+    </div>
+@endif
+
     <div class="top-bar">
         <div class="page-title">Kartu Milik {{ $user->full_name ?? $user->name }}</div>
         <a href="{{ route('create_cards') }}" class="btn btn-dark">+ Tambah Kartu Baru</a>
     </div>
-
-    @if (session('success'))
-        <p class="alert-success">{{ session('success') }}</p>
-    @endif
-    @if (session('error'))
-        <p class="alert-error">{{ session('error') }}</p>
-    @endif
 
     <div class="cards-grid">
         @forelse($cards as $card)
