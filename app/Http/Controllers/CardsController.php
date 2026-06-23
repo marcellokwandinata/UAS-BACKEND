@@ -15,7 +15,7 @@ class CardsController extends Controller
             ->where('type', 'pin')
             ->orderBy('updated_at', 'desc')
             ->first();
-        return view('cards_index', compact('cards', 'pinSecurity'));
+        return view('cards.index', compact('cards', 'pinSecurity'));
     }
 
     public function create()
@@ -88,9 +88,21 @@ public function store(Request $request)
 
     public function destroy($id)
     {
+        $card = DB::table('cards')->where('id', $id)->first();
+
+        if (!$card) {
+            return redirect()->back()
+                ->with('error', 'Kartu tidak ditemukan.');
+        }
+
+        $userId = $card->user_id;
+
         DB::table('cards')->where('id', $id)->delete();
-        return redirect('/cards')->with('success', 'Kartu berhasil dihapus.');
+
+        return redirect('/cards/user/' . $userId)
+            ->with('success', 'Kartu berhasil dihapus.');
     }
+
     public function setLimitForm($id)
     {
         $card = DB::table('cards')->where('id', $id)->first();
