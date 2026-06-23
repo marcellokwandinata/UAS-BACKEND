@@ -9,15 +9,16 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-        if (!Schema::hasColumn('users', 'balance')) {
-            Schema::table('users', function (Blueprint $table) {
-                $table->decimal('balance', 15, 2)->default(0);
-            });
-        }
+    public function up()
+{
+    // Check if the column DOES NOT exist before adding it
+    if (!Schema::hasColumn('users', 'balance')) {
+        Schema::table('users', function (Blueprint $table) {
+            $table->decimal('balance', 15, 2)->default(0);
+        });
+    
     }
-
+}
     /**
      * Reverse the migrations.
      */
