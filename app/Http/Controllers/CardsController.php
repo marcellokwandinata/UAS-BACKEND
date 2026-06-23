@@ -15,7 +15,7 @@ class CardsController extends Controller
             ->where('type', 'pin')
             ->orderBy('updated_at', 'desc')
             ->first();
-        return view('cards_index', compact('cards', 'pinSecurity'));
+        return view('cards.index', compact('cards', 'pinSecurity'));
     }
 
     public function create()
