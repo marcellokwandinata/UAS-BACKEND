@@ -36,6 +36,14 @@ class AuthController extends Controller
         ]);
 
         if (Auth::attempt($request->only('email', 'password'))) {
+            // Cek apakah akun diblokir
+            if (Auth::user()->is_blocked) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda telah diblokir. Hubungi admin untuk informasi lebih lanjut.',
+                ])->onlyInput('email');
+            }
+
             $request->session()->regenerate();
             return redirect()->route('user.index');
         }

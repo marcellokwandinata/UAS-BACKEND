@@ -159,6 +159,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('/admin/user/{id}', [AdminController::class, 'show'])->name('admin.user.show');
     Route::delete('/admin/user/{id}', [AdminController::class, 'destroy'])->name('admin.user.destroy');
-
+    Route::patch('/admin/user/{id}/block',   [AdminController::class, 'block'])->name('admin.user.block');
+    Route::patch('/admin/user/{id}/unblock', [AdminController::class, 'unblock'])->name('admin.user.unblock');
     Route::post('/admin/logout',      [AdminController::class, 'logout'])->name('admin.logout');
 });

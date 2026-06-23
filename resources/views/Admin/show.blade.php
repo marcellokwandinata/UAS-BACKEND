@@ -171,9 +171,31 @@
 <div class="container">
 
     <h1>Detail Nasabah</h1>
+
+    @if (session('success'))
+        <p style="color: green;">{{ session('success') }}</p>
+    @endif
+
+    @if ($user->is_blocked)
+        <p style="color: red;"><strong>Status Akun: Diblokir</strong></p>
+        <form action="{{ route('admin.user.unblock', $user->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <button type="submit">Buka Blokir</button>
+        </form>
+    @else
+        <p style="color: green;"><strong>Status Akun: Aktif</strong></p>
+        <form action="{{ route('admin.user.block', $user->id) }}" method="POST" style="display:inline;">
+            @csrf
+            @method('PATCH')
+            <button type="submit" onclick="return confirm('Yakin ingin blokir akun ini?')">Blokir Akun</button>
+        </form>
+    @endif
+
     <div class="subtitle">
         Informasi lengkap akun pengguna.
     </div>
+
 
     <div class="card">
 

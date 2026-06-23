@@ -21,6 +21,7 @@ class User extends Authenticatable
         'password',
         'account_number',
         'balance',
+        'is_blocked',
     ];
 
     /**

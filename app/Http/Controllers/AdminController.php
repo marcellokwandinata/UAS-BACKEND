@@ -107,4 +107,22 @@ class AdminController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
+
+    // Memblokir akun nasabah
+    public function block($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update(['is_blocked' => true]);
+
+        return redirect()->route('admin.user.show', $id)->with('success', 'Akun nasabah berhasil diblokir.');
+    }
+
+    // Membuka blokir akun nasabah
+    public function unblock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->update(['is_blocked' => false]);
+
+        return redirect()->route('admin.user.show', $id)->with('success', 'Akun nasabah berhasil dibuka blokirnya.');
+    }
 }
