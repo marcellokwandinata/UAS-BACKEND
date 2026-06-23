@@ -325,13 +325,6 @@
         <a href="{{ route('create_cards') }}" class="btn btn-dark">+ Tambah Kartu Baru</a>
     </div>
 
-    @if (session('success'))
-        <p class="alert-success">{{ session('success') }}</p>
-    @endif
-    @if (session('error'))
-        <p class="alert-error">{{ session('error') }}</p>
-    @endif
-
     <div class="cards-grid">
         @forelse($cards as $card)
         <div class="card-wrapper">
