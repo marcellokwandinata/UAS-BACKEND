@@ -138,7 +138,7 @@
         <div class="button-group">
 
             <a href="{{ route('admin.dashboard') }}" class="btn">
-                Kembali
+                ← Halaman Utama
             </a>
 
             <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Yakin ingin hapus nasabah ini?')">

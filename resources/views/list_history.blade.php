@@ -135,7 +135,7 @@
 
         <div class="button-group">
             <a href="{{ route('user.index') }}" class="btn">
-                Dashboard
+                ← Halaman Utama
             </a>
 
             <a href="/topups/create" class="btn">

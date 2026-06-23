@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Daftar Beneficiary</title>
+    <title>Tabungan Saya</title>
 
     <style>
         body {
@@ -37,13 +37,6 @@
             padding: 25px;
         }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
         .btn {
             border: none;
             border-radius: 8px;
@@ -70,15 +63,7 @@
             color: green;
             padding: 10px;
             border-radius: 8px;
-            margin-bottom: 10px;
-        }
-
-        .error-box {
-            background: #ffe5e5;
-            color: red;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         table {
@@ -88,9 +73,13 @@
         }
 
         th, td {
+            text-align: left;
             padding: 12px;
             border-bottom: 1px solid #bbb;
-            text-align: left;
+        }
+
+        th {
+            font-size: 14px;
         }
 
         td a {
@@ -103,21 +92,22 @@
             text-decoration: underline;
         }
 
-        .action a {
-            margin-right: 10px;
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .delete-btn {
-            background: red;
-            color: white;
-            border: none;
-            padding: 6px 10px;
-            border-radius: 6px;
-            cursor: pointer;
+        .empty {
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            text-align: center;
         }
 
-        .delete-btn:hover {
-            opacity: 0.8;
+        .progress {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -130,43 +120,31 @@
 
 <div class="container">
 
-    <h1>Daftar Beneficiary</h1>
+    <h1>Tabungan Saya</h1>
     <div class="subtitle">
-        Kelola daftar rekening tujuan kamu.
+        Kelola semua tabungan kamu di sini.
     </div>
 
-    {{-- SUCCESS --}}
     @if(session('success'))
         <div class="success-box">
             {{ session('success') }}
         </div>
-        <script>alert("{{ session('success') }}");</script>
-    @endif
-
-    {{-- ERROR --}}
-    @if(session('error'))
-        <div class="error-box">
-            {{ session('error') }}
-        </div>
-        <script>alert("{{ session('error') }}");</script>
     @endif
 
     <div class="card">
 
         <div class="top-bar">
-            <a href="{{ route('user.index') }}" class="btn">
-                ← Halaman Utama
-            </a>
-
-
-            <a href="{{ route('beneficiaries.create') }}" class="btn btn-primary">
-                + Tambah Beneficiary
+            <a href="/" class="btn">← Halaman Utama</a>
+            <a href="{{ route('saving.create') }}" class="btn btn-primary">
+                + Buat Tabungan Baru
             </a>
         </div>
 
-        @if ($beneficiaries->isEmpty())
+        @if($savings->isEmpty())
 
-            <p style="text-align:center;">Belum ada beneficiary yang tersimpan.</p>
+            <div class="empty">
+                Belum ada tabungan.
+            </div>
 
         @else
 
@@ -174,44 +152,38 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama</th>
-                        <th>Nomor Rekening</th>
-                        <th>Aksi</th>
+                        <th>Nama Tabungan</th>
+                        <th>Target</th>
+                        <th>Terkumpul</th>
+                        <th>Progress</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach($beneficiaries as $beneficiary)
+                    @foreach($savings as $saving)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
 
                         <td>
-                            <a href="{{ route('transfer.form', [
-                                'account_number' => $beneficiary->account_number
-                            ]) }}">
-                                {{ $beneficiary->beneficiary_name }}
+                            <a href="{{ route('saving.show', $saving->id) }}">
+                                {{ $saving->saving_name }}
                             </a>
                         </td>
 
                         <td>
-                            {{ $beneficiary->account_number }}
+                            Rp {{ number_format($saving->target_amount, 0, ',', '.') }}
                         </td>
 
-                        <td class="action">
-                            <a href="{{ route('beneficiaries.edit', $beneficiary) }}">
-                                Ubah
-                            </a>
+                        <td>
+                            Rp {{ number_format($saving->current_amount, 0, ',', '.') }}
+                        </td>
 
-                            <form action="{{ route('beneficiaries.destroy', $beneficiary) }}"
-                                  method="POST"
-                                  style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-
-                                <button type="submit" class="delete-btn">
-                                    Hapus
-                                </button>
-                            </form>
+                        <td class="progress">
+                            @if($saving->target_amount > 0)
+                                {{ round(($saving->current_amount / $saving->target_amount) * 100, 1) }}%
+                            @else
+                                0%
+                            @endif
                         </td>
                     </tr>
                     @endforeach

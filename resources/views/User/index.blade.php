@@ -100,6 +100,7 @@
     DIGITAL BANKING
 </div>
 
+
 <div class="container">
 
     <h1>Dashboard Nasabah</h1>
@@ -152,8 +153,17 @@
                 <button>Riwayat Top Up</button>
             </a>
 
+            <a href="{{ route('beneficiaries.index') }}">
+                <button>Daftar Favorit</button>
+            </a>
+
+            <a href="{{ route ('saving.index') }}">
+                <button>Tabungan Saya</button>
+            </a>
         </div>
     </div>
+
+    
 
     <div class="section">
         <div class="section-title">
@@ -183,7 +193,6 @@
     </div>
 
 </div>
-
 </body>
 </html>
 

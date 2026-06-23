@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Topup;
 use App\Models\History;
+
 use Illuminate\Support\Facades\DB;
+
+use App\Models\Beneficiary;
+
 
 class UserController extends Controller
 {
@@ -16,7 +20,8 @@ class UserController extends Controller
     public function index()
     {
         $user = Auth::user();
-        return view('User.index', compact('user'));
+        $beneficiaries = Beneficiary::all();
+        return view('User.index', compact('user', 'beneficiaries'));
     }
 
     // Menampilkan detail profil nasabah

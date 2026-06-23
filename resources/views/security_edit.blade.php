@@ -62,7 +62,7 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h4 class="fw-bold"><i class="bi bi-shield-lock"></i> Ubah Kartu</h4>
     <div class="d-flex gap-2">
-        <a href="/" class="btn btn-secondary">Home</a>
+        <a href="/" class="btn btn-secondary">← Halaman Utama</a>
         <a href="{{ route('security.index') }}" class="btn btn-outline-secondary">Kembali ke List</a>
     </div>
 </div>
