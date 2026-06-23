@@ -260,7 +260,7 @@
         </div>
         <div style="text-align:center; margin: 0 auto;">
             <div class="card-label">Expired</div>
-            <div class="card-exp-val">{{ now()->addYears(2)->format('m/Y') }}</div>
+            <div class="card-exp-val">{{ now()->addYears(5)->format('m/Y') }}</div>
         </div>
         <div class="card-logo">
             <div class="logo-icon" id="previewLogo">DEBIT</div>
