@@ -16,18 +16,18 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->decimal('balance', 15, 2)->default(0);
         });
+    
     }
 }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
+        if (Schema::hasColumn('users', 'balance')) {
             Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('balance');
+                $table->dropColumn('balance');
             });
-        });
+        }
     }
 };

@@ -55,7 +55,7 @@
 <h1>Create Security</h1>
 
 <!-- BUTTON -->
-<a href="/" class="btn">Home</a>
+<a href="/" class="btn">← Halaman Utama</a>
 <a href="/securities" class="btn">Kembali ke List</a>
 
 <!-- SALDO (WAJIB MUNCUL) -->

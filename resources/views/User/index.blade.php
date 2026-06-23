@@ -150,14 +150,17 @@
                 <button>Riwayat Transaksi</button>
             </a>
 
-            <a href="{{ route('beneficiaries.index') }}">
-                <button>Daftar Favorit</button>
-            </a>
-
             <a href="/histories">
                 <button>Riwayat Top Up</button>
             </a>
 
+            <a href="{{ route('beneficiaries.index') }}">
+                <button>Daftar Favorit</button>
+            </a>
+
+            <a href="{{ route ('saving.index') }}">
+                <button>Tabungan Saya</button>
+            </a>
         </div>
     </div>
 
@@ -191,30 +194,6 @@
     </div>
 
 </div>
-
-
-<div style="margin-bottom: 20px;">
-    <a href="{{ route('transaction.index') }}"><button>Riwayat Transaksi</button></a>
-    <a href="{{ route('transfer.form') }}"><button>Transfer Saldo</button></a>
-    <a href="{{ route('saving.index') }}"><button>Tabungan Saya</button></a>
-</div>
-
-<div style="margin-bottom: 20px;">
-    <a href="{{ route('user.show', $user->id) }}"><button>Lihat Detail</button></a>
-    <a href="{{ route('user.edit', $user->id) }}"><button>Edit Profil</button></a>
-    <a href="{{ route('user.changePasswordForm', $user->id) }}"><button>Ganti Password</button></a>
-    
-</div>
-
-<br>
-
-<br><br>
-
-<form action="{{ route('user.logout') }}" method="POST" style="display:inline;">
-    @csrf
-    <button type="submit">Logout</button>
-</form>
-
 </body>
 </html>
 
