@@ -94,6 +94,14 @@
             border-radius: 8px;
             margin-bottom: 15px;
         }
+
+        .success-box {
+            background: #e5ffe5;
+            color: green;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 
@@ -114,6 +122,10 @@
 
         <div class="form-box">
 
+            @if(session('success'))
+                <div class="success-box">{{ session('success') }}</div>
+            @endif
+
             @if ($errors->any())
                 <div class="error-box">
                     <ul style="margin:0; padding-left:18px;">
@@ -124,7 +136,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('user.changePassword', $user->id) }}">
+            <form method="POST" action="{{ route('security.changePassword') }}">
                 @csrf
                 @method('PATCH')
 
@@ -132,21 +144,18 @@
                 <input type="password" name="current_password" required>
 
                 <label>Password Baru</label>
-                <input type="password" name="new_password" required>
+                <input type="password" name="password" required>
 
                 <label>Konfirmasi Password Baru</label>
-                <input type="password" name="new_password_confirmation" required>
+                <input type="password" name="password_confirmation" required>
 
                 <div class="button-group">
-
                     <a href="{{ route('user.index') }}" class="btn">
                         ← Halaman Utama
                     </a>
-
                     <button type="submit" class="btn btn-primary">
                         Simpan Password
                     </button>
-
                 </div>
             </form>
 

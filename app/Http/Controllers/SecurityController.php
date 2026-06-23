@@ -12,7 +12,7 @@ class SecurityController extends Controller
 {
     public function index()
     {
-        $securities = DB::table('securities')->get();
+        $securities = DB::table(' security')->get();
         return view('security_index', compact('securities'));
     }
 
@@ -165,4 +165,29 @@ class SecurityController extends Controller
         $redirect = $request->query('redirect', '/transaction');
         return view('securities.verify_pin', compact('redirect'));
     }
+    public function changePasswordForm()
+{
+    return view('security.change_password');
+}
+
+    public function changePassword(Request $request)
+    {
+    $request->validate([
+        'current_password' => 'required',
+        'password'         => 'required|min:8|confirmed',
+    ]);
+
+    $user = Auth::user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+        return back()->withErrors(['current_password' => 'Password lama tidak sesuai.']);
+    }
+
+    DB::table('users')->where('id', $user->id)->update([
+        'password'   => Hash::make($request->password),
+        'updated_at' => now(),
+    ]);
+
+    return redirect()->route('user.index')->with('success', 'Password berhasil diubah.');
+}
 }

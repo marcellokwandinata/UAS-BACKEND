@@ -131,7 +131,7 @@ class UserController extends Controller
             return redirect()->route('user.index')->with('error', 'Akses dilarang!');
         }
 
-        return view('User.change_password', compact('user'));
+        return view('Security.change_password', compact('user'));
     }
 
     // Menyimpan password baru nasabah
